@@ -730,6 +730,15 @@ class People extends RequestCollection
             ->getResponse(new Response\SuggestedUsersBadgeResponse());
     }
 
+    public function getMarkSuSeen()
+    {
+        return $this->ig->request('discover/mark_su_seen/')
+            ->addPost('_uuid', $this->ig->uuid)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->addPost('module', 'discover_people')
+            ->getResponse(new Response\SuggestedUsersBadgeResponse());
+    }
+
     /**
      * Hide suggested user, so that they won't be suggested again.
      *
