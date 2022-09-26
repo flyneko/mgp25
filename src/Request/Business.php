@@ -63,7 +63,7 @@ class Business extends RequestCollection
         return $this->ig->request('ads/graphql/')
             ->setSignedPost(false)
             ->setIsMultiResponse(true)
-            ->addParam('locale', Constants::USER_AGENT_LOCALE)
+            ->addParam('locale', Constants::LOCALE)
             ->addParam('vc_policy', 'insights_policy')
             ->addParam('surface', 'account')
             ->addPost('access_token', 'undefined')

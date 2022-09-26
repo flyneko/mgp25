@@ -479,7 +479,7 @@ class Mqtt implements PersistentInterface
         $result['User-Agent'] = $this->_device->getUserAgent();
         $result['ig_mqtt_route'] = 'django';
         // Accept-Language must be the last one.
-        $result['Accept-Language'] = Constants::ACCEPT_LANGUAGE;
+        $result['Accept-Language'] = str_replace('_', '-', Constants::LOCALE);
 
         return $result;
     }

@@ -801,7 +801,7 @@ class Client
                 'Connection'       => 'Keep-Alive',
                 'Accept'           => '*/*',
                 'Accept-Encoding'  => Constants::ACCEPT_ENCODING,
-                'Accept-Language'  => Constants::ACCEPT_LANGUAGE,
+                'Accept-Language'  => str_replace('_', '-', Constants::LOCALE),
             ],
         ]);
 

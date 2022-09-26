@@ -93,7 +93,7 @@ class Shopping extends RequestCollection
 
         return $this->ig->request('wwwgraphql/ig/query/')
             ->addUnsignedPost('doc_id', '1747750168640998')
-            ->addUnsignedPost('locale', Constants::ACCEPT_LANGUAGE)
+            ->addUnsignedPost('locale', str_replace('_', '-', Constants::LOCALE))
             ->addUnsignedPost('vc_policy', 'default')
             ->addUnsignedPost('strip_nulls', true)
             ->addUnsignedPost('strip_defaults', true)
