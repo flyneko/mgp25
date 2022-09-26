@@ -164,13 +164,12 @@ interface StorageInterface
      * simply JSON-encode the whole $userSettings array and store that string.
      *
      * @param array  $userSettings An array with all of the user's key-value pairs.
-     * @param string $triggerKey   The differing key which triggered the write.
      *
      * @throws \InstagramAPI\Exception\SettingsException
      */
     public function saveUserSettings(
-        array $userSettings,
-        $triggerKey);
+        array $userSettings
+    );
 
     /**
      * Whether the storage backend has cookies for the currently active user.

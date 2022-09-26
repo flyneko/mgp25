@@ -197,8 +197,8 @@ class Redis implements StorageInterface
      * {@inheritdoc}
      */
     public function saveUserSettings(
-        array $userSettings,
-        $triggerKey)
+        array $userSettings
+    )
     {
         $hash = $this->_getHash($this->_username);
 

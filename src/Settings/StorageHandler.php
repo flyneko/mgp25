@@ -402,7 +402,6 @@ class StorageHandler
             || $this->_userSettings[$key] !== $value) {
             // The value differs, so save to memory cache and write to storage.
             $this->_userSettings[$key] = $value;
-            $this->_storage->saveUserSettings($this->_userSettings, $key);
         }
     }
 
@@ -785,5 +784,13 @@ class StorageHandler
         }
 
         return $data;
+    }
+
+    /**
+     * Save the current user settings
+     * @return void
+     */
+    public function saveCurrentUserSettings() {
+        $this->_storage->saveUserSettings($this->_userSettings);
     }
 }

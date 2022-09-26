@@ -14,9 +14,6 @@ use InstagramAPI\Utils;
  */
 class File implements StorageInterface
 {
-    /** @var int Current storage format version. */
-    const STORAGE_VERSION = 2;
-
     /** @var string Format for settings filename. */
     const SETTINGSFILE_NAME = '%s-settings.dat';
 
@@ -166,17 +163,7 @@ class File implements StorageInterface
             ));
         }
 
-        // Fetch the data version ("FILESTORAGEv#;") header.
-        $dataVersion = 1; // Assume migration from v1 if no version.
-        if (preg_match('/^FILESTORAGEv(\d+);/', $rawData, $matches)) {
-            $dataVersion = intval($matches[1]);
-            $rawData = substr($rawData, strpos($rawData, ';') + 1);
-        }
-
-        // Decode the key-value pairs regardless of data-storage version.
-        $userSettings = $this->_decodeStorage($dataVersion, $rawData);
-
-        return $userSettings;
+        return $this->_decodeStorage($rawData);
     }
 
     /**
@@ -185,15 +172,10 @@ class File implements StorageInterface
      * {@inheritdoc}
      */
     public function saveUserSettings(
-        array $userSettings,
-        $triggerKey)
-    {
-        // Generate the storage version header.
-        $versionHeader = 'FILESTORAGEv'.self::STORAGE_VERSION.';';
-
+        array $userSettings
+    ) {
         // Encode a binary representation of all settings.
-        // VERSION 2 STORAGE FORMAT: JSON-encoded blob.
-        $encodedData = $versionHeader.json_encode($userSettings);
+        $encodedData = json_encode($userSettings, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         // Perform an atomic diskwrite, which prevents accidental truncation.
         // NOTE: If we had just written directly to settingsPath, the file would
@@ -278,50 +260,12 @@ class File implements StorageInterface
      *
      * @return array An array with all current key-value pairs for the user.
      */
-    private function _decodeStorage(
-        $dataVersion,
-        $rawData)
-    {
-        $loadedSettings = [];
-
-        switch ($dataVersion) {
-        case 1:
-            /**
-             * This is the old format from v1.x of Instagram-API.
-             * Terrible format. Basic "key=value\r\n" and very fragile.
-             */
-
-            // Split by system-independent newlines. Tries \r\n (Win), then \r
-            // (pre-2000s Mac), then \n\r, then \n (Mac OS X, UNIX, Linux).
-            $lines = preg_split('/(\r\n?|\n\r?)/', $rawData, -1, PREG_SPLIT_NO_EMPTY);
-            if ($lines !== false) {
-                foreach ($lines as $line) {
-                    // Key must be at least one character. Allows empty values.
-                    if (preg_match('/^([^=]+)=(.*)$/', $line, $matches)) {
-                        $key = $matches[1];
-                        $value = rtrim($matches[2], "\r\n ");
-                        $loadedSettings[$key] = $value;
-                    }
-                }
-            }
-            break;
-        case 2:
-            /**
-             * Version 2 uses JSON encoding and perfectly stores any value.
-             * And file corruption can't happen, thanks to the atomic writer.
-             */
-            $loadedSettings = @json_decode($rawData, true, 512, JSON_BIGINT_AS_STRING);
-            if (!is_array($loadedSettings)) {
-                throw new SettingsException(sprintf(
-                    'Failed to decode corrupt settings file for account "%s".',
-                    $this->_username
-                ));
-            }
-            break;
-        default:
+    private function _decodeStorage($rawData) {
+        $loadedSettings = @json_decode($rawData, true, 512, JSON_BIGINT_AS_STRING);
+        if (!is_array($loadedSettings)) {
             throw new SettingsException(sprintf(
-                'Invalid file settings storage format version "%d".',
-                $dataVersion
+                'Failed to decode corrupt settings file for account "%s".',
+                $this->_username
             ));
         }
 

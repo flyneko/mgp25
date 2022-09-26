@@ -3,6 +3,7 @@
 namespace InstagramAPI;
 
 use InstagramAPI\Response\Model\User;
+use InstagramAPI\Settings\StorageHandler;
 
 /**
  * Instagram's Private API v7.0.1.
@@ -241,9 +242,10 @@ class Instagram implements ExperimentsInterface
                 // This saves all user session cookies "in bulk" at script exit
                 // or when switching to a different user, so that it only needs
                 // to write cookies to storage a few times per user session:
-                'onCloseUser' => function ($storage) use ($self) {
+                'onCloseUser' => function (StorageHandler $storage) use ($self) {
                     if ($self->client instanceof Client) {
                         $self->client->saveCookieJar();
+                        $storage->saveCurrentUserSettings();
                     }
                 },
             ]
@@ -661,7 +663,7 @@ class Instagram implements ExperimentsInterface
         $this->device = new Devices\Device(
             Constants::IG_VERSION,
             Constants::VERSION_CODE,
-            Constants::USER_AGENT_LOCALE,
+            Constants::LOCALE,
             $savedDeviceString
         );
 
@@ -796,13 +798,12 @@ class Instagram implements ExperimentsInterface
     {
         // This check is just protection against accidental bugs. It makes sure
         // that we always call this function with a *successful* login response!
-        if (!$response instanceof Response\LoginResponse
-            || !$response->isOk()) {
+        if (!$response instanceof Response\LoginResponse || !$response->isOk()) {
             throw new \InvalidArgumentException('Invalid login response provided to _updateLoginState().');
         }
 
-        $this->account_id = $response->getLoggedInUser()->getPk();
         $this->logged_in_user = $response->getLoggedInUser();
+        $this->account_id     = $response->getLoggedInUser()->getPk();
 
         $this->settings->set('logged_in_user', $response->getLoggedInUser()->serialize());
         $this->settings->set('account_id', $this->account_id);

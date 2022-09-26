@@ -263,8 +263,8 @@ class Memcached implements StorageInterface
      * {@inheritdoc}
      */
     public function saveUserSettings(
-        array $userSettings,
-        $triggerKey)
+        array $userSettings
+    )
     {
         // Store the settings as a JSON blob.
         $encodedData = json_encode($userSettings);
