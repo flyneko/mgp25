@@ -1093,36 +1093,36 @@ class Internal extends RequestCollection
     }
 
     /**
-     * Send launcher sync.
-     *
-     * @param bool $prelogin     Indicates if the request is done before login request.
-     * @param bool $idIsUuid     Indicates if the id parameter is the user's id.
-     * @param bool $useCsrfToken Indicates if a csrf token should be included.
-     * @param bool $loginConfigs Indicates if login configs should be used.
+     * Send pre login launcher sync.
      *
      * @throws \InstagramAPI\Exception\InstagramException
      *
      * @return \InstagramAPI\Response\LauncherSyncResponse
      */
-    public function sendLauncherSync(
-        $prelogin,
-        $idIsUuid = true,
-        $useCsrfToken = false,
-        $loginConfigs = false)
-    {
+    public function preLoginLauncherSync() {
         $request = $this->ig->request('launcher/sync/')
-            ->addPost('configs', $loginConfigs ? Constants::LAUNCHER_LOGIN_CONFIGS : Constants::LAUNCHER_CONFIGS)
-            ->addPost('id', ($idIsUuid ? $this->ig->uuid : $this->ig->account_id));
-        if ($useCsrfToken) {
-            $request->addPost('_csrftoken', $this->ig->client->getToken());
-        }
-        if ($prelogin) {
-            $request->setNeedsAuth(false);
-        } else {
-            $request
-                ->addPost('_uuid', $this->ig->uuid)
-                ->addPost('_uid', $this->ig->account_id);
-        }
+            ->setNeedsAuth(false)
+            ->addPost('configs', Constants::PRE_LOGIN_LAUNCHER_CONFIGS)
+            ->addPost('id', $this->ig->uuid);
+
+        return $request->getResponse(new Response\LauncherSyncResponse());
+    }
+
+    /**
+     * Send post login launcher sync.
+     *
+     * @throws \InstagramAPI\Exception\InstagramException
+     *
+     * @return \InstagramAPI\Response\LauncherSyncResponse
+     */
+    public function postLoginLauncherSync() {
+        $request = $this->ig->request('launcher/sync/')
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->addPost('id', $this->ig->account_id)
+            ->addPost('_uid', $this->ig->account_id)
+            ->addPost('_uuid', $this->ig->uuid)
+            ->addPost('configs', Constants::POST_LOGIN_LAUNCHER_CONFIGS)
+        ;
 
         return $request->getResponse(new Response\LauncherSyncResponse());
     }
@@ -1621,6 +1621,11 @@ class Internal extends RequestCollection
 
         // We are never supposed to get here!
         throw new \LogicException('Something went wrong during configuration.');
+    }
+
+    public function getViewableStatuses() {
+        return $this->ig->request('status/get_viewable_statuses/')
+            ->getResponse(new Response\GenericResponse());
     }
 
     /**
