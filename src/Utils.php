@@ -1561,4 +1561,12 @@ class Utils
 
         return $urls;
     }
+
+    public static function catch($callback) {
+        try {
+            $result = $callback();
+        } catch (\Throwable $e) {}
+
+        return $result;
+    }
 }
