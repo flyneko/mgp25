@@ -385,14 +385,19 @@ class Request
     protected function _addDefaultHeaders()
     {
         if ($this->_defaultHeaders) {
-            $this->_headers['X-IG-App-ID'] = Constants::FACEBOOK_ANALYTICS_APPLICATION_ID;
-            $this->_headers['X-IG-Capabilities'] = Constants::X_IG_Capabilities;
-            $this->_headers['X-IG-Connection-Type'] = Constants::X_IG_Connection_Type;
-            $this->_headers['X-IG-Connection-Speed'] = mt_rand(1000, 3700).'kbps';
-            // TODO: IMPLEMENT PROPER CALCULATION OF THESE HEADERS.
-            $this->_headers['X-IG-Bandwidth-Speed-KBPS'] = '-1.000';
-            $this->_headers['X-IG-Bandwidth-TotalBytes-B'] = '0';
-            $this->_headers['X-IG-Bandwidth-TotalTime-MS'] = '0';
+            $this->_headers = [
+                'X-IG-App-ID'                 => Constants::FACEBOOK_ANALYTICS_APPLICATION_ID,
+                'X-IG-Device-ID'              => $this->_parent->uuid,
+                'X-IG-Android-ID'             => $this->_parent->device_id,
+                'X-IG-WWW-Claim'              => $this->_parent->settings->get('www_claim'),
+                'X-IG-Capabilities'           => Constants::X_IG_Capabilities,
+                'X-IG-Connection-Type'        => Constants::X_IG_Connection_Type,
+                'X-IG-Connection-Speed'       => mt_rand(1000, 3700).'kbps',
+                'X-IG-Bandwidth-Speed-KBPS'   => '-1.000',
+                'X-IG-Bandwidth-TotalBytes-B' => '0',
+                'X-IG-Bandwidth-TotalTime-MS' => '0',
+                'Authorization'               => $this->_parent->settings->get('authorization')
+            ] + $this->_headers;
         }
 
         return $this;
@@ -723,7 +728,7 @@ class Request
     {
         // Check the cached login state. May not reflect what will happen on the
         // server. But it's the best we can check without trying the actual request!
-        if (!$this->_parent->isMaybeLoggedIn) {
+        if (empty($this->_parent->account_id)) {
             throw new LoginRequiredException('User not logged in. Please call login() and then try again.');
         }
     }
@@ -833,6 +838,9 @@ class Request
             $this->getRawResponse(), // Throws.
             $this->getHttpResponse() // Throws.
         );
+
+        // Update settings from response
+        $this->_parent->updateStateFromResponse($responseObject);
 
         return $responseObject;
     }
