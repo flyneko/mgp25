@@ -26,6 +26,9 @@ class StorageHandler
      * @var array
      */
     const PERSISTENT_KEYS = [
+        'logged_in_user',
+        'www_claim',
+        'authorization',
         'account_id', // The numerical UserPK ID of the account.
         'devicestring', // Which Android device they're identifying as.
         'device_id', // Hardware identifier.
@@ -46,21 +49,6 @@ class StorageHandler
         'zr_rules', // Zero rating rewrite rules.
         'public_key', // Public Key for login authentication.
         'public_key_id', // Public Key ID for login authentication.
-    ];
-
-    /**
-     * List of important settings to keep when erasing device-specific settings.
-     *
-     * Whenever we are told to erase all device-specific settings, we will clear
-     * the values of all settings EXCEPT the keys listed here. It is therefore
-     * VERY important to list ALL important NON-DEVICE specific settings here!
-     *
-     * @var array
-     *
-     * @see StorageHandler::eraseDeviceSettings()
-     */
-    const KEEP_KEYS_WHEN_ERASING_DEVICE = [
-        'account_id', // We don't really need to keep this, but it's a good example.
     ];
 
     /**
@@ -331,13 +319,9 @@ class StorageHandler
      *
      * @throws \InstagramAPI\Exception\SettingsException
      */
-    public function eraseDeviceSettings()
-    {
-        foreach (self::PERSISTENT_KEYS as $key) {
-            if (!in_array($key, self::KEEP_KEYS_WHEN_ERASING_DEVICE)) {
-                $this->set($key, ''); // Erase the setting.
-            }
-        }
+    public function clearSettings() {
+        foreach (self::PERSISTENT_KEYS as $key)
+            $this->set($key, '');
 
         $this->setCookies(''); // Erase all cookies.
     }
