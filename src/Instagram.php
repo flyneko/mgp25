@@ -2,6 +2,8 @@
 
 namespace InstagramAPI;
 
+use InstagramAPI\Response\Model\User;
+
 /**
  * Instagram's Private API v7.0.1.
  *
@@ -76,23 +78,6 @@ class Instagram implements ExperimentsInterface
     public $apiDeveloperDebug = false;
 
     /**
-     * Global flag for users who want to run the library incorrectly online.
-     *
-     * YOU ENABLE THIS AT YOUR OWN RISK! WE GIVE _ZERO_ SUPPORT FOR THIS MODE!
-     * EMBEDDING THE LIBRARY DIRECTLY IN A WEBPAGE (WITHOUT ANY INTERMEDIARY
-     * PROTECTIVE LAYER) CAN CAUSE ALL KINDS OF DAMAGE AND DATA CORRUPTION!
-     *
-     * YOU HAVE BEEN WARNED. ANY DATA CORRUPTION YOU CAUSE IS YOUR OWN PROBLEM!
-     *
-     * The right way to run the library online is described in `webwarning.htm`.
-     *
-     * @var bool
-     *
-     * @see Instagram::__construct()
-     */
-    public static $allowDangerousWebUsageAtMyOwnRisk = false;
-
-    /**
      * UUID.
      *
      * @var string
@@ -133,24 +118,10 @@ class Instagram implements ExperimentsInterface
     public $account_id;
 
     /**
-     * Our current guess about the session status.
-     *
-     * This contains our current GUESS about whether the current user is still
-     * logged in. There is NO GUARANTEE that we're still logged in. For example,
-     * the server may have invalidated our current session due to the account
-     * password being changed AFTER our last login happened (which kills all
-     * existing sessions for that account), or the session may have expired
-     * naturally due to not being used for a long time, and so on...
-     *
-     * NOTE TO USERS: The only way to know for sure if you're logged in is to
-     * try a request. If it throws a `LoginRequiredException`, then you're not
-     * logged in anymore. The `login()` function will always ensure that your
-     * current session is valid. But AFTER that, anything can happen... It's up
-     * to Instagram, and we have NO control over what they do with your session!
-     *
-     * @var bool
+     * Instance of logged user
+     * @var User
      */
-    public $isMaybeLoggedIn = false;
+    public $logged_in_user;
 
     /**
      * Raw API communication/networking class.
@@ -237,44 +208,6 @@ class Instagram implements ExperimentsInterface
         $truncatedDebug = false,
         array $storageConfig = [])
     {
-        // Disable incorrect web usage by default. People should never embed
-        // this application emulator library directly in a webpage, or they
-        // might cause all kinds of damage and data corruption. They should
-        // use an intermediary layer such as a database or a permanent process!
-        // NOTE: People can disable this safety via the flag at their own risk.
-        if (!self::$allowDangerousWebUsageAtMyOwnRisk && (!defined('PHP_SAPI') || PHP_SAPI !== 'cli')) {
-            // IMPORTANT: We do NOT throw any exception here for users who are
-            // running the library via a webpage. Many webservers are configured
-            // to hide all PHP errors, and would just give the user a totally
-            // blank webpage with "Error 500" if we throw here, which would just
-            // confuse the newbies even more. Instead, we output a HTML warning
-            // message for people who try to run the library on a webpage.
-            echo file_get_contents(__DIR__.'/../webwarning.htm');
-            echo '<p>If you truly want to enable <em>incorrect</em> website usage by directly embedding this application emulator library in your page, then you can do that <strong>AT YOUR OWN RISK</strong> by setting the following flag <em>before</em> you create the <code>Instagram()</code> object:</p>'.PHP_EOL;
-            echo '<p><code>\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;</code></p>'.PHP_EOL;
-            exit(0); // Exit without error to avoid triggering Error 500.
-        }
-
-        // Prevent people from running this library on ancient PHP versions, and
-        // verify that people have the most critically important PHP extensions.
-        // NOTE: All of these are marked as requirements in composer.json, but
-        // some people install the library at home and then move it somewhere
-        // else without the requirements, and then blame us for their errors.
-        if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50600) {
-            throw new \InstagramAPI\Exception\InternalException(
-                'You must have PHP 5.6 or higher to use the Instagram API library.'
-            );
-        }
-        static $extensions = ['curl', 'mbstring', 'gd', 'exif', 'zlib'];
-        foreach ($extensions as $ext) {
-            if (!@extension_loaded($ext)) {
-                throw new \InstagramAPI\Exception\InternalException(sprintf(
-                    'You must have the "%s" PHP extension to use the Instagram API library.',
-                    $ext
-                ));
-            }
-        }
-
         // Debugging options.
         $this->debug = $debug;
         $this->truncatedDebug = $truncatedDebug;
@@ -399,61 +332,6 @@ class Instagram implements ExperimentsInterface
     }
 
     /**
-     * Login to Instagram or automatically resume and refresh previous session.
-     *
-     * Sets the active account for the class instance. You can call this
-     * multiple times to switch between multiple Instagram accounts.
-     *
-     * WARNING: You MUST run this function EVERY time your script runs! It
-     * handles automatic session resume and relogin and app session state
-     * refresh and other absolutely *vital* things that are important if you
-     * don't want to be banned from Instagram!
-     *
-     * WARNING: This function MAY return a CHALLENGE telling you that the
-     * account needs two-factor login before letting you log in! Read the
-     * two-factor login example to see how to handle that.
-     *
-     * @param string $username           Your Instagram username.
-     *                                   You can also use your email or phone,
-     *                                   but take in mind that they won't work
-     *                                   when you have two factor auth enabled.
-     * @param string $password           Your Instagram password.
-     * @param int    $appRefreshInterval How frequently `login()` should act
-     *                                   like an Instagram app that's been
-     *                                   closed and reopened and needs to
-     *                                   "refresh its state", by asking for
-     *                                   extended account state details.
-     *                                   Default: After `1800` seconds, meaning
-     *                                   `30` minutes after the last
-     *                                   state-refreshing `login()` call.
-     *                                   This CANNOT be longer than `6` hours.
-     *                                   Read `_sendLoginFlow()`! The shorter
-     *                                   your delay is the BETTER. You may even
-     *                                   want to set it to an even LOWER value
-     *                                   than the default 30 minutes!
-     *
-     * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     *
-     * @return \InstagramAPI\Response\LoginResponse|null A login response if a
-     *                                                   full (re-)login
-     *                                                   happens, otherwise
-     *                                                   `NULL` if an existing
-     *                                                   session is resumed.
-     */
-    public function login(
-        $username,
-        $password,
-        $appRefreshInterval = 1800)
-    {
-        if (empty($username) || empty($password)) {
-            throw new \InvalidArgumentException('You must provide a username and password to login().');
-        }
-
-        return $this->_login($username, $password, false, $appRefreshInterval);
-    }
-
-    /**
      * Internal login handler.
      *
      * @param string $username
@@ -472,23 +350,19 @@ class Instagram implements ExperimentsInterface
      *
      * @see Instagram::login() The public login handler with a full description.
      */
-    protected function _login(
+    public function login(
         $username,
-        $password,
-        $forceLogin = false,
-        $appRefreshInterval = 1800)
-    {
-        if (empty($username) || empty($password)) {
+        $password
+    ) {
+        if (empty($username) || empty($password))
             throw new \InvalidArgumentException('You must provide a username and password to _login().');
-        }
 
         // Switch the currently active user/pass if the details are different.
         if ($this->username !== $username || $this->password !== $password) {
             $this->_setUser($username, $password);
         }
 
-        // Perform a full relogin if necessary.
-        if (!$this->isMaybeLoggedIn || $forceLogin) {
+        if (empty($this->logged_in_user->getPk()) || empty($this->account_id)) {
             $this->_sendPreLoginFlow();
 
             try {
@@ -502,7 +376,6 @@ class Instagram implements ExperimentsInterface
                     ->addPost('adid', $this->advertising_id)
                     ->addPost('guid', $this->uuid)
                     ->addPost('device_id', $this->device_id)
-                    ->addPost('password', $this->password)
                     ->addPost('enc_password', Utils::encryptPassword($password, $this->settings->get('public_key_id'), $this->settings->get('public_key')))
                     ->addPost('google_tokens', '[]')
                     ->addPost('login_attempt_count', 0)
@@ -520,15 +393,10 @@ class Instagram implements ExperimentsInterface
 
             $this->_updateLoginState($response);
 
-            $this->_sendLoginFlow(true, $appRefreshInterval);
-
-            // Full (re-)login successfully completed. Return server response.
-            return $response;
+            $this->_sendPostLoginFlow();
         }
 
-        // Attempt to resume an existing session, or full re-login if necessary.
-        // NOTE: The "return" here gives a LoginResponse in case of re-login.
-        return $this->_sendLoginFlow(false, $appRefreshInterval);
+        return $this->logged_in_user;
     }
 
     /**
@@ -606,7 +474,7 @@ class Instagram implements ExperimentsInterface
 
         $this->_updateLoginState($response);
 
-        $this->_sendLoginFlow(true, $appRefreshInterval);
+        $this->_sendPostLoginFlow();
 
         return $response;
     }
@@ -808,12 +676,14 @@ class Instagram implements ExperimentsInterface
         // are CRITICALLY important to the particular device. We don't want to
         // frivolously force the users to generate new device IDs constantly.
         $resetCookieJar = false;
-        if ($deviceString !== $savedDeviceString // Brand new device, or missing
+        if (
+            $deviceString !== $savedDeviceString // Brand new device, or missing
             || empty($this->settings->get('uuid')) // one of the critically...
             || empty($this->settings->get('phone_id')) // ...important device...
-            || empty($this->settings->get('device_id'))) { // ...parameters.
+            || empty($this->settings->get('device_id'))
+        ) { // ...parameters.
             // Erase all previously stored device-specific settings and cookies.
-            $this->settings->eraseDeviceSettings();
+            $this->settings->clearSettings();
 
             // Save the chosen device string to settings.
             $this->settings->set('devicestring', $deviceString);
@@ -825,7 +695,7 @@ class Instagram implements ExperimentsInterface
 
             // Erase any stored account ID, to ensure that we detect ourselves
             // as logged-out. This will force a new relogin from the new device.
-            $this->settings->set('account_id', '');
+            $this->settings->set('logged_in_user', (new User())->serialize());
 
             // We'll also need to throw out all previous cookies.
             $resetCookieJar = true;
@@ -853,12 +723,13 @@ class Instagram implements ExperimentsInterface
         $this->session_id = $this->settings->get('session_id');
         $this->experiments = $this->settings->getExperiments();
 
+        $this->logged_in_user = new User();
+        $this->logged_in_user->unserialize($this->settings->get('logged_in_user'));
+
         // Load the previous session details if we're possibly logged in.
         if (!$resetCookieJar && $this->settings->isMaybeLoggedIn()) {
-            $this->isMaybeLoggedIn = true;
             $this->account_id = $this->settings->get('account_id');
         } else {
-            $this->isMaybeLoggedIn = false;
             $this->account_id = null;
         }
 
@@ -930,10 +801,32 @@ class Instagram implements ExperimentsInterface
             throw new \InvalidArgumentException('Invalid login response provided to _updateLoginState().');
         }
 
-        $this->isMaybeLoggedIn = true;
         $this->account_id = $response->getLoggedInUser()->getPk();
+        $this->logged_in_user = $response->getLoggedInUser();
+
+        $this->settings->set('logged_in_user', $response->getLoggedInUser()->serialize());
         $this->settings->set('account_id', $this->account_id);
         $this->settings->set('last_login', time());
+    }
+
+    public function updateStateFromResponse(Response $response) {
+        $headersMap = [
+            'x-ig-set-www-claim' => 'www_claim',
+            'ig-set-authorization' => 'authorization',
+            'ig-set-password-encryption-key-id' => 'public_key_id',
+            'ig-set-password-encryption-pub-key' => 'public_key'
+        ];
+
+        foreach ($headersMap as $headerName => $storageKey) {
+            $v = $response->getHttpResponse()->getHeaderLine($headerName);
+            if (
+                empty($v) ||
+                ($storageKey == 'authorization' && str_ends_with($v, ':'))
+            )
+                continue;
+
+            $this->settings->set($storageKey, $v);
+        }
     }
 
     /**
@@ -943,70 +836,18 @@ class Instagram implements ExperimentsInterface
      */
     protected function _sendPreLoginFlow()
     {
+        $this->internal->readMsisdnHeader('default');
+        $this->internal->bootstrapMsisdnHeader();
         // Reset zero rating rewrite rules.
         $this->client->zeroRating()->reset();
         // Calling this non-token API will put a csrftoken in our cookie
         // jar. We must do this before any functions that require a token.
         $this->internal->fetchZeroRatingToken();
-        $this->internal->bootstrapMsisdnHeader();
-        $this->internal->readMsisdnHeader('default');
-        $this->internal->syncDeviceFeatures(true);
-        $launcherResponse = $this->internal->sendLauncherSync(true)->getHttpResponse();
-        $this->settings->set('public_key', $launcherResponse->getHeaderLine('ig-set-password-encryption-pub-key'));
-        $this->settings->set('public_key_id', $launcherResponse->getHeaderLine('ig-set-password-encryption-key-id'));
-        $this->internal->bootstrapMsisdnHeader();
+        $this->account->setContactPointPrefill('prefill');
+        //$this->internal->syncDeviceFeatures(true);
+        $this->internal->preLoginLauncherSync();
         $this->internal->logAttribution();
         $this->account->getPrefillCandidates();
-        $this->internal->readMsisdnHeader('default', true);
-        $this->account->setContactPointPrefill('prefill');
-        $this->internal->sendLauncherSync(true, true, true);
-        $this->internal->syncDeviceFeatures(true, true);
-    }
-
-    /**
-     * Registers available Push channels during the login flow.
-     */
-    protected function _registerPushChannels()
-    {
-        // Forcibly remove the stored token value if >24 hours old.
-        // This prevents us from constantly re-registering the user's
-        // "useless" token if they have stopped using the Push features.
-        try {
-            $lastFbnsToken = (int) $this->settings->get('last_fbns_token');
-        } catch (\Exception $e) {
-            $lastFbnsToken = null;
-        }
-        if (!$lastFbnsToken || $lastFbnsToken < strtotime('-24 hours')) {
-            try {
-                $this->settings->set('fbns_token', '');
-            } catch (\Exception $e) {
-                // Ignore storage errors.
-            }
-
-            return;
-        }
-
-        // Read our token from the storage.
-        try {
-            $fbnsToken = $this->settings->get('fbns_token');
-        } catch (\Exception $e) {
-            $fbnsToken = null;
-        }
-        if ($fbnsToken === null) {
-            return;
-        }
-
-        // Register our last token since we had a fresh (age <24 hours) one,
-        // or clear our stored token if we fail to register it again.
-        try {
-            $this->push->register('mqtt', $fbnsToken);
-        } catch (\Exception $e) {
-            try {
-                $this->settings->set('fbns_token', '');
-            } catch (\Exception $e) {
-                // Ignore storage errors.
-            }
-        }
     }
 
     /**
@@ -1026,131 +867,36 @@ class Instagram implements ExperimentsInterface
      *                                                   flow attempt, otherwise
      *                                                   `NULL`.
      */
-    protected function _sendLoginFlow(
-        $justLoggedIn,
-        $appRefreshInterval = 1800)
+    protected function _sendPostLoginFlow()
     {
-        if (!is_int($appRefreshInterval) || $appRefreshInterval < 0) {
-            throw new \InvalidArgumentException("Instagram's app state refresh interval must be a positive integer.");
-        }
-        if ($appRefreshInterval > 21600) {
-            throw new \InvalidArgumentException("Instagram's app state refresh interval is NOT allowed to be higher than 6 hours, and the lower the better!");
-        }
-
-        // SUPER IMPORTANT:
-        //
-        // STOP trying to ask us to remove this code section!
-        //
-        // EVERY time the user presses their device's home button to leave the
-        // app and then comes back to the app, Instagram does ALL of these things
-        // to refresh its internal app state. We MUST emulate that perfectly,
-        // otherwise Instagram will silently detect you as a "fake" client
-        // after a while!
-        //
-        // You can configure the login's $appRefreshInterval in the function
-        // parameter above, but you should keep it VERY frequent (definitely
-        // NEVER longer than 6 hours), so that Instagram sees you as a real
-        // client that keeps quitting and opening their app like a REAL user!
-        //
-        // Otherwise they WILL detect you as a bot and silently BLOCK features
-        // or even ban you.
-        //
-        // You have been warned.
-        if ($justLoggedIn) {
-            // Reset zero rating rewrite rules.
-            $this->client->zeroRating()->reset();
-            // Perform the "user has just done a full login" API flow.
-            $this->account->getAccountFamily();
-            $this->internal->sendLauncherSync(false, false, true);
-            $this->internal->fetchZeroRatingToken();
-            $this->internal->syncUserFeatures();
-            $this->timeline->getTimelineFeed();
-            $this->story->getReelsTrayFeed('cold_start');
-            $this->internal->sendLauncherSync(false, false, true, true);
-            $this->story->getReelsMediaFeed($this->account_id);
-            $this->people->getRecentActivityInbox();
-            //TODO: Figure out why this isn't sending...
-//            $this->internal->logResurrectAttribution();
-            $this->internal->getLoomFetchConfig();
-            $this->internal->getDeviceCapabilitiesDecisions();
-            $this->people->getBootstrapUsers();
-            $this->people->getInfoById($this->account_id);
-            $this->account->getLinkageStatus();
-            $this->creative->sendSupportedCapabilities();
-            $this->media->getBlockedMedia();
-            $this->internal->storeClientPushPermissions();
-            $this->internal->getQPCooldowns();
-            $this->_registerPushChannels();
-            $this->story->getReelsMediaFeed($this->account_id);
-            $this->discover->getExploreFeed(null, null, true);
-            $this->internal->getQPFetch();
-            $this->account->getProcessContactPointSignals();
-            $this->internal->getArlinkDownloadInfo();
-            $this->_registerPushChannels();
-            $this->people->getSharePrefill();
-            $this->direct->getPresences();
-            $this->direct->getInbox();
-            $this->direct->getInbox(null, 20, 10);
-            $this->_registerPushChannels();
-            $this->internal->getFacebookOTA();
-        } else {
-            $lastLoginTime = $this->settings->get('last_login');
-            $isSessionExpired = $lastLoginTime === null || (time() - $lastLoginTime) > $appRefreshInterval;
-
-            // Act like a real logged in app client refreshing its news timeline.
-            // This also lets us detect if we're still logged in with a valid session.
-            if ($isSessionExpired) {
-                // Act like a real logged in app client refreshing its news timeline.
-                // This also lets us detect if we're still logged in with a valid session.
-                try {
-                    $this->story->getReelsTrayFeed('cold_start');
-                } catch (\InstagramAPI\Exception\LoginRequiredException $e) {
-                    // If our session cookies are expired, we were now told to login,
-                    // so handle that by running a forced relogin in that case!
-                    return $this->_login($this->username, $this->password, true, $appRefreshInterval);
-                }
-                $this->timeline->getTimelineFeed(null, [
-                    'is_pull_to_refresh' => $isSessionExpired ? null : mt_rand(1, 3) < 3,
-                ]);
-                $this->people->getSharePrefill();
-                $this->people->getRecentActivityInbox();
-
-                $this->people->getSharePrefill();
-                $this->people->getRecentActivityInbox();
-                $this->people->getInfoById($this->account_id);
-                $this->internal->getDeviceCapabilitiesDecisions();
-                $this->direct->getPresences();
-                $this->discover->getExploreFeed();
-                $this->direct->getInbox();
-
-                $this->settings->set('last_login', time());
-                // Generate and save a new application session ID.
-                $this->session_id = Signatures::generateUUID();
-                $this->settings->set('session_id', $this->session_id);
-                // Do the rest of the "user is re-opening the app" API flow...
-                $this->tv->getTvGuide();
-
-                $this->internal->getLoomFetchConfig();
-                $this->direct->getRankedRecipients('reshare', true);
-                $this->direct->getRankedRecipients('raven', true);
-                $this->_registerPushChannels();
-            }
-
-            // Users normally resume their sessions, meaning that their
-            // experiments never get synced and updated. So sync periodically.
-            $lastExperimentsTime = $this->settings->get('last_experiments');
-            if ($lastExperimentsTime === null || (time() - $lastExperimentsTime) > self::EXPERIMENTS_REFRESH) {
-                $this->internal->syncUserFeatures();
-                $this->internal->syncDeviceFeatures();
-            }
-
-            // Update zero rating token when it has been expired.
-            $expired = time() - (int) $this->settings->get('zr_expires');
-            if ($expired > 0) {
-                $this->client->zeroRating()->reset();
-                $this->internal->fetchZeroRatingToken($expired > 7200 ? 'token_stale' : 'token_expired');
-            }
-        }
+        // Reset zero rating rewrite rules.
+        $this->client->zeroRating()->reset();
+        $this->internal->fetchZeroRatingToken();
+        // Perform the "user has just done a full login" API flow.
+        //$this->account->getAccountFamily();
+        $this->internal->postLoginLauncherSync(); // postLoginSync
+        //$this->internal->syncUserFeatures(); // qe.syncExperiments
+        $this->internal->logAttribution();
+        Utils::catch(function () { $this->internal->logResurrectAttribution(); });
+        $this->internal->getLoomFetchConfig(); // loom.fetchConfig()
+        $this->account->getLinkageStatus();
+        $this->timeline->getTimelineFeed();
+        $this->story->getReelsTrayFeed('cold_start');
+        $this->story->getReelsMediaFeed($this->account_id);
+        //$this->discover->getSuggestedSearches('users');
+        //$this->discover->getSuggestedSearches('blended');
+        $this->discover->getRecentSearches();
+        $this->direct->getRankedRecipients('reshare', true);
+        $this->direct->getRankedRecipients('raven', true);
+        $this->direct->getPresences();
+        $this->direct->getInbox(null, 20, 10);
+        $this->media->getBlockedMedia();
+        $this->internal->getQPFetch();
+        $this->internal->getQPCooldowns();
+        $this->internal->getArlinkDownloadInfo();
+        $this->discover->getExploreFeed(null, null, true); // discover.topicalExplore
+        $this->people->getMarkSuSeen();
+        $this->internal->getFacebookOTA();
 
         // We've now performed a login or resumed a session. Forcibly write our
         // cookies to the storage, to ensure that the storage doesn't miss them
