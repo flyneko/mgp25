@@ -5,12 +5,86 @@ namespace InstagramAPI\Request;
 use InstagramAPI\Exception\InternalException;
 use InstagramAPI\Exception\SettingsException;
 use InstagramAPI\Response;
+use InstagramAPI\Utils;
 
 /**
  * Account-related functions, such as profile editing and security.
  */
 class Account extends RequestCollection
 {
+    public function login($username, $password) {
+        return $this->ig->request('accounts/login/')
+            ->setNeedsAuth(false)
+            ->addPost('jazoest', Utils::generateJazoest($this->ig->phone_id))
+            ->addPost('country_codes', '[{"country_code":"1","source":["default"]}]')
+            ->addPost('phone_id', $this->ig->phone_id)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->addPost('username', $username)
+            ->addPost('adid', $this->ig->advertising_id)
+            ->addPost('guid', $this->ig->uuid)
+            ->addPost('device_id', $this->ig->device_id)
+            ->addPost('enc_password', Utils::encryptPassword($password, $this->ig->settings->get('public_key_id'), $this->ig->settings->get('public_key')))
+            ->addPost('google_tokens', '[]')
+            ->addPost('login_attempt_count', 0)
+            ->getResponse(new Response\LoginResponse());
+    }
+
+    public function twoFactorLogin(
+        $username,
+        $twoFactorIdentifier,
+        $verificationCode,
+        $verificationMethod = '1'
+    ) {
+        // Remove all whitespace from the verification code.
+        $verificationCode = preg_replace('/\s+/', '', $verificationCode);
+
+        return $this->ig->request('accounts/two_factor_login/')
+            ->setNeedsAuth(false)
+            // 1 - SMS, 2 - Backup codes, 3 - TOTP, 0 - ??
+            ->addPost('verification_method', $verificationMethod)
+            ->addPost('verification_code', $verificationCode)
+            ->addPost('trust_this_device', 1)
+            ->addPost('two_factor_identifier', $twoFactorIdentifier)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->addPost('username', $username)
+            ->addPost('device_id', $this->ig->device_id)
+            ->addPost('guid', $this->ig->uuid)
+            ->getResponse(new Response\LoginResponse());
+    }
+
+    public function sendTwoFactorLoginSms($username, $twoFactorIdentifier) {
+        return $this->ig->request('accounts/send_two_factor_login_sms/')
+            ->setNeedsAuth(false)
+            ->addPost('two_factor_identifier', $twoFactorIdentifier)
+            ->addPost('username', $username)
+            ->addPost('device_id', $this->ig->device_id)
+            ->addPost('guid', $this->ig->uuid)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->getResponse(new Response\TwoFactorLoginSMSResponse());
+    }
+
+    public function sendRecoveryFlowEmail($username) {
+        return $this->ig->request('accounts/send_recovery_flow_email/')
+            ->setNeedsAuth(false)
+            ->addPost('query', $username)
+            ->addPost('adid', $this->ig->advertising_id)
+            ->addPost('device_id', $this->ig->device_id)
+            ->addPost('guid', $this->ig->uuid)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->getResponse(new Response\RecoveryResponse());
+    }
+
+    public function logout() {
+        return $this->ig->request('accounts/logout/')
+            ->setSignedPost(false)
+            ->addPost('phone_id', $this->ig->phone_id)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->addPost('guid', $this->ig->uuid)
+            ->addPost('device_id', $this->ig->device_id)
+            ->addPost('_uuid', $this->ig->uuid)
+            ->getResponse(new Response\LogoutResponse());
+    }
+
     /**
      * Get details about the currently logged in account.
      *
@@ -775,5 +849,39 @@ class Account extends RequestCollection
     {
         return $this->ig->request('linked_accounts/get_linkage_status/')
             ->getResponse(new Response\LinkageStatusResponse());
+    }
+
+    /**
+     * Request a recovery SMS to get back into your account.
+     * @param $username Your Instagram username.
+     * @return Response
+     */
+    public function sendRecoverySms($username) {
+        return $this->ig->request('users/lookup_phone/')
+            ->setNeedsAuth(false)
+            ->addPost('query', $username)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->getResponse(new Response\RecoveryResponse());
+    }
+
+    /**
+     * Request information about available password recovery methods for an account.
+     *
+     * This will tell you things such as whether SMS or EMAIL-based recovery is
+     * available for the given account name.
+     *
+     * @param $username
+     * @return Response
+     */
+    public function lookup($username) {
+        return $this->ig->request('users/lookup/')
+            ->setNeedsAuth(false)
+            ->addPost('q', $username)
+            ->addPost('directly_sign_in', true)
+            ->addPost('username', $username)
+            ->addPost('device_id', $this->ig->device_id)
+            ->addPost('guid', $this->ig->uuid)
+            ->addPost('_csrftoken', $this->ig->client->getToken())
+            ->getResponse(new Response\UsersLookupResponse());
     }
 }

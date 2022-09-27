@@ -368,20 +368,7 @@ class Instagram implements ExperimentsInterface
             $this->_sendPreLoginFlow();
 
             try {
-                $response = $this->request('accounts/login/')
-                    ->setNeedsAuth(false)
-                    ->addPost('jazoest', Utils::generateJazoest($this->phone_id))
-                    ->addPost('country_codes', '[{"country_code":"1","source":["default"]}]')
-                    ->addPost('phone_id', $this->phone_id)
-                    ->addPost('_csrftoken', $this->client->getToken())
-                    ->addPost('username', $this->username)
-                    ->addPost('adid', $this->advertising_id)
-                    ->addPost('guid', $this->uuid)
-                    ->addPost('device_id', $this->device_id)
-                    ->addPost('enc_password', Utils::encryptPassword($password, $this->settings->get('public_key_id'), $this->settings->get('public_key')))
-                    ->addPost('google_tokens', '[]')
-                    ->addPost('login_attempt_count', 0)
-                    ->getResponse(new Response\LoginResponse());
+                $response = $this->account->login($username, $password);
             } catch (\InstagramAPI\Exception\InstagramException $e) {
                 if ($e->hasResponse() && $e->getResponse()->isTwoFactorRequired()) {
                     // Login failed because two-factor login is required.
@@ -458,21 +445,7 @@ class Instagram implements ExperimentsInterface
 
         $username = ($usernameHandler !== null) ? $usernameHandler : $username;
 
-        // Remove all whitespace from the verification code.
-        $verificationCode = preg_replace('/\s+/', '', $verificationCode);
-
-        $response = $this->request('accounts/two_factor_login/')
-            ->setNeedsAuth(false)
-            // 1 - SMS, 2 - Backup codes, 3 - TOTP, 0 - ??
-            ->addPost('verification_method', $verificationMethod)
-            ->addPost('verification_code', $verificationCode)
-            ->addPost('trust_this_device', 1)
-            ->addPost('two_factor_identifier', $twoFactorIdentifier)
-            ->addPost('_csrftoken', $this->client->getToken())
-            ->addPost('username', $username)
-            ->addPost('device_id', $this->device_id)
-            ->addPost('guid', $this->uuid)
-            ->getResponse(new Response\LoginResponse());
+        $response = $this->account->twoFactorLogin($username, $twoFactorIdentifier, $verificationCode, $verificationMethod);
 
         $this->_updateLoginState($response);
 
@@ -527,14 +500,7 @@ class Instagram implements ExperimentsInterface
 
         $username = ($usernameHandler !== null) ? $usernameHandler : $username;
 
-        return $this->request('accounts/send_two_factor_login_sms/')
-            ->setNeedsAuth(false)
-            ->addPost('two_factor_identifier', $twoFactorIdentifier)
-            ->addPost('username', $username)
-            ->addPost('device_id', $this->device_id)
-            ->addPost('guid', $this->uuid)
-            ->addPost('_csrftoken', $this->client->getToken())
-            ->getResponse(new Response\TwoFactorLoginSMSResponse());
+        return $this->account->sendTwoFactorLoginSms($username, $twoFactorIdentifier);
     }
 
     /**
@@ -560,15 +526,7 @@ class Instagram implements ExperimentsInterface
         // Set active user (without pwd), and create database entry if new user.
         $this->_setUserWithoutPassword($username);
 
-        return $this->request('users/lookup/')
-            ->setNeedsAuth(false)
-            ->addPost('q', $username)
-            ->addPost('directly_sign_in', true)
-            ->addPost('username', $username)
-            ->addPost('device_id', $this->device_id)
-            ->addPost('guid', $this->uuid)
-            ->addPost('_csrftoken', $this->client->getToken())
-            ->getResponse(new Response\UsersLookupResponse());
+        return $this->account->lookup($username);
     }
 
     /**
@@ -594,14 +552,7 @@ class Instagram implements ExperimentsInterface
             throw new \InstagramAPI\Exception\InternalException('Email recovery is not available, since your account lacks a verified email address.');
         }
 
-        return $this->request('accounts/send_recovery_flow_email/')
-            ->setNeedsAuth(false)
-            ->addPost('query', $username)
-            ->addPost('adid', $this->advertising_id)
-            ->addPost('device_id', $this->device_id)
-            ->addPost('guid', $this->uuid)
-            ->addPost('_csrftoken', $this->client->getToken())
-            ->getResponse(new Response\RecoveryResponse());
+        return $this->account->sendRecoveryFlowEmail($username);
     }
 
     /**
@@ -627,11 +578,7 @@ class Instagram implements ExperimentsInterface
             throw new \InstagramAPI\Exception\InternalException('SMS recovery is not available, since your account lacks a verified phone number.');
         }
 
-        return $this->request('users/lookup_phone/')
-            ->setNeedsAuth(false)
-            ->addPost('query', $username)
-            ->addPost('_csrftoken', $this->client->getToken())
-            ->getResponse(new Response\RecoveryResponse());
+        return $this->account->sendRecoverySms($username);
     }
 
     /**
@@ -924,14 +871,7 @@ class Instagram implements ExperimentsInterface
      */
     public function logout()
     {
-        $response = $this->request('accounts/logout/')
-            ->setSignedPost(false)
-            ->addPost('phone_id', $this->phone_id)
-            ->addPost('_csrftoken', $this->client->getToken())
-            ->addPost('guid', $this->uuid)
-            ->addPost('device_id', $this->device_id)
-            ->addPost('_uuid', $this->uuid)
-            ->getResponse(new Response\LogoutResponse());
+        $response = $this->account->logout();
 
         // We've now logged out. Forcibly write our cookies to the storage, to
         // ensure that the storage doesn't miss them in case something bad
