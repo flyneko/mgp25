@@ -79,11 +79,6 @@ class Constants
     const INSTAGRAM_APPLICATION_NAME = 'Instagram';
     const PACKAGE_NAME = 'com.instagram.android';
 
-    // Instagram Quick Promotions.
-    const SURFACE_PARAM = [
-        4715,
-        5734,
-    ];
 
     // Internal Feedtype Constants. CRITICAL: EVERY value here MUST be unique!
     const FEED_TIMELINE = 1;

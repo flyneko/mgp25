@@ -396,7 +396,8 @@ class Request
                 'X-IG-Bandwidth-Speed-KBPS'   => '-1.000',
                 'X-IG-Bandwidth-TotalBytes-B' => '0',
                 'X-IG-Bandwidth-TotalTime-MS' => '0',
-                'Authorization'               => $this->_parent->settings->get('authorization')
+                'Authorization'               => $this->_parent->settings->get('authorization'),
+                'X-FB-HTTP-Engine'            => Constants::X_FB_HTTP_Engine
             ] + $this->_headers;
         }
 
