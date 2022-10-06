@@ -2,6 +2,7 @@
 
 namespace InstagramAPI;
 
+use InstagramAPI\Exception\InstagramException;
 use InstagramAPI\Response\Model\User;
 use InstagramAPI\Settings\StorageHandler;
 
@@ -22,12 +23,11 @@ use InstagramAPI\Settings\StorageHandler;
  */
 class Instagram implements ExperimentsInterface
 {
-    /**
-     * Experiments refresh interval in sec.
-     *
-     * @var int
-     */
-    const EXPERIMENTS_REFRESH = 7200;
+    const SUPPORTED_EVENTS = [
+        'beforeRequest',
+        'onResponse'
+    ];
+
 
     /**
      * Currently active Instagram username.
@@ -155,6 +155,12 @@ class Instagram implements ExperimentsInterface
      */
     public $experiments;
 
+    /**
+     *
+     * @var array
+     */
+    protected $_events = [];
+
     /** @var Request\Account Collection of Account related functions. */
     public $account;
     /** @var Request\Business Collection of Business related functions. */
@@ -252,6 +258,10 @@ class Instagram implements ExperimentsInterface
         );
         $this->client = new Client($this);
         $this->experiments = [];
+
+        $this->addEvent('onResponse', function (Response $responseObject) {
+            $this->updateStateFromResponse($responseObject);
+        });
     }
 
     /**
@@ -933,5 +943,42 @@ class Instagram implements ExperimentsInterface
         $url)
     {
         return new Request($this, $url);
+    }
+
+
+    /**
+     * Triggers an event.
+     * @param $eventName string Event name
+     * @param ...$handlerArguments
+     * @return void
+     */
+    public function triggerEvent($eventName, ...$handlerArguments) {
+        // Reject anything that isn't in our list of VALID callbacks.
+        if (!in_array($eventName, self::SUPPORTED_EVENTS)) {
+            throw new InstagramException(sprintf(
+                'The string "%s" is not a valid event name.',
+                $eventName
+            ));
+        }
+
+        // Trigger the callback with a reference to our StorageHandler instance.
+        foreach (($this->_events[$eventName] ?? []) as $eventHandler)
+            call_user_func_array($eventHandler, $handlerArguments);
+    }
+
+
+    /**
+     * Add an event handler
+     * @param string $eventName
+     * @param callable $handler
+     * @return self
+     */
+    public function addEvent(string $eventName, callable $handler): self {
+        if (!isset($this->_events[$eventName]))
+            $this->_events[$eventName] = [];
+
+        $this->_events[$eventName][] = $handler;
+
+        return $this;
     }
 }

@@ -754,10 +754,15 @@ class Request
 
             $this->_resetHandles();
 
+            $request = $this->_buildHttpRequest();
+            $guzzleOptions = $this->_guzzleOptions;
+
+            $this->_parent->triggerEvent('beforeRequest', $request, $guzzleOptions);
+
             try {
                 $this->_httpResponse = $this->_parent->client->api( // Throws.
-                    $this->_buildHttpRequest(), // Throws.
-                    $this->_guzzleOptions
+                    $request, // Throws.
+                    $guzzleOptions
                 );
             } finally {
                 $this->_closeHandles();
@@ -840,8 +845,8 @@ class Request
             $this->getHttpResponse() // Throws.
         );
 
-        // Update settings from response
-        $this->_parent->updateStateFromResponse($responseObject);
+        // Call event
+        $this->_parent->triggerEvent('onResponse', $responseObject);
 
         return $responseObject;
     }
