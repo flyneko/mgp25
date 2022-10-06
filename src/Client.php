@@ -581,23 +581,12 @@ class Client
                 $message = $responseObject->getMessage();
             }
 
-            try {
-                ServerMessageThrower::autoThrow(
-                    get_class($responseObject),
-                    $message,
-                    $responseObject,
-                    $httpResponse
-                );
-            } catch (LoginRequiredException $e) {
-                // Instagram told us that our session is invalid (that we are
-                // not logged in). Update our cached "logged in?" state. This
-                // ensures that users with various retry-algorithms won't hammer
-                // their server. When this flag is false, ALL further attempts
-                // at AUTHENTICATED requests will be aborted by our library.
-                $this->_parent->isMaybeLoggedIn = false;
-
-                throw $e; // Re-throw.
-            }
+            ServerMessageThrower::autoThrow(
+                get_class($responseObject),
+                $message,
+                $responseObject,
+                $httpResponse
+            );
         }
     }
 
