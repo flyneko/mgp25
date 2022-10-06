@@ -14,7 +14,7 @@ use InstagramAPI\Middleware\ZeroRating;
 use LazyJsonMapper\Exception\LazyJsonMapperException;
 use Psr\Http\Message\RequestInterface as HttpRequestInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use function GuzzleHttp\Psr7\modify_request;
+use GuzzleHttp\Psr7\Utils as GuzzleUtils;
 
 /**
  * This class handles core API network communication.
@@ -782,7 +782,7 @@ class Client
         array $guzzleOptions = [])
     {
         // Set up headers that are required for every request.
-        $request = modify_request($request, [
+        $request = GuzzleUtils::modifyRequest($request, [
             'set_headers' => [
                 'User-Agent'       => $this->_userAgent,
                 // Keep the API's HTTPS connection alive in Guzzle for future
