@@ -405,6 +405,22 @@ class StorageHandler
         }
     }
 
+
+    /**
+     * Store a setting's values for the current user.
+     *
+     * Can only be executed after setActiveUser(). To clear the value of a
+     * setting, simply pass in an empty string as value.
+     *
+     * @param array $payload  Saving data
+     *
+     * @throws \InstagramAPI\Exception\SettingsException
+     */
+    public function setMulti(array $payload){
+        foreach ($payload as $key => $value)
+            $this->set($key, $value);
+    }
+
     /**
      * Whether the storage backend has cookies for the currently active user.
      *
