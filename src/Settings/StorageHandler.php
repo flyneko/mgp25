@@ -26,6 +26,9 @@ class StorageHandler
      * @var array
      */
     const PERSISTENT_KEYS = [
+        'ig_version',
+        'version_code',
+        'locale',
         'logged_in_user',
         'www_claim',
         'authorization',
@@ -266,13 +269,6 @@ class StorageHandler
         // Retrieve any existing settings for the user from the backend.
         $loadedSettings = $this->_storage->loadUserSettings();
         foreach ($loadedSettings as $key => $value) {
-            // Map renamed old-school keys to new key names.
-            if ($key == 'username_id') {
-                $key = 'account_id';
-            } elseif ($key == 'adid') {
-                $key = 'advertising_id';
-            }
-
             // Only keep values for keys that are still in use. Discard others.
             if (in_array($key, self::PERSISTENT_KEYS)) {
                 // Cast all values to strings to ensure we only use strings!
