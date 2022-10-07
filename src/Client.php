@@ -45,13 +45,6 @@ class Client
     protected $_parent;
 
     /**
-     * What user agent to identify our client as.
-     *
-     * @var string
-     */
-    protected $_userAgent;
-
-    /**
      * The SSL certificate verification behavior of requests.
      *
      * @see http://docs.guzzlephp.org/en/latest/request-options.html#verify
@@ -185,7 +178,6 @@ class Client
         $resetCookieJar = false)
     {
         // Update our internal client state from the new user's settings.
-        $this->_userAgent = $this->_parent->device->getUserAgent();
         $this->loadCookieJar($resetCookieJar);
 
         // Verify that the jar contains a non-expired csrftoken for the API
@@ -784,7 +776,7 @@ class Client
         // Set up headers that are required for every request.
         $request = GuzzleUtils::modifyRequest($request, [
             'set_headers' => [
-                'User-Agent'       => $this->_userAgent,
+                'User-Agent'       => $this->_parent->device->getUserAgent(),
                 // Keep the API's HTTPS connection alive in Guzzle for future
                 // re-use, to greatly speed up all further queries after this.
                 'Connection'       => 'Keep-Alive',
