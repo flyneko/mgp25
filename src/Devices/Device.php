@@ -97,31 +97,27 @@ class Device implements DeviceInterface
      * @param string      $appVersion   Instagram client app version.
      * @param string      $versionCode  Instagram client app version code.
      * @param string      $userLocale   The user's locale, such as "en_US".
-     * @param string|null $deviceString (optional) The device string to attempt
-     *                                  to construct from. If NULL or not a good
-     *                                  device, we'll use a random good device.
-     * @param bool        $autoFallback (optional) Toggle automatic fallback.
      *
      * @throws \RuntimeException If fallback is disabled and device is invalid.
      */
     public function __construct(
         $appVersion,
         $versionCode,
-        $userLocale,
-        $deviceString = null,
-        $autoFallback = true)
-    {
+        $userLocale
+    ) {
         $this->_appVersion = $appVersion;
         $this->_versionCode = $versionCode;
         $this->_userLocale = $userLocale;
+    }
 
-        // Use the provided device if a valid good device. Otherwise use random.
-        if ($autoFallback && (!is_string($deviceString) || !GoodDevices::isGoodDevice($deviceString))) {
-            $deviceString = GoodDevices::getRandomGoodDevice();
-        }
+    public function generateDevice() {
+        $devicesContent = file_get_contents(__DIR__ . '/devices.json');
+        $devices = json_decode($devicesContent, true);
+
+        $deviceString = $devices[array_rand($devices)];
 
         // Initialize ourselves from the device string.
-        $this->_initFromDeviceString($deviceString);
+        $this->generateFromDeviceString($deviceString);
     }
 
     /**
@@ -133,9 +129,7 @@ class Device implements DeviceInterface
      *
      * @throws \RuntimeException If the device string is invalid.
      */
-    protected function _initFromDeviceString(
-        $deviceString)
-    {
+    public function generateFromDeviceString(string $deviceString){
         if (!is_string($deviceString) || empty($deviceString)) {
             throw new \RuntimeException('Device string is empty.');
         }

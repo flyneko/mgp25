@@ -117,7 +117,7 @@ class UserAgent
             'FBSV' => self::_escapeFbString($device->getAndroidRelease()),
             'FBLR' => 0, // android.hardware.ram.low
             'FBBK' => 1, // Const (at least in 10.12.0).
-            'FBCA' => self::_escapeFbString(GoodDevices::CPU_ABI),
+            'FBCA' => self::_escapeFbString(Constants::CPU_ABI),
         ];
         array_walk($result, function (&$value, $key) {
             $value = sprintf('%s/%s', $key, $value);
