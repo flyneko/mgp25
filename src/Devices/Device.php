@@ -170,7 +170,7 @@ class Device implements DeviceInterface
         $this->_cpu = $parts[6];
 
         // Build our user agent.
-        $this->_userAgent = UserAgent::buildUserAgent($this->_appVersion, $this->_userLocale, $this);
+        $this->_userAgent = UserAgent::buildUserAgent($this);
 
         $this->_fbUserAgents = [];
     }
@@ -196,9 +196,6 @@ class Device implements DeviceInterface
         if (!isset($this->_fbUserAgents[$appName])) {
             $this->_fbUserAgents[$appName] = UserAgent::buildFbUserAgent(
                 $appName,
-                $this->_appVersion,
-                $this->_versionCode,
-                $this->_userLocale,
                 $this
             );
         }
@@ -258,5 +255,20 @@ class Device implements DeviceInterface
     public function getCPU()
     {
         return $this->_cpu;
+    }
+
+    /** {@inheritdoc} */
+    public function getAppVersion(): string {
+        return $this->_appVersion;
+    }
+
+    /** {@inheritdoc} */
+    public function getVersionCode(): string {
+        return $this->_versionCode;
+    }
+
+    /** {@inheritdoc} */
+    public function getLocale(): string {
+        return $this->_userLocale;
     }
 }

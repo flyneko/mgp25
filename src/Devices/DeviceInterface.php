@@ -90,4 +90,22 @@ interface DeviceInterface
      * @return string
      */
     public function getCPU();
+
+    /**
+     * Get the app version
+     * @return string
+     */
+    public function getAppVersion(): string;
+
+    /**
+     * Get the version code
+     * @return string
+     */
+    public function getVersionCode(): string;
+
+    /**
+     * Get the device locale
+     * @return string
+     */
+    public function getLocale(): string;
 }
