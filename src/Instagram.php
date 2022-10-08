@@ -348,12 +348,8 @@ class Instagram implements ExperimentsInterface
      *
      * @param string $username
      * @param string $password
-     * @param bool   $forceLogin         Force login to Instagram instead of
-     *                                   resuming previous session. Used
-     *                                   internally to do a new, full relogin
-     *                                   when we detect an expired/invalid
-     *                                   previous session.
-     * @param int    $appRefreshInterval
+     * @param bool $flows Enable Pre- and Post-flows
+     * @param bool $force Force login through existing login state
      *
      * @throws \InvalidArgumentException
      * @throws \InstagramAPI\Exception\InstagramException
@@ -363,8 +359,10 @@ class Instagram implements ExperimentsInterface
      * @see Instagram::login() The public login handler with a full description.
      */
     public function login(
-        $username,
-        $password
+        string $username,
+        string $password,
+        bool $flows = true,
+        bool $force = false
     ) {
         if (empty($username) || empty($password))
             throw new \InvalidArgumentException('You must provide a username and password to _login().');
@@ -374,8 +372,8 @@ class Instagram implements ExperimentsInterface
             $this->_setUser($username, $password);
         }
 
-        if (empty($this->logged_in_user->getPk()) || empty($this->account_id)) {
-            $this->_sendPreLoginFlow();
+        if (empty($this->logged_in_user->getPk()) || empty($this->account_id) || $force) {
+            $flows && $this->_sendPreLoginFlow();
 
             try {
                 $response = $this->account->login($username, $password);
@@ -392,7 +390,7 @@ class Instagram implements ExperimentsInterface
 
             $this->_updateLoginState($response);
 
-            $this->_sendPostLoginFlow();
+            $flows && $this->_sendPostLoginFlow();
         }
 
         return $this->logged_in_user;
@@ -613,68 +611,38 @@ class Instagram implements ExperimentsInterface
         // Load all settings from the storage and mark as current user.
         $this->settings->setActiveUser($username);
 
-        // Generate the user's device instance, which will be created from the
-        // user's last-used device IF they've got a valid, good one stored.
-        // But if they've got a BAD/none, this will create a brand-new device.
-        $savedDeviceString = $this->settings->get('devicestring');
+        $defaultValues = [
+            'ig_version'     => Constants::IG_VERSION,
+            'version_code'   => Constants::VERSION_CODE,
+            'locale'         => Constants::LOCALE,
+            'device_id'      => Signatures::generateDeviceId(),
+            'phone_id'       => Signatures::generateUUID(true),
+            'uuid'           => Signatures::generateUUID(true),
+            'advertising_id' => Signatures::generateUUID(true),
+            'session_id'     => Signatures::generateUUID(true)
+        ];
+
+        foreach ($defaultValues as $key => $value) {
+            if (empty($this->settings->get($key)))
+                $this->settings->set($key, $value);
+        }
+
         $this->device = new Devices\Device(
-            Constants::IG_VERSION,
-            Constants::VERSION_CODE,
-            Constants::LOCALE,
-            $savedDeviceString
+            $this->settings->get('ig_version'),
+            $this->settings->get('version_code'),
+            $this->settings->get('locale')
         );
 
-        // Get active device string so that we can compare it to any saved one.
-        $deviceString = $this->device->getDeviceString();
-
-        // Generate a brand-new device fingerprint if the device wasn't reused
-        // from settings, OR if any of the stored fingerprints are missing.
-        // NOTE: The regeneration when our device model changes is to avoid
-        // dangerously reusing the "previous phone's" unique hardware IDs.
-        // WARNING TO CONTRIBUTORS: Only add new parameter-checks here if they
-        // are CRITICALLY important to the particular device. We don't want to
-        // frivolously force the users to generate new device IDs constantly.
-        $resetCookieJar = false;
-        if (
-            $deviceString !== $savedDeviceString // Brand new device, or missing
-            || empty($this->settings->get('uuid')) // one of the critically...
-            || empty($this->settings->get('phone_id')) // ...important device...
-            || empty($this->settings->get('device_id'))
-        ) { // ...parameters.
-            // Erase all previously stored device-specific settings and cookies.
-            $this->settings->clearSettings();
-
-            // Save the chosen device string to settings.
-            $this->settings->set('devicestring', $deviceString);
-
-            // Generate hardware fingerprints for the new device.
-            $this->settings->set('device_id', Signatures::generateDeviceId());
-            $this->settings->set('phone_id', Signatures::generateUUID(true));
-            $this->settings->set('uuid', Signatures::generateUUID(true));
-
-            // Erase any stored account ID, to ensure that we detect ourselves
-            // as logged-out. This will force a new relogin from the new device.
-            $this->settings->set('logged_in_user', (new User())->serialize());
-
-            // We'll also need to throw out all previous cookies.
-            $resetCookieJar = true;
-        }
-
-        // Generate other missing values. These are for less critical parameters
-        // that don't need to trigger a complete device reset like above. For
-        // example, this is good for new parameters that Instagram introduces
-        // over time, since those can be added one-by-one over time here without
-        // needing to wipe/reset the whole device.
-        if (empty($this->settings->get('advertising_id'))) {
-            $this->settings->set('advertising_id', Signatures::generateUUID(true));
-        }
-        if (empty($this->settings->get('session_id'))) {
-            $this->settings->set('session_id', Signatures::generateUUID(true));
-        }
+        if (empty($this->settings->get('devicestring'))) {
+            $this->device->generateDevice();
+            $this->settings->set('devicestring', $this->device->getDeviceString());
+        } else
+            $this->device->generateFromDeviceString($this->settings->get('devicestring'));
 
         // Store various important parameters for easy access.
         $this->username = $username;
         $this->password = $password;
+        $this->account_id = $this->settings->get('account_id');
         $this->uuid = $this->settings->get('uuid');
         $this->advertising_id = $this->settings->get('advertising_id');
         $this->device_id = $this->settings->get('device_id');
@@ -683,20 +651,15 @@ class Instagram implements ExperimentsInterface
         $this->experiments = $this->settings->getExperiments();
 
         $this->logged_in_user = new User();
-        $this->logged_in_user->unserialize($this->settings->get('logged_in_user'));
 
-        // Load the previous session details if we're possibly logged in.
-        if (!$resetCookieJar && $this->settings->isMaybeLoggedIn()) {
-            $this->account_id = $this->settings->get('account_id');
-        } else {
-            $this->account_id = null;
-        }
+        if (!empty($this->settings->get('logged_in_user')))
+            $this->logged_in_user->unserialize($this->settings->get('logged_in_user'));
 
         // Configures Client for current user AND updates isMaybeLoggedIn state
         // if it fails to load the expected cookies from the user's jar.
         // Must be done last here, so that isMaybeLoggedIn is properly updated!
         // NOTE: If we generated a new device we start a new cookie jar.
-        $this->client->updateFromCurrentSettings($resetCookieJar);
+        $this->client->updateFromCurrentSettings();
     }
 
     /**
