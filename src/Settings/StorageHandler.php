@@ -106,9 +106,6 @@ class StorageHandler
     /** @var array Cache for the current user's key-value settings pairs. */
     private $_userSettings;
 
-    /** @var string|null Location of the cookiefile if file-based jar wanted. */
-    private $_cookiesFilePath;
-
     /**
      * Constructor.
      *
@@ -276,14 +273,6 @@ class StorageHandler
                 $this->_userSettings[$key] = (string) $value;
             }
         }
-
-        // Determine what type of cookie storage the backend wants for the user.
-        // NOTE: Do NOT validate file existence, since we'll create if missing.
-        $cookiesFilePath = $this->_storage->getUserCookiesFilePath();
-        if ($cookiesFilePath !== null && (!is_string($cookiesFilePath) || !strlen($cookiesFilePath))) {
-            $cookiesFilePath = null; // Disable since it isn't a non-empty string.
-        }
-        $this->_cookiesFilePath = $cookiesFilePath;
     }
 
     /**
@@ -300,8 +289,7 @@ class StorageHandler
     {
         $this->_throwIfNoActiveUser();
 
-        return $this->_storage->hasUserCookies()
-                && !empty($this->get('account_id'));
+        return !empty($this->get('account_id'));
     }
 
     /**
@@ -449,27 +437,7 @@ class StorageHandler
         $this->_throwIfNoActiveUser();
 
         // Read the cookies via the appropriate backend method.
-        $userCookies = null;
-        if ($this->_cookiesFilePath === null) { // Backend storage.
-            $userCookies = $this->_storage->loadUserCookies();
-        } else { // Cookiefile on disk.
-            if (empty($this->_cookiesFilePath)) { // Just for extra safety.
-                throw new SettingsException(
-                    'Cookie file format requested, but no file path provided.'
-                );
-            }
-
-            // Ensure that the cookie file's folder exists and is writable.
-            $this->_createCookiesFileDirectory();
-
-            // Read the existing cookie jar file if it already exists.
-            if (is_file($this->_cookiesFilePath)) {
-                $rawData = file_get_contents($this->_cookiesFilePath);
-                if ($rawData !== false) {
-                    $userCookies = $rawData;
-                }
-            }
-        }
+        $userCookies = $this->_storage->loadUserCookies();
 
         // Ensure that we'll always return NULL if no cookies exist.
         if ($userCookies !== null && !strlen($userCookies)) {
@@ -500,57 +468,7 @@ class StorageHandler
         $this->_throwIfNoActiveUser();
         $this->_throwIfNotString($rawData);
 
-        if ($this->_cookiesFilePath === null) { // Backend storage.
-            $this->_storage->saveUserCookies($rawData);
-        } else { // Cookiefile on disk.
-            if (strlen($rawData)) { // Update cookies (new value is non-empty).
-                // Perform an atomic diskwrite, which prevents accidental
-                // truncation if the script is ever interrupted mid-write.
-                $this->_createCookiesFileDirectory(); // Ensures dir exists.
-                $timeout = 5;
-                $init = time();
-                while (!$written = Utils::atomicWrite($this->_cookiesFilePath, $rawData)) {
-                    usleep(mt_rand(400000, 600000));  // 0.4-0.6 sec
-                    if (time() - $init > $timeout) {
-                        break;
-                    }
-                }
-                if ($written === false) {
-                    throw new SettingsException(sprintf(
-                        'The "%s" cookie file is not writable.',
-                        $this->_cookiesFilePath
-                    ));
-                }
-            } else { // Delete cookies (empty string).
-                // Delete any existing cookie jar since the new data is empty.
-                if (is_file($this->_cookiesFilePath) && !@unlink($this->_cookiesFilePath)) {
-                    throw new SettingsException(sprintf(
-                        'Unable to delete the "%s" cookie file.',
-                        $this->_cookiesFilePath
-                    ));
-                }
-            }
-        }
-    }
-
-    /**
-     * Ensures the whole directory path to the cookie file exists/is writable.
-     *
-     * @throws \InstagramAPI\Exception\SettingsException
-     */
-    protected function _createCookiesFileDirectory()
-    {
-        if ($this->_cookiesFilePath === null) {
-            return;
-        }
-
-        $cookieDir = dirname($this->_cookiesFilePath); // Can be "." in case of CWD.
-        if (!Utils::createFolder($cookieDir)) {
-            throw new SettingsException(sprintf(
-                'The "%s" cookie folder is not writable.',
-                $cookieDir
-            ));
-        }
+        $this->_storage->saveUserCookies($rawData);
     }
 
     /**

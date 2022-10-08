@@ -207,24 +207,61 @@ class File implements StorageInterface
     }
 
     /**
-     * (Non-cookiefile) Load all cookies for the currently active user.
+     * Load all cookies for the currently active user.
      *
      * {@inheritdoc}
      */
     public function loadUserCookies()
     {
-        // Never called for "cookiefile" format.
+        if (empty($this->_cookiesFile)) { // Just for extra safety.
+            throw new SettingsException(
+                'Cookie file format requested, but no file path provided.'
+            );
+        }
+
+        // Read the existing cookie jar file if it already exists.
+        if (is_file($this->_cookiesFile)) {
+            $rawData = file_get_contents($this->_cookiesFile);
+            if ($rawData !== false) {
+                return $rawData;
+            }
+        }
     }
 
     /**
-     * (Non-cookiefile) Save all cookies for the currently active user.
+     * Save all cookies for the currently active user.
      *
      * {@inheritdoc}
      */
     public function saveUserCookies(
         $rawData)
     {
-        // Never called for "cookiefile" format.
+        if (strlen($rawData)) { // Update cookies (new value is non-empty).
+            // Perform an atomic diskwrite, which prevents accidental
+            // truncation if the script is ever interrupted mid-write.
+            $timeout = 5;
+            $init = time();
+            while (!$written = Utils::atomicWrite($this->_cookiesFile, $rawData)) {
+                usleep(mt_rand(400000, 600000));  // 0.4-0.6 sec
+                if (time() - $init > $timeout) {
+                    break;
+                }
+            }
+            if ($written === false) {
+                throw new SettingsException(sprintf(
+                    'The "%s" cookie file is not writable.',
+                    $this->_cookiesFile
+                ));
+            }
+        } else { // Delete cookies (empty string).
+            // Delete any existing cookie jar since the new data is empty.
+            if (is_file($this->_cookiesFile) && !@unlink($this->_cookiesFile)) {
+                throw new SettingsException(sprintf(
+                    'Unable to delete the "%s" cookie file.',
+                    $this->_cookiesFile
+                ));
+            }
+        }
     }
 
     /**
