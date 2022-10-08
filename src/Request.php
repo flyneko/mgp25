@@ -387,18 +387,22 @@ class Request
         if ($this->_defaultHeaders) {
             $this->_headers = [
                 'X-IG-App-ID'                 => Constants::FACEBOOK_ANALYTICS_APPLICATION_ID,
-                'X-IG-Device-ID'              => $this->_parent->uuid,
-                'X-IG-Android-ID'             => $this->_parent->device_id,
-                'X-IG-WWW-Claim'              => $this->_parent->settings->get('www_claim'),
+                'X-IG-Device-ID'              => $this->_parent->settings->get('uuid'),
+                'X-IG-Android-ID'             => $this->_parent->settings->get('device_id'),
+                'X-IG-WWW-Claim'              => $this->_parent->settings->get('www_claim') ?? '0',
                 'X-IG-Capabilities'           => Constants::X_IG_Capabilities,
                 'X-IG-Connection-Type'        => Constants::X_IG_Connection_Type,
                 'X-IG-Connection-Speed'       => mt_rand(1000, 3700).'kbps',
                 'X-IG-Bandwidth-Speed-KBPS'   => '-1.000',
                 'X-IG-Bandwidth-TotalBytes-B' => '0',
                 'X-IG-Bandwidth-TotalTime-MS' => '0',
-                'Authorization'               => $this->_parent->settings->get('authorization'),
-                'X-FB-HTTP-Engine'            => Constants::X_FB_HTTP_Engine
+                'X-FB-HTTP-Engine'            => Constants::X_FB_HTTP_Engine,
+                'X-IG-App-Locale'             => $this->_parent->settings->get('locale'),
+                'X-IG-Device-Locale'          =>$this->_parent->settings->get('locale')
             ] + $this->_headers;
+
+            if ($this->_needsAuth)
+                $this->_headers['Authorization'] = $this->_parent->settings->get('authorization');
         }
 
         return $this;
@@ -729,7 +733,7 @@ class Request
     {
         // Check the cached login state. May not reflect what will happen on the
         // server. But it's the best we can check without trying the actual request!
-        if (empty($this->_parent->account_id)) {
+        if (empty($this->_parent->settings->get('account_id'))) {
             throw new LoginRequiredException('User not logged in. Please call login() and then try again.');
         }
     }
