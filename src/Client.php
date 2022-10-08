@@ -170,15 +170,12 @@ class Client
      *
      * Used whenever we switch active user, to configure our internal state.
      *
-     * @param bool $resetCookieJar (optional) Whether to clear current cookies.
-     *
      * @throws \InstagramAPI\Exception\SettingsException
      */
-    public function updateFromCurrentSettings(
-        $resetCookieJar = false)
+    public function updateFromCurrentSettings()
     {
         // Update our internal client state from the new user's settings.
-        $this->loadCookieJar($resetCookieJar);
+        $this->loadCookieJar();
 
         // Verify that the jar contains a non-expired csrftoken for the API
         // domain. Instagram gives us a 1-year csrftoken whenever we log in.
@@ -196,20 +193,12 @@ class Client
     /**
      * Loads all cookies via the current Settings storage.
      *
-     * @param bool $resetCookieJar (optional) Whether to clear current cookies.
-     *
      * @throws \InstagramAPI\Exception\SettingsException
      */
-    public function loadCookieJar(
-        $resetCookieJar = false)
+    public function loadCookieJar()
     {
         // Mark any previous cookie jar for garbage collection.
         $this->_cookieJar = null;
-
-        // Delete all current cookies from the storage if this is a reset.
-        if ($resetCookieJar) {
-            $this->_parent->settings->setCookies('');
-        }
 
         // Get all cookies for the currently active user.
         $cookieData = $this->_parent->settings->getCookies();
