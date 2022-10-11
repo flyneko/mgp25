@@ -67,7 +67,6 @@ class PostgreSQL extends PDOStorage
                   id            serial       not null
                     constraint {$this->_dbTableName}_id_pk
                     primary key,
-                  cookies       text,
                   last_modified timestamp
                 );
         ");

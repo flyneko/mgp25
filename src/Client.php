@@ -94,15 +94,6 @@ class Client
      */
     private $_cookieJar;
 
-    /**
-     * The timestamp of when we last saved our cookie jar to disk.
-     *
-     * Used for automatically saving the jar after any API call, after enough
-     * time has elapsed since our last save.
-     *
-     * @var int
-     */
-    private $_cookieJarLastSaved;
 
     /**
      * The flag to force cURL to reopen a fresh connection.
@@ -176,15 +167,6 @@ class Client
     {
         // Update our internal client state from the new user's settings.
         $this->loadCookieJar();
-
-        // Verify that the jar contains a non-expired csrftoken for the API
-        // domain. Instagram gives us a 1-year csrftoken whenever we log in.
-        // If it's missing, we're definitely NOT logged in! But even if all of
-        // these checks succeed, the cookie may still not be valid. It's just a
-        // preliminary check to detect definitely-invalid session cookies!
-        if ($this->getToken() === null) {
-            $this->_parent->isMaybeLoggedIn = false;
-        }
 
         // Load rewrite rules (if any).
         $this->zeroRating()->update($this->_parent->settings->getRewriteRules());
@@ -316,9 +298,6 @@ class Client
         // Tell the settings storage to persist the latest cookies.
         $newCookies = $this->getCookieJarAsJSON();
         $this->_parent->settings->setCookies($newCookies);
-
-        // Reset the "last saved" timestamp to the current time.
-        $this->_cookieJarLastSaved = time();
     }
 
     /**
@@ -666,12 +645,6 @@ class Client
         // WARNING: Do NOT detect 404 and other higher-level HTTP errors here,
         // since we catch those later during steps like mapServerResponse()
         // and autoThrow. This is a warning to future contributors!
-        }
-
-        // We'll periodically auto-save our cookies at certain intervals. This
-        // complements the "onCloseUser" and "login()/logout()" force-saving.
-        if ((time() - $this->_cookieJarLastSaved) > self::COOKIE_AUTOSAVE_INTERVAL) {
-            $this->saveCookieJar();
         }
 
         // The response may still have serious but "valid response" errors, such

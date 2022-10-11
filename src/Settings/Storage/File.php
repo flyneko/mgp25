@@ -17,9 +17,6 @@ class File implements StorageInterface
     /** @var string Format for settings filename. */
     const SETTINGSFILE_NAME = '%s-settings.dat';
 
-    /** @var string Format for cookie jar filename. */
-    const COOKIESFILE_NAME = '%s-cookies.dat';
-
     /** @var string The base folder for all storage files. */
     private $_baseFolder;
 
@@ -28,9 +25,6 @@ class File implements StorageInterface
 
     /** @var string Path to the current user's settings file. */
     private $_settingsFile;
-
-    /** @var string Path to the current user's cookie jar file. */
-    private $_cookiesFile;
 
     /** @var string Current Instagram username that all settings belong to. */
     private $_username;
@@ -100,13 +94,6 @@ class File implements StorageInterface
                 $oldUser['settingsFile'], $newUser['settingsFile']
             ));
         }
-        if (is_file($oldUser['cookiesFile'])
-            && !@rename($oldUser['cookiesFile'], $newUser['cookiesFile'])) {
-            throw new SettingsException(sprintf(
-                'Failed to move "%s" to "%s".',
-                $oldUser['cookiesFile'], $newUser['cookiesFile']
-            ));
-        }
 
         // Delete all files in the old folder, and the folder itself.
         Utils::deleteTree($oldUser['userFolder']);
@@ -137,7 +124,6 @@ class File implements StorageInterface
         $userPaths = $this->_generateUserPaths($username);
         $this->_userFolder = $userPaths['userFolder'];
         $this->_settingsFile = $userPaths['settingsFile'];
-        $this->_cookiesFile = $userPaths['cookiesFile'];
         $this->_createFolder($this->_userFolder);
     }
 
@@ -185,86 +171,6 @@ class File implements StorageInterface
     }
 
     /**
-     * Whether the storage backend has cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function hasUserCookies()
-    {
-        return is_file($this->_cookiesFile)
-            && filesize($this->_cookiesFile) > 0;
-    }
-
-    /**
-     * Get the cookiefile disk path (only if a file-based cookie jar is wanted).
-     *
-     * {@inheritdoc}
-     */
-    public function getUserCookiesFilePath()
-    {
-        // Tell the caller to use a file-based cookie jar.
-        return $this->_cookiesFile;
-    }
-
-    /**
-     * Load all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function loadUserCookies()
-    {
-        if (empty($this->_cookiesFile)) { // Just for extra safety.
-            throw new SettingsException(
-                'Cookie file format requested, but no file path provided.'
-            );
-        }
-
-        // Read the existing cookie jar file if it already exists.
-        if (is_file($this->_cookiesFile)) {
-            $rawData = file_get_contents($this->_cookiesFile);
-            if ($rawData !== false) {
-                return $rawData;
-            }
-        }
-    }
-
-    /**
-     * Save all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function saveUserCookies(
-        $rawData)
-    {
-        if (strlen($rawData)) { // Update cookies (new value is non-empty).
-            // Perform an atomic diskwrite, which prevents accidental
-            // truncation if the script is ever interrupted mid-write.
-            $timeout = 5;
-            $init = time();
-            while (!$written = Utils::atomicWrite($this->_cookiesFile, $rawData)) {
-                usleep(mt_rand(400000, 600000));  // 0.4-0.6 sec
-                if (time() - $init > $timeout) {
-                    break;
-                }
-            }
-            if ($written === false) {
-                throw new SettingsException(sprintf(
-                    'The "%s" cookie file is not writable.',
-                    $this->_cookiesFile
-                ));
-            }
-        } else { // Delete cookies (empty string).
-            // Delete any existing cookie jar since the new data is empty.
-            if (is_file($this->_cookiesFile) && !@unlink($this->_cookiesFile)) {
-                throw new SettingsException(sprintf(
-                    'Unable to delete the "%s" cookie file.',
-                    $this->_cookiesFile
-                ));
-            }
-        }
-    }
-
-    /**
      * Close the settings storage for the currently active user.
      *
      * {@inheritdoc}
@@ -273,7 +179,6 @@ class File implements StorageInterface
     {
         $this->_userFolder = null;
         $this->_settingsFile = null;
-        $this->_cookiesFile = null;
         $this->_username = null;
     }
 
@@ -321,12 +226,10 @@ class File implements StorageInterface
     {
         $userFolder = $this->_baseFolder.'/'.$username;
         $settingsFile = $userFolder.'/'.sprintf(self::SETTINGSFILE_NAME, $username);
-        $cookiesFile = $userFolder.'/'.sprintf(self::COOKIESFILE_NAME, $username);
 
         return [
             'userFolder'   => $userFolder,
             'settingsFile' => $settingsFile,
-            'cookiesFile'  => $cookiesFile,
         ];
     }
 

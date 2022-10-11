@@ -93,7 +93,6 @@ class MySQL extends PDOStorage
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(150) NOT NULL,
             settings MEDIUMBLOB NULL,
-            cookies MEDIUMBLOB NULL,
             last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             UNIQUE KEY (username)
         ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ENGINE=InnoDB;');

@@ -26,6 +26,7 @@ class StorageHandler
      * @var array
      */
     const PERSISTENT_KEYS = [
+        'cookies',
         'ig_version',
         'version_code',
         'locale',
@@ -418,7 +419,7 @@ class StorageHandler
     {
         $this->_throwIfNoActiveUser();
 
-        return $this->_storage->hasUserCookies();
+        return !empty($this->get('cookies'));
     }
 
     /**
@@ -437,7 +438,7 @@ class StorageHandler
         $this->_throwIfNoActiveUser();
 
         // Read the cookies via the appropriate backend method.
-        $userCookies = $this->_storage->loadUserCookies();
+        $userCookies = $this->get('cookies');
 
         // Ensure that we'll always return NULL if no cookies exist.
         if ($userCookies !== null && !strlen($userCookies)) {
@@ -468,7 +469,7 @@ class StorageHandler
         $this->_throwIfNoActiveUser();
         $this->_throwIfNotString($rawData);
 
-        $this->_storage->saveUserCookies($rawData);
+        $this->set('cookies', $rawData);
     }
 
     /**

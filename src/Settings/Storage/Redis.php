@@ -23,7 +23,7 @@ class Redis implements StorageInterface
     private $_isSharedRedis;
     /** @var string Current Instagram username that all settings belong to. */
     private $_username;
-    /** @var array Settings and cookies data: ['settings' => {DATA}, 'cookies' => {DATA}] */
+    /** @var array Settings data: ['settings' => {DATA}] */
     private $_cache;
     /** @var string The prefix to the username hash */
     private $_hashPrefix;
@@ -102,16 +102,13 @@ class Redis implements StorageInterface
         $newHash = $this->_getHash($newUsername);
 
         // Verify that the old username settings exists and get data
-        $oldUserData = $this->_redis->hmGet($oldHash, ['settings', 'cookies']);
+        $oldUserData = $this->_redis->hmGet($oldHash, ['settings']);
         if (empty($oldUserData['settings'])) {
             throw new SettingsException(sprintf(
                 'Cannot move non-existent user "%s".',
                 $oldUsername
             ));
         }
-
-        // If no cookie, convert empty string to null
-        $oldUserData['cookie'] = empty($oldUserData['cookie']) ? null : $oldUserData['cookie'];
 
         // Verify that the new username does not exist.
         if ($this->hasUser($newHash)) {
@@ -124,7 +121,7 @@ class Redis implements StorageInterface
         // Write data to the new username hash & delete data from the old username hash
         $response = $this->_redis->multi()
             ->hmSet($newHash, $oldUserData)
-            ->hDel($oldHash, 'settings', 'cookies')
+            ->hDel($oldHash, 'settings')
             ->exec();
 
         // Throw Exceptions from response
@@ -145,7 +142,7 @@ class Redis implements StorageInterface
         $username)
     {
         $hash = $this->_getHash($username);
-        $response = $this->_redis->hDel($hash, 'settings', 'cookies');
+        $response = $this->_redis->hDel($hash, 'settings');
         if ($response === 0) {
             throw new SettingsException('Redis failed to delete user data');
         }
@@ -163,10 +160,9 @@ class Redis implements StorageInterface
 
         $this->_username = $username;
 
-        $userData = $this->_redis->hmGet($hash, ['settings', 'cookies']);
+        $userData = $this->_redis->hmGet($hash, ['settings']);
         $this->_cache = [
             'settings' => empty($userData['settings']) ? null : $userData['settings'],
-            'cookies'  => empty($userData['cookies']) ? null : $userData['cookies'],
         ];
     }
 
@@ -208,56 +204,6 @@ class Redis implements StorageInterface
 
         if ($response === false) {
             throw new SettingsException('Redis failed to save user settings');
-        }
-    }
-
-    /**
-     * Whether the storage backend has cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function hasUserCookies()
-    {
-        // Simply check if the storage key for cookies exists and is non-empty.
-        return !empty($this->loadUserCookies()) ? true : false;
-    }
-
-    /**
-     * Get the cookiefile disk path (only if a file-based cookie jar is wanted).
-     *
-     * {@inheritdoc}
-     */
-    public function getUserCookiesFilePath()
-    {
-        // NULL = We (the backend) will handle the cookie loading/saving.
-        return null;
-    }
-
-    /**
-     * (Non-cookiefile) Load all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function loadUserCookies()
-    {
-        return isset($this->_cache['cookies']) ? $this->_cache['cookies'] : null;
-    }
-
-    /**
-     * (Non-cookiefile) Save all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function saveUserCookies(
-        $rawData
-    ) {
-        $hash = $this->_getHash($this->_username);
-
-        // Store the raw cookie data as-provided.
-        $response = $this->_redis->hSet($hash, 'cookies', $rawData);
-
-        if ($response === false) {
-            throw new SettingsException('Redis failed to save user cookies');
         }
     }
 

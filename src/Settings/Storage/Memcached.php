@@ -184,7 +184,6 @@ class Memcached implements StorageInterface
     {
         // Verify that the old username exists and fetch the old data.
         $oldSettings = $this->_getUserKey($oldUsername, 'settings');
-        $oldCookies = $this->_getUserKey($oldUsername, 'cookies');
         if ($oldSettings === null) { // Only settings are vital.
             throw new SettingsException(sprintf(
                 'Cannot move non-existent user "%s".',
@@ -202,9 +201,6 @@ class Memcached implements StorageInterface
 
         // Now attempt to write all data to the new name.
         $this->_setUserKey($newUsername, 'settings', $oldSettings);
-        if ($oldCookies !== null) { // Only if cookies existed.
-            $this->_setUserKey($newUsername, 'cookies', $oldCookies);
-        }
 
         // Delete the previous user keys.
         $this->deleteUser($oldUsername);
@@ -219,7 +215,6 @@ class Memcached implements StorageInterface
         $username)
     {
         $this->_delUserKey($username, 'settings');
-        $this->_delUserKey($username, 'cookies');
     }
 
     /**
@@ -269,50 +264,6 @@ class Memcached implements StorageInterface
         // Store the settings as a JSON blob.
         $encodedData = json_encode($userSettings);
         $this->_setUserKey($this->_username, 'settings', $encodedData);
-    }
-
-    /**
-     * Whether the storage backend has cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function hasUserCookies()
-    {
-        // Simply check if the storage key for cookies exists and is non-empty.
-        return !empty($this->loadUserCookies()) ? true : false;
-    }
-
-    /**
-     * Get the cookiefile disk path (only if a file-based cookie jar is wanted).
-     *
-     * {@inheritdoc}
-     */
-    public function getUserCookiesFilePath()
-    {
-        // NULL = We (the backend) will handle the cookie loading/saving.
-        return null;
-    }
-
-    /**
-     * (Non-cookiefile) Load all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function loadUserCookies()
-    {
-        return $this->_getUserKey($this->_username, 'cookies');
-    }
-
-    /**
-     * (Non-cookiefile) Save all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function saveUserCookies(
-        $rawData)
-    {
-        // Store the raw cookie data as-provided.
-        $this->_setUserKey($this->_username, 'cookies', $rawData);
     }
 
     /**

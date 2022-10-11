@@ -90,7 +90,6 @@ class SQLite extends PDOStorage
             id INTEGER PRIMARY KEY NOT NULL,
             username TEXT NOT NULL UNIQUE,
             settings BLOB,
-            cookies BLOB,
             last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
         );');
 

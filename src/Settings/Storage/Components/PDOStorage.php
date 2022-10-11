@@ -148,7 +148,7 @@ abstract class PDOStorage implements StorageInterface
         $column,
         $data)
     {
-        if ($column != 'settings' && $column != 'cookies') {
+        if ($column != 'settings') {
             throw new SettingsException(sprintf(
                 'Attempt to write to illegal database column "%s".',
                 $column
@@ -267,7 +267,7 @@ abstract class PDOStorage implements StorageInterface
 
         // Retrieve and cache the existing user data row if available.
         try {
-            $sth = $this->_pdo->prepare("SELECT id, settings, cookies FROM {$this->_dbTableName} WHERE (username=:username)");
+            $sth = $this->_pdo->prepare("SELECT id, settings FROM {$this->_dbTableName} WHERE (username=:username)");
             $sth->execute([':username' => $this->_username]);
             $result = $sth->fetch(PDO::FETCH_ASSOC);
             $sth->closeCursor();
@@ -278,7 +278,6 @@ abstract class PDOStorage implements StorageInterface
                 $this->_cache = [
                     'id'       => null,
                     'settings' => null,
-                    'cookies'  => null,
                 ];
             }
         } catch (\Exception $e) {
@@ -320,52 +319,6 @@ abstract class PDOStorage implements StorageInterface
         // Store the settings as a JSON blob.
         $encodedData = json_encode($userSettings);
         $this->_setUserColumn('settings', $encodedData);
-    }
-
-    /**
-     * Whether the storage backend has cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function hasUserCookies()
-    {
-        return isset($this->_cache['cookies'])
-                && !empty($this->_cache['cookies']);
-    }
-
-    /**
-     * Get the cookiefile disk path (only if a file-based cookie jar is wanted).
-     *
-     * {@inheritdoc}
-     */
-    public function getUserCookiesFilePath()
-    {
-        // NULL = We (the backend) will handle the cookie loading/saving.
-        return null;
-    }
-
-    /**
-     * (Non-cookiefile) Load all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function loadUserCookies()
-    {
-        return isset($this->_cache['cookies'])
-                ? $this->_cache['cookies']
-                : null;
-    }
-
-    /**
-     * (Non-cookiefile) Save all cookies for the currently active user.
-     *
-     * {@inheritdoc}
-     */
-    public function saveUserCookies(
-        $rawData)
-    {
-        // Store the raw cookie data as-provided.
-        $this->_setUserColumn('cookies', $rawData);
     }
 
     /**
