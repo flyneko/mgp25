@@ -20,6 +20,8 @@ class Device implements DeviceInterface
      */
     const REQUIRED_ANDROID_VERSION = '2.2';
 
+    const DEVICE_FORMAT = "%s/%s; %s; %s; %s; %s; %s; %s";
+
     /**
      * Which Instagram client app version this "device" is running.
      *
@@ -101,9 +103,9 @@ class Device implements DeviceInterface
      * @throws \RuntimeException If fallback is disabled and device is invalid.
      */
     public function __construct(
-        $appVersion,
-        $versionCode,
-        $userLocale
+        string $appVersion = '',
+        string $versionCode = '',
+        string $userLocale = ''
     ) {
         $this->_appVersion = $appVersion;
         $this->_versionCode = $versionCode;
@@ -171,6 +173,50 @@ class Device implements DeviceInterface
 
         // Build our user agent.
         $this->_userAgent = UserAgent::buildUserAgent($this);
+
+        $this->_fbUserAgents = [];
+    }
+
+    /**
+     * Parses a user-agent string into its component parts and sets internal fields.
+     *
+     * @param string $userAgentString
+     */
+    public function generateFromUserAgent(string $userAgentString) {
+        list(
+            $appVersion, $androidVersion, $androidRelease,
+            $dpi, $resolution, $manufacturerWithBrand,
+            $model, $device, $cpu, $locale, $versionCode
+        ) = sscanf($userAgentString, preg_replace('#%s([/;]+)#', '%[^$1]$1', UserAgent::USER_AGENT_FORMAT));
+
+        // Extract "Manufacturer/Brand" string into separate fields.
+        list($manufacturer, $brand) = explode('/', $manufacturerWithBrand, 2);
+
+        $this->_appVersion = $appVersion;
+        $this->_androidVersion = $androidVersion;
+        $this->_androidRelease = $androidRelease;
+        $this->_dpi = $dpi;
+        $this->_resolution = $resolution;
+        $this->_manufacturer = $manufacturer;
+        $this->_brand = (!empty($brand) ? $brand : null);
+        $this->_model = $model;
+        $this->_device = $device;
+        $this->_cpu = $cpu;
+        $this->_userLocale = $locale;
+        $this->_versionCode = $versionCode;
+
+        $this->_deviceString = sprintf(
+            self::DEVICE_FORMAT,
+            $this->_androidVersion,
+            $this->_androidRelease,
+            $this->_dpi,
+            $this->_resolution,
+            $manufacturerWithBrand,
+            $this->_model,
+            $this->_device,
+            $this->_cpu
+        );
+        $this->_userAgent = $userAgentString;
 
         $this->_fbUserAgents = [];
     }
