@@ -155,6 +155,8 @@ class Instagram implements ExperimentsInterface
      */
     public $experiments;
 
+    protected $_preparedState;
+
     /**
      *
      * @var array
@@ -262,6 +264,12 @@ class Instagram implements ExperimentsInterface
         $this->addEvent('onResponse', function (Response $responseObject) {
             $this->updateStateFromResponse($responseObject);
         });
+    }
+
+    public function setPreparedState($payload): self {
+        $processed = is_string($payload) ? json_decode($payload, true) : $payload;
+        $this->_preparedState = $processed;
+        return $this;
     }
 
     /**
@@ -376,6 +384,10 @@ class Instagram implements ExperimentsInterface
             $flows && $this->_sendPreLoginFlow();
 
             try {
+                // Try to parse public key
+                if (empty($this->settings->get('public_key')))
+                    $this->internal->syncDeviceFeatures(true);
+
                 $response = $this->account->login($username, $password);
             } catch (\InstagramAPI\Exception\InstagramException $e) {
                 if ($e->hasResponse() && $e->getResponse()->isTwoFactorRequired()) {
@@ -621,6 +633,24 @@ class Instagram implements ExperimentsInterface
             'advertising_id' => Signatures::generateUUID(true),
             'session_id'     => Signatures::generateUUID(true)
         ];
+
+        // Handle prepared state
+        if (!empty($this->_preparedState)) {
+            $isDifferentStates = false;
+            foreach ($this->_preparedState as $key => $value) {
+                if (in_array($key, ['last_login', 'account_id', 'zr_expires', 'logged_in_user'])) continue;
+
+                if (!empty($this->settings->get($key)) && $this->settings->get($key) != $value)
+                    $isDifferentStates = true;
+            }
+
+            if ($isDifferentStates)
+                $this->settings->clearSettings();
+
+            $this->settings->setMulti($this->_preparedState);
+
+            $this->_preparedState = null;
+        }
 
         foreach ($defaultValues as $key => $value) {
             if (empty($this->settings->get($key)))
