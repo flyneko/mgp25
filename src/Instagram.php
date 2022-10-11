@@ -761,14 +761,13 @@ class Instagram implements ExperimentsInterface
     }
 
     public function updateStateFromResponse(Response $response) {
-        $headersMap = [
-            'x-ig-set-www-claim' => 'www_claim',
-            'ig-set-authorization' => 'authorization',
-            'ig-set-password-encryption-key-id' => 'public_key_id',
-            'ig-set-password-encryption-pub-key' => 'public_key'
-        ];
-
-        foreach ($headersMap as $headerName => $storageKey) {
+        foreach ([
+             'ig-set-x-mid'                       => 'mid',
+             'x-ig-set-www-claim'                 => 'www_claim',
+             'ig-set-authorization'               => 'authorization',
+             'ig-set-password-encryption-key-id'  => 'public_key_id',
+             'ig-set-password-encryption-pub-key' => 'public_key'
+         ] as $headerName => $storageKey) {
             $v = $response->getHttpResponse()->getHeaderLine($headerName);
             if (
                 empty($v) ||

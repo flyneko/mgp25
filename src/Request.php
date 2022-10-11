@@ -387,9 +387,6 @@ class Request
         if ($this->_defaultHeaders) {
             $this->_headers = [
                 'X-IG-App-ID'                 => Constants::FACEBOOK_ANALYTICS_APPLICATION_ID,
-                'X-IG-Device-ID'              => $this->_parent->settings->get('uuid'),
-                'X-IG-Android-ID'             => $this->_parent->settings->get('device_id'),
-                'X-IG-WWW-Claim'              => $this->_parent->settings->get('www_claim') ?? '0',
                 'X-IG-Capabilities'           => Constants::X_IG_Capabilities,
                 'X-IG-Connection-Type'        => Constants::X_IG_Connection_Type,
                 'X-IG-Connection-Speed'       => mt_rand(1000, 3700).'kbps',
@@ -397,8 +394,12 @@ class Request
                 'X-IG-Bandwidth-TotalBytes-B' => '0',
                 'X-IG-Bandwidth-TotalTime-MS' => '0',
                 'X-FB-HTTP-Engine'            => Constants::X_FB_HTTP_Engine,
+                'X-IG-Device-ID'              => $this->_parent->settings->get('uuid'),
+                'X-IG-Android-ID'             => $this->_parent->settings->get('device_id'),
+                'X-IG-WWW-Claim'              => $this->_parent->settings->get('www_claim') ?? '0',
                 'X-IG-App-Locale'             => $this->_parent->settings->get('locale'),
-                'X-IG-Device-Locale'          =>$this->_parent->settings->get('locale')
+                'X-IG-Device-Locale'          => $this->_parent->settings->get('locale'),
+                'X-MID'                       => $this->_parent->settings->get('mid') ?? $this->_parent->client->getCookie('mid')
             ] + $this->_headers;
 
             if ($this->_needsAuth)

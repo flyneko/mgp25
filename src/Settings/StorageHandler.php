@@ -33,6 +33,7 @@ class StorageHandler
         'logged_in_user',
         'www_claim',
         'authorization',
+        'mid',
         'account_id', // The numerical UserPK ID of the account.
         'devicestring', // Which Android device they're identifying as.
         'device_id', // Hardware identifier.
