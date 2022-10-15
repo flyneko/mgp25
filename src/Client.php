@@ -7,7 +7,6 @@ use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\HandlerStack;
 use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Exception\LoginRequiredException;
 use InstagramAPI\Exception\ServerMessageThrower;
 use InstagramAPI\Middleware\FakeCookies;
 use InstagramAPI\Middleware\ZeroRating;
@@ -30,12 +29,6 @@ use GuzzleHttp\Psr7\Utils as GuzzleUtils;
  */
 class Client
 {
-    /**
-     * How frequently we're allowed to auto-save the cookie jar, in seconds.
-     *
-     * @var int
-     */
-    const COOKIE_AUTOSAVE_INTERVAL = 45;
 
     /**
      * The Instagram class instance we belong to.

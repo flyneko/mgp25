@@ -399,7 +399,7 @@ class Request
                 'X-IG-WWW-Claim'              => $this->_parent->settings->get('www_claim') ?? '0',
                 'X-IG-App-Locale'             => $this->_parent->settings->get('locale'),
                 'X-IG-Device-Locale'          => $this->_parent->settings->get('locale'),
-                'X-MID'                       => $this->_parent->settings->get('mid') ?? $this->_parent->client->getCookie('mid')
+                'X-MID'                       => $this->_parent->settings->get('mid') ?? (($midCookie = $this->_parent->client->getCookie('mid')) ? $midCookie->getValue() : '')
             ] + $this->_headers;
 
             if ($this->_needsAuth)
