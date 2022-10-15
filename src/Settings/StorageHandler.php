@@ -380,7 +380,7 @@ class StorageHandler
 
         // Cast the value to string to ensure we don't try writing non-strings.
         // NOTE: THIS CAST IS EXTREMELY IMPORTANT AND *MUST* ALWAYS BE DONE!
-        $value = (string) $value;
+        $value = is_array($value) ? $value : (string) $value;
 
         // Check if the value differs from our storage (cached representation).
         // NOTE: This optimizes writes by only writing when values change!
