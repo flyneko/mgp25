@@ -149,11 +149,11 @@ class Device implements DeviceInterface
         }
 
         // Check the screen resolution.
-        $resolution = explode('x', $parts[2], 2);
+        /*$resolution = explode('x', $parts[2], 2);
         $pixelCount = (int) $resolution[0] * (int) $resolution[1];
         if ($pixelCount < 2073600) { // 1920x1080.
             throw new \RuntimeException(sprintf('Device string "%s" does not meet the minimum resolution requirement of 1920x1080.', $deviceString));
-        }
+        }*/
 
         // Extract "Manufacturer/Brand" string into separate fields.
         $manufacturerAndBrand = explode('/', $parts[3], 2);
