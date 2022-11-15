@@ -187,7 +187,7 @@ class Device implements DeviceInterface
             $appVersion, $androidVersion, $androidRelease,
             $dpi, $resolution, $manufacturerWithBrand,
             $model, $device, $cpu, $locale, $versionCode
-        ) = sscanf($userAgentString, preg_replace('#%s([/;]+)#', '%[^$1]$1', UserAgent::USER_AGENT_FORMAT));
+        ) = sscanf($userAgentString, preg_replace('#%s([/;)]+)#', '%[^$1]$1', UserAgent::USER_AGENT_FORMAT));
 
         // Extract "Manufacturer/Brand" string into separate fields.
         list($manufacturer, $brand) = explode('/', $manufacturerWithBrand, 2);
