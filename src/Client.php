@@ -745,6 +745,8 @@ class Client
         $contentType = $request->getHeader('Content-Type');
         $isFormData = count($contentType) && reset($contentType) === Constants::CONTENT_TYPE;
 
+        $this->_parent->triggerEvent('beforeRequest', $request, $guzzleOptions);
+
         // Perform the API request.
         $response = $this->_apiRequest($request, $guzzleOptions, [
             'debugUploadedBody'  => $isFormData,
