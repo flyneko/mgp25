@@ -34,11 +34,11 @@ class Constants
     const LOCALE = 'en_US'; // "language_COUNTRY".
 
     // HTTP Protocol Constants.
-    const ACCEPT_ENCODING = 'gzip,deflate';
+    const ACCEPT_ENCODING = 'gzip';
     const CONTENT_TYPE = 'application/x-www-form-urlencoded; charset=UTF-8';
     const X_FB_HTTP_Engine = 'Liger';
     const X_IG_Connection_Type = 'WIFI';
-    const X_IG_Capabilities = '3brTv10=';
+    const X_IG_Capabilities = '3brTvwE=';
 
     // Supported Capabilities
     const SUPPORTED_CAPABILITIES = [
