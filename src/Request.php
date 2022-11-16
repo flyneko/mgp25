@@ -404,6 +404,9 @@ class Request
 
             if ($this->_needsAuth)
                 $this->_headers['Authorization'] = $this->_parent->settings->get('authorization');
+
+            if ($this->_parent->settings->get('headers'))
+                $this->_headers = $this->_parent->settings->get('headers') + $this->_headers;
         }
 
         return $this;
