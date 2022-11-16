@@ -155,6 +155,9 @@ class Instagram implements ExperimentsInterface
      */
     public $experiments;
 
+    /**
+     * @var State
+     */
     protected $_preparedState;
 
     /**
@@ -266,9 +269,8 @@ class Instagram implements ExperimentsInterface
         });
     }
 
-    public function setPreparedState($payload): self {
-        $processed = is_string($payload) ? json_decode($payload, true) : $payload;
-        $this->_preparedState = $processed;
+    public function setPreparedState(State $state): self {
+        $this->_preparedState = $state;
         return $this;
     }
 
@@ -380,14 +382,14 @@ class Instagram implements ExperimentsInterface
             $this->_setUser($username, $password);
         }
 
-        if (empty($this->logged_in_user->getPk()) || empty($this->account_id) || $force) {
+        // Try to parse public key
+        if (empty($this->settings->get('public_key')))
+            $this->internal->syncDeviceFeatures(true);
+
+        if (empty($this->account_id) || $force) {
             $flows && $this->_sendPreLoginFlow();
 
             try {
-                // Try to parse public key
-                if (empty($this->settings->get('public_key')))
-                    $this->internal->syncDeviceFeatures(true);
-
                 $response = $this->account->login($username, $password);
             } catch (\InstagramAPI\Exception\InstagramException $e) {
                 if ($e->hasResponse() && $e->getResponse()->isTwoFactorRequired()) {
@@ -628,30 +630,32 @@ class Instagram implements ExperimentsInterface
             'version_code'   => Constants::VERSION_CODE,
             'locale'         => Constants::LOCALE,
             'device_id'      => Signatures::generateDeviceId(),
-            'phone_id'       => Signatures::generateUUID(true),
-            'uuid'           => Signatures::generateUUID(true),
-            'advertising_id' => Signatures::generateUUID(true),
-            'session_id'     => Signatures::generateUUID(true)
+            'phone_id'       => Signatures::generateUUID(),
+            'uuid'           => Signatures::generateUUID(),
+            'advertising_id' => Signatures::generateUUID(),
+            'session_id'     => Signatures::generateUUID()
         ];
 
         // Handle prepared state
-        if (!empty($this->_preparedState)) {
+        if ($this->_preparedState) {
             $isDifferentStates = false;
-            foreach ($this->_preparedState as $key => $value) {
-                if (in_array($key, ['last_login', 'account_id', 'zr_expires', 'logged_in_user'])) continue;
+            foreach ($this->_preparedState->toArray() as $key => $value) {
+                if (in_array($key, ['last_login', 'account_id', 'cookies', 'zr_expires', 'logged_in_user'])) continue;
 
-                if (!empty($this->settings->get($key)) && $this->settings->get($key) != $value)
+                if (!empty($this->settings->get($key)) && $this->settings->get($key) != $value) {
                     $isDifferentStates = true;
+                }
             }
 
             if ($isDifferentStates)
                 $this->settings->clearSettings();
 
-            $this->settings->setMulti($this->_preparedState);
+            $this->settings->setMulti($this->_preparedState->toArray());
 
             $this->_preparedState = null;
         }
 
+        // Set default state values
         foreach ($defaultValues as $key => $value) {
             if (empty($this->settings->get($key)))
                 $this->settings->set($key, $value);
@@ -680,10 +684,10 @@ class Instagram implements ExperimentsInterface
         $this->session_id = $this->settings->get('session_id');
         $this->experiments = $this->settings->getExperiments();
 
-        $this->logged_in_user = new User();
-
-        if (!empty($this->settings->get('logged_in_user')))
+        if (!empty($this->settings->get('logged_in_user'))) {
+            $this->logged_in_user = new User();
             $this->logged_in_user->unserialize($this->settings->get('logged_in_user'));
+        }
 
         // Configures Client for current user AND updates isMaybeLoggedIn state
         // if it fails to load the expected cookies from the user's jar.
@@ -863,7 +867,7 @@ class Instagram implements ExperimentsInterface
      * the Instagram app for Android, where you are supposed to stay logged in
      * forever. By calling this function, you will tell Instagram that you are
      * logging out of the APP. But you SHOULDN'T do that! In almost 100% of all
-     * cases you want to *stay logged in* so that `login()` resumes your session!
+     * cases you want to *stay logged in* sof that `login()` resumes your session!
      *
      * @throws \InstagramAPI\Exception\InstagramException
      *
