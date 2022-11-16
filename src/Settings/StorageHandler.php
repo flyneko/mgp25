@@ -34,6 +34,7 @@ class StorageHandler
         'www_claim',
         'authorization',
         'mid',
+        'headers',
         'account_id', // The numerical UserPK ID of the account.
         'devicestring', // Which Android device they're identifying as.
         'device_id', // Hardware identifier.
@@ -272,7 +273,7 @@ class StorageHandler
             if (in_array($key, self::PERSISTENT_KEYS)) {
                 // Cast all values to strings to ensure we only use strings!
                 // NOTE: THIS CAST IS EXTREMELY IMPORTANT AND *MUST* BE DONE!
-                $this->_userSettings[$key] = (string) $value;
+                $this->_userSettings[$key] = is_array($value) ? $value : (string) $value;
             }
         }
     }
@@ -306,10 +307,7 @@ class StorageHandler
      * @throws \InstagramAPI\Exception\SettingsException
      */
     public function clearSettings() {
-        foreach (self::PERSISTENT_KEYS as $key)
-            $this->set($key, '');
-
-        $this->setCookies(''); // Erase all cookies.
+        $this->_userSettings = [];
     }
 
     /**
