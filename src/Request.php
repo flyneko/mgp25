@@ -853,6 +853,9 @@ class Request
             $this->getHttpResponse() // Throws.
         );
 
+        // Call event
+        $this->_parent->triggerEvent('onResponse', $responseObject);
+
         return $responseObject;
     }
 
