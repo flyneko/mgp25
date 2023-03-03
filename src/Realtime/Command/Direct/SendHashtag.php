@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+namespace InstagramNextAPI\Realtime\Command\Direct;
 
 final class SendHashtag extends ShareItem
 {

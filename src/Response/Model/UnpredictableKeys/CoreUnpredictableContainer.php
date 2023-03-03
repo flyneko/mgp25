@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model\UnpredictableKeys;
+namespace InstagramNextAPI\Response\Model\UnpredictableKeys;
 
-use InstagramAPI\AutoPropertyMapper;
+use InstagramNextAPI\AutoPropertyMapper;
 use LazyJsonMapper\Exception\LazyJsonMapperException;
 
 /**

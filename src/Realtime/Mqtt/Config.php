@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Realtime\Mqtt;
+namespace InstagramNextAPI\Realtime\Mqtt;
 
 class Config
 {

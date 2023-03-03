@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI\Realtime\Parser;
+namespace InstagramNextAPI\Realtime\Parser;
 
 use Fbns\Client\Thrift\Compact;
 use Fbns\Client\Thrift\Reader;
-use InstagramAPI\Client;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\ParserInterface;
+use InstagramNextAPI\Client;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\ParserInterface;
 
 class SkywalkerParser implements ParserInterface
 {

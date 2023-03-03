@@ -1,14 +1,14 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+namespace InstagramNextAPI\Realtime\Handler;
 
-use InstagramAPI\Client as HttpClient;
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\Event\PatchEvent;
-use InstagramAPI\Realtime\Payload\Event\PatchEventOp;
-use InstagramAPI\Realtime\Payload\LiveBroadcast;
-use InstagramAPI\Realtime\Payload\RealtimeEvent;
+use InstagramNextAPI\Client as HttpClient;
+use InstagramNextAPI\Realtime\HandlerInterface;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\Payload\Event\PatchEvent;
+use InstagramNextAPI\Realtime\Payload\Event\PatchEventOp;
+use InstagramNextAPI\Realtime\Payload\LiveBroadcast;
+use InstagramNextAPI\Realtime\Payload\RealtimeEvent;
 
 class LiveHandler extends AbstractHandler implements HandlerInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
 class Signatures
 {

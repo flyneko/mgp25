@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Response\Model\UnpredictableKeys;
+namespace InstagramNextAPI\Response\Model\UnpredictableKeys;
 
 /**
  * Container for unpredictable data-keys with Presence object values.
  */
 class PresenceUnpredictableContainer extends CoreUnpredictableContainer
 {
-    protected $_type = '\InstagramAPI\Response\Model\UserPresence';
+    protected $_type = '\InstagramNextAPI\Response\Model\UserPresence';
 }

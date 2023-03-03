@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Push;
+namespace InstagramNextAPI\Push;
 
 use Fbns\Client\Json;
-use InstagramAPI\Push\Payload\BadgeCount;
+use InstagramNextAPI\Push\Payload\BadgeCount;
 
 class Notification
 {

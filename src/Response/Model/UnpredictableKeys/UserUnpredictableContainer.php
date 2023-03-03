@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Response\Model\UnpredictableKeys;
+namespace InstagramNextAPI\Response\Model\UnpredictableKeys;
 
 /**
  * Container for unpredictable data-keys with User object values.
@@ -9,5 +9,5 @@ namespace InstagramAPI\Response\Model\UnpredictableKeys;
  */
 class UserUnpredictableContainer extends CoreUnpredictableContainer
 {
-    protected $_type = '\InstagramAPI\Response\Model\User';
+    protected $_type = '\InstagramNextAPI\Response\Model\User';
 }

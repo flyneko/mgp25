@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Exception;
+namespace InstagramNextAPI\Exception;
 
 /**
  * Used for all problems with the Settings storage.

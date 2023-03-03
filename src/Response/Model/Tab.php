@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+namespace InstagramNextAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
+use InstagramNextAPI\AutoPropertyMapper;
 
 /**
  * Tab.

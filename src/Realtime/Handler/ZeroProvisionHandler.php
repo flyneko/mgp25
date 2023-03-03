@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+namespace InstagramNextAPI\Realtime\Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\ZeroProvisionEvent;
+use InstagramNextAPI\Realtime\HandlerInterface;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\Payload\ZeroProvisionEvent;
 
 class ZeroProvisionHandler extends AbstractHandler implements HandlerInterface
 {

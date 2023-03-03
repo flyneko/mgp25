@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Exception;
+namespace InstagramNextAPI\Exception;
 
 /**
  * Used when the server requires us to login again, and also used as a locally

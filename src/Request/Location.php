@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Exception\RequestHeadersTooLargeException;
-use InstagramAPI\Response;
-use InstagramAPI\Signatures;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Exception\RequestHeadersTooLargeException;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Signatures;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions related to finding and exploring locations.
@@ -24,9 +24,9 @@ class Location extends RequestCollection
      *                               worldwide location text search, but lists
      *                               locations closest to your lat/lng first.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LocationResponse
+     * @return \InstagramNextAPI\Response\LocationResponse
      */
     public function search(
         $latitude,
@@ -60,9 +60,9 @@ class Location extends RequestCollection
      * @param string|null    $rankToken   (When paginating) The rank token from the previous page's response.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FBLocationResponse
+     * @return \InstagramNextAPI\Response\FBLocationResponse
      *
      * @see FBLocationResponse::getRankToken() To get a rank token from the response.
      * @see examples/paginateWithExclusion.php For an example.
@@ -114,9 +114,9 @@ class Location extends RequestCollection
      * @param string         $searchSurface (Optional) The place (surface) in the app where this action was triggered.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FBLocationResponse
+     * @return \InstagramNextAPI\Response\FBLocationResponse
      *
      * @see FBLocationResponse::getRankToken() To get a rank token from the response.
      * @see examples/paginateWithExclusion.php For an example.
@@ -167,9 +167,9 @@ class Location extends RequestCollection
      * @param string $locationId The internal ID of a location (from a field
      *                           such as "pk", "external_id" or "facebook_places_id").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\RelatedLocationResponse
+     * @return \InstagramNextAPI\Response\RelatedLocationResponse
      */
     public function getRelated(
         $locationId)
@@ -197,9 +197,9 @@ class Location extends RequestCollection
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LocationFeedResponse
+     * @return \InstagramNextAPI\Response\LocationFeedResponse
      *
      * @see Signatures::generateUUID() To create a UUID.
      * @see examples/rankTokenUsage.php For an example.
@@ -250,9 +250,9 @@ class Location extends RequestCollection
      *                           such as "pk", "external_id" or "facebook_places_id").
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LocationStoryResponse
+     * @return \InstagramNextAPI\Response\LocationStoryResponse
      */
     public function getStoryFeed(
         $locationId)
@@ -288,9 +288,9 @@ class Location extends RequestCollection
      *                                                     story media Items.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaSeenResponse
+     * @return \InstagramNextAPI\Response\MediaSeenResponse
      *
      * @see Story::markMediaSeen()
      * @see Hashtag::markStoryMediaSeen()

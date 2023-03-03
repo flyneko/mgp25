@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI\Realtime\Parser;
+namespace InstagramNextAPI\Realtime\Parser;
 
 use Fbns\Client\Thrift\Compact;
 use Fbns\Client\Thrift\Reader;
-use InstagramAPI\Realtime\Handler\RegionHintHandler;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\ParserInterface;
+use InstagramNextAPI\Realtime\Handler\RegionHintHandler;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\ParserInterface;
 
 class RegionHintParser implements ParserInterface
 {

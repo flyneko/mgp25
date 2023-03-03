@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 
 /**
  * Functions for managing your push notifications.
@@ -16,9 +16,9 @@ class Push extends RequestCollection
      * @param string $token       The token used to register to the push channel.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PushRegisterResponse
+     * @return \InstagramNextAPI\Response\PushRegisterResponse
      */
     public function register(
         $pushChannel,
@@ -46,9 +46,9 @@ class Push extends RequestCollection
     /**
      * Get push preferences.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PushPreferencesResponse
+     * @return \InstagramNextAPI\Response\PushPreferencesResponse
      */
     public function getPreferences()
     {
@@ -61,9 +61,9 @@ class Push extends RequestCollection
      *
      * @param array $preferences Described in "extradocs/Push_setPreferences.txt".
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PushPreferencesResponse
+     * @return \InstagramNextAPI\Response\PushPreferencesResponse
      */
     public function setPreferences(
         array $preferences)

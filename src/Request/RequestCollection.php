@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Instagram;
-use InstagramAPI\Request;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Instagram;
+use InstagramNextAPI\Request;
+use InstagramNextAPI\Utils;
 
 /**
  * Base class for grouping multiple related request functions.

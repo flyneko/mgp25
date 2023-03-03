@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response;
+namespace InstagramNextAPI\Response;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 
 /**
  * Used for generic API responses that don't contain any extra data.

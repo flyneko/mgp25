@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Realtime;
+namespace InstagramNextAPI\Realtime;
 
 class Message
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Exception;
+namespace InstagramNextAPI\Exception;
 
 /**
  * Used when we know for a fact that our uploads failed.

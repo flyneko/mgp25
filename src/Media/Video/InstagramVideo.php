@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Media\Video;
+namespace InstagramNextAPI\Media\Video;
 
-use InstagramAPI\Media\Geometry\Dimensions;
-use InstagramAPI\Media\Geometry\Rectangle;
-use InstagramAPI\Media\InstagramMedia;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Media\Geometry\Dimensions;
+use InstagramNextAPI\Media\Geometry\Rectangle;
+use InstagramNextAPI\Media\InstagramMedia;
+use InstagramNextAPI\Utils;
 use Winbox\Args;
 
 /**

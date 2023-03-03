@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Settings;
+namespace InstagramNextAPI\Settings;
 
-use InstagramAPI\Exception\SettingsException;
+use InstagramNextAPI\Exception\SettingsException;
 
 /**
  * Effortlessly instantiates a StorageHandler with the desired Storage backend.
@@ -21,9 +21,9 @@ class Factory
      *                             user settings storage backend.
      * @param array $callbacks     Optional StorageHandler callback functions.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
-     * @return \InstagramAPI\Settings\StorageHandler
+     * @return \InstagramNextAPI\Settings\StorageHandler
      */
     public static function createHandler(
         array $storageConfig,

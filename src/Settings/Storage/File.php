@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage;
+namespace InstagramNextAPI\Settings\Storage;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Settings\StorageInterface;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Settings\StorageInterface;
+use InstagramNextAPI\Utils;
 
 /**
  * Persistent storage backend which keeps settings in a reliable binary file.
@@ -198,7 +198,7 @@ class File implements StorageInterface
      * @param int    $dataVersion Which data format to decode.
      * @param string $rawData     The raw data, encoded in version's format.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return array An array with all current key-value pairs for the user.
      */
@@ -238,7 +238,7 @@ class File implements StorageInterface
      *
      * @param string $folder The directory path.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return string The canonicalized absolute pathname of the folder, without
      *                any trailing slash.

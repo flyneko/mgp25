@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request as HttpRequest;
 use GuzzleHttp\Psr7\Stream;
-use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Exception\LoginRequiredException;
+use InstagramNextAPI\Exception\InstagramException;
+use InstagramNextAPI\Exception\LoginRequiredException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use function GuzzleHttp\Psr7\stream_for;
@@ -19,7 +19,7 @@ class Request
     /**
      * The Instagram class instance we belong to.
      *
-     * @var \InstagramAPI\Instagram
+     * @var \InstagramNextAPI\Instagram
      */
     protected $_parent;
 
@@ -159,7 +159,7 @@ class Request
      * @param string    $url
      */
     public function __construct(
-        \InstagramAPI\Instagram $parent,
+        \InstagramNextAPI\Instagram $parent,
         $url)
     {
         $this->_parent = $parent;

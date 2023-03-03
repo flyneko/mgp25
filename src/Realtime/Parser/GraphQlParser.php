@@ -1,14 +1,14 @@
 <?php
 
-namespace InstagramAPI\Realtime\Parser;
+namespace InstagramNextAPI\Realtime\Parser;
 
 use Fbns\Client\Thrift\Compact;
 use Fbns\Client\Thrift\Reader;
-use InstagramAPI\Client;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\ParserInterface;
-use InstagramAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
-use InstagramAPI\Realtime\Subscription\GraphQl\ZeroProvisionSubscription;
+use InstagramNextAPI\Client;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\ParserInterface;
+use InstagramNextAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
+use InstagramNextAPI\Realtime\Subscription\GraphQl\ZeroProvisionSubscription;
 
 class GraphQlParser implements ParserInterface
 {

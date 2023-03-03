@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Push\Fbns;
+namespace InstagramNextAPI\Push\Fbns;
 
 use Fbns\Client\Auth\DeviceAuth;
 use Fbns\Client\AuthInterface;
-use InstagramAPI\Instagram;
+use InstagramNextAPI\Instagram;
 
 class Auth implements AuthInterface
 {

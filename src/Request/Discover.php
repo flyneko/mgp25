@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Exception\RequestHeadersTooLargeException;
-use InstagramAPI\Response;
+use InstagramNextAPI\Exception\RequestHeadersTooLargeException;
+use InstagramNextAPI\Response;
 
 /**
  * General content discovery functions which don't fit into any better groups.
@@ -21,9 +21,9 @@ class Discover extends RequestCollection
      * @param string|null $maxId      Next "maximum ID", used for pagination.
      * @param bool        $isPrefetch Whether this is the first fetch; we'll ignore maxId if TRUE.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ExploreResponse
+     * @return \InstagramNextAPI\Response\ExploreResponse
      */
     public function getExploreFeed(
         $clusterId = null,
@@ -57,9 +57,9 @@ class Discover extends RequestCollection
      * @param string $exploreSourceToken Token related to the Explore media.
      * @param string $userId             Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReportExploreMediaResponse
+     * @return \InstagramNextAPI\Response\ReportExploreMediaResponse
      */
     public function reportExploreMedia(
         $exploreSourceToken,
@@ -87,9 +87,9 @@ class Discover extends RequestCollection
      * @param string|null $rankToken   (When paginating) The rank token from the previous page's response.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FBSearchResponse
+     * @return \InstagramNextAPI\Response\FBSearchResponse
      *
      * @see FBSearchResponse::getRankToken() To get a rank token from the response.
      * @see examples/paginateWithExclusion.php For a rank token example (but with a different type of exclude list).
@@ -143,9 +143,9 @@ class Discover extends RequestCollection
      *
      * @param string $type One of: "blended", "users", "hashtags" or "places".
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SuggestedSearchesResponse
+     * @return \InstagramNextAPI\Response\SuggestedSearchesResponse
      */
     public function getSuggestedSearches(
         $type)
@@ -164,9 +164,9 @@ class Discover extends RequestCollection
      *
      * NOTE: In the app, they're listed as the "Recent" in the "Top" tab at the "Search" screen.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\RecentSearchesResponse
+     * @return \InstagramNextAPI\Response\RecentSearchesResponse
      */
     public function getRecentSearches()
     {
@@ -177,9 +177,9 @@ class Discover extends RequestCollection
     /**
      * Clear the search history.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function clearSearchHistory()
     {

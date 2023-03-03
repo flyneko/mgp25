@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Middleware;
+namespace InstagramNextAPI\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 

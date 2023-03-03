@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\React;
+namespace InstagramNextAPI\React;
 
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;

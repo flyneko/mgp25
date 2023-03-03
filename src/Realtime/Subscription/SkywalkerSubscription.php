@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Realtime\Subscription;
+namespace InstagramNextAPI\Realtime\Subscription;
 
-use InstagramAPI\Realtime\Mqtt;
-use InstagramAPI\Realtime\SubscriptionInterface;
+use InstagramNextAPI\Realtime\Mqtt;
+use InstagramNextAPI\Realtime\SubscriptionInterface;
 
 abstract class SkywalkerSubscription implements SubscriptionInterface
 {

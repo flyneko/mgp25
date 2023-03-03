@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Response;
 
 /**
  * Functions related to Instagram TV.
@@ -21,9 +21,9 @@ class TV extends RequestCollection
      *                            or not. Valid values: 0 for not charging, 1 for
      *                            charging.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TVGuideResponse
+     * @return \InstagramNextAPI\Response\TVGuideResponse
      */
     public function getTvGuide(
         array $options = null)
@@ -60,9 +60,9 @@ class TV extends RequestCollection
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TVChannelsResponse
+     * @return \InstagramNextAPI\Response\TVChannelsResponse
      */
     public function getChannel(
         $id = 'for_you',
@@ -94,10 +94,10 @@ class TV extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -113,9 +113,9 @@ class TV extends RequestCollection
      *
      * @param string $query The username or channel you are looking for.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TVSearchResponse
+     * @return \InstagramNextAPI\Response\TVSearchResponse
      */
     public function search(
         $query = '')
@@ -139,9 +139,9 @@ class TV extends RequestCollection
      * @param mixed  $gridImpressions TODO No info yet.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function writeSeenState(
         $impression,

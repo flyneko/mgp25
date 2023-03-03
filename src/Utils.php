@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
-use InstagramAPI\Media\Video\FFmpeg;
-use InstagramAPI\Response\Model\Item;
-use InstagramAPI\Response\Model\Location;
+use InstagramNextAPI\Media\Video\FFmpeg;
+use InstagramNextAPI\Response\Model\Item;
+use InstagramNextAPI\Response\Model\Location;
 
 class Utils
 {
@@ -17,7 +17,7 @@ class Utils
      * TIP: If your default system temp folder isn't writable, it's NECESSARY
      * for you to set this value to another, writable path, like this:
      *
-     * \InstagramAPI\Utils::$defaultTmpPath = '/home/example/foo/';
+     * \InstagramNextAPI\Utils::$defaultTmpPath = '/home/example/foo/';
      */
     public static $defaultTmpPath = null;
 
@@ -358,7 +358,7 @@ class Utils
         $location)
     {
         if (!$location instanceof Location) {
-            throw new \InvalidArgumentException('The location must be an instance of \InstagramAPI\Response\Model\Location.');
+            throw new \InvalidArgumentException('The location must be an instance of \InstagramNextAPI\Response\Model\Location.');
         }
 
         // Forbid locations that came from Location::searchFacebook() and
@@ -398,7 +398,7 @@ class Utils
      * that need FFprobe, you must simply assign a manual value (ONCE) to tell
      * us where to find your FFprobe, like this:
      *
-     * \InstagramAPI\Utils::$ffprobeBin = '/home/exampleuser/ffmpeg/bin/ffprobe';
+     * \InstagramNextAPI\Utils::$ffprobeBin = '/home/exampleuser/ffmpeg/bin/ffprobe';
      *
      * @return string|bool Name of the library if present, otherwise FALSE.
      */

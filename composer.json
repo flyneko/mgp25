@@ -30,12 +30,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "InstagramAPI\\": "src/"
+            "InstagramNextAPI\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "InstagramAPI\\Tests\\": "tests/"
+            "InstagramNextAPI\\Tests\\": "tests/"
         }
     },
     "require": {

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime;
+namespace InstagramNextAPI\Realtime;
 
-use InstagramAPI\Realtime\Handler\HandlerException;
+use InstagramNextAPI\Realtime\Handler\HandlerException;
 
 interface HandlerInterface
 {

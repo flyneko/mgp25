@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Media;
+namespace InstagramNextAPI\Media;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Media\Constraints\ConstraintsFactory;
-use InstagramAPI\Media\Geometry\Dimensions;
-use InstagramAPI\Media\Geometry\Rectangle;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Media\Constraints\ConstraintsFactory;
+use InstagramNextAPI\Media\Geometry\Dimensions;
+use InstagramNextAPI\Media\Geometry\Rectangle;
 
 /**
  * Automatically prepares a media file according to Instagram's rules.
@@ -45,7 +45,7 @@ abstract class InstagramMedia
      * for you to set this value to another, writable path, like this:
      *
      * ```
-     * \InstagramAPI\InstagramMedia::$defaultTmpPath = '/home/example/foo/';
+     * \InstagramNextAPI\InstagramMedia::$defaultTmpPath = '/home/example/foo/';
      * ```
      *
      * @var string|null

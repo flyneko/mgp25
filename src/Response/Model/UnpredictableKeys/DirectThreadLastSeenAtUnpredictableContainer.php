@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Response\Model\UnpredictableKeys;
+namespace InstagramNextAPI\Response\Model\UnpredictableKeys;
 
 /**
  * Container for unpredictable data-keys with DirectThreadLastSeenAt object values.
@@ -9,5 +9,5 @@ namespace InstagramAPI\Response\Model\UnpredictableKeys;
  */
 class DirectThreadLastSeenAtUnpredictableContainer extends CoreUnpredictableContainer
 {
-    protected $_type = '\InstagramAPI\Response\Model\DirectThreadLastSeenAt';
+    protected $_type = '\InstagramNextAPI\Response\Model\DirectThreadLastSeenAt';
 }

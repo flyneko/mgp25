@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Settings;
+namespace InstagramNextAPI\Settings;
 
 use Fbns\Client\Auth\DeviceAuth;
 use Fbns\Client\AuthInterface;
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Utils;
 
 /**
  * Advanced, modular settings storage engine.
@@ -117,7 +117,7 @@ class StorageHandler
      *                                          the storage backend location.
      * @param array            $callbacks       Optional callback functions.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function __construct(
         $storageInstance,
@@ -146,7 +146,7 @@ class StorageHandler
     /**
      * Destructor.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function __destruct()
     {
@@ -164,7 +164,7 @@ class StorageHandler
      *
      * @param string $username The Instagram username.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return bool TRUE if user exists, otherwise FALSE.
      */
@@ -197,7 +197,7 @@ class StorageHandler
      * @param string $oldUsername The old name that settings are stored as.
      * @param string $newUsername The new name to move the settings to.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function moveUser(
         $oldUsername,
@@ -221,7 +221,7 @@ class StorageHandler
      *
      * @param string $username The Instagram username.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function deleteUser(
         $username)
@@ -242,7 +242,7 @@ class StorageHandler
      *
      * @param string $username The Instagram username.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function setActiveUser(
         $username)
@@ -284,7 +284,7 @@ class StorageHandler
      * Can only be executed after setActiveUser(). And the session it looks
      * for may be expired, so there's no guarantee that we are still logged in.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return bool TRUE if possibly logged in, otherwise FALSE.
      */
@@ -304,7 +304,7 @@ class StorageHandler
      *
      * Note that ALL cookies will be erased too, to clear out the old session.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function clearSettings() {
         $this->_userSettings = [];
@@ -317,7 +317,7 @@ class StorageHandler
      *
      * @param string $key Name of the setting.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return string|null The value as a string IF the setting exists AND is
      *                     a NON-EMPTY string. Otherwise NULL.
@@ -352,7 +352,7 @@ class StorageHandler
      * @param string       $key   Name of the setting.
      * @param string|mixed $value The data to store. MUST be castable to string.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function set(
         $key,
@@ -398,7 +398,7 @@ class StorageHandler
      *
      * @param array $payload  Saving data
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function setMulti(array $payload){
         foreach ($payload as $key => $value)
@@ -410,7 +410,7 @@ class StorageHandler
      *
      * Can only be executed after setActiveUser().
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return bool TRUE if cookies exist, otherwise FALSE.
      */
@@ -426,7 +426,7 @@ class StorageHandler
      *
      * Can only be executed after setActiveUser().
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return string|null A previously-stored, raw cookie data string
      *                     (non-empty), or NULL if no cookies exist for
@@ -460,7 +460,7 @@ class StorageHandler
      * @param string $rawData An encoded string with all cookie data. Use an
      *                        empty string to erase currently stored cookies.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function setCookies(
         $rawData)
@@ -476,7 +476,7 @@ class StorageHandler
      *
      * @param mixed $value The value to check.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     protected function _throwIfNotString(
         $value)
@@ -491,7 +491,7 @@ class StorageHandler
      *
      * @param mixed $value The value to check.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     protected function _throwIfEmptyValue(
         $value)
@@ -504,7 +504,7 @@ class StorageHandler
     /**
      * Internal: Ensures that there is an active storage user.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     protected function _throwIfNoActiveUser()
     {
@@ -523,7 +523,7 @@ class StorageHandler
      *
      * @param string $cbName The name of the callback.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     protected function _triggerCallback(
         $cbName)
@@ -556,7 +556,7 @@ class StorageHandler
      *
      * @param array $experiments
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return array A list of "good" experiments.
      */
@@ -578,7 +578,7 @@ class StorageHandler
     /**
      * Return saved experiments.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return array
      */
@@ -592,7 +592,7 @@ class StorageHandler
      *
      * @param array $rules
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function setRewriteRules(
         array $rules)
@@ -603,7 +603,7 @@ class StorageHandler
     /**
      * Return saved rewrite rules.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return array
      */

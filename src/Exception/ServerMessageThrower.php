@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Exception;
+namespace InstagramNextAPI\Exception;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 /**
@@ -196,7 +196,7 @@ class ServerMessageThrower
         // Attach the server response to the exception, IF a response exists.
         // NOTE: Only possible on exceptions derived from InstagramException.
         if ($serverResponse instanceof Response
-            && $e instanceof \InstagramAPI\Exception\InstagramException) {
+            && $e instanceof \InstagramNextAPI\Exception\InstagramException) {
             $e->setResponse($serverResponse);
         }
 

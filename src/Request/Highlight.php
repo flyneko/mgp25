@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Response;
 
 /**
  * Functions related to creating and managing highlights of your media.
@@ -19,9 +19,9 @@ class Highlight extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\HighlightFeedResponse
+     * @return \InstagramNextAPI\Response\HighlightFeedResponse
      *
      * @see Story::getReelsMediaFeed() To get highlight items when they aren't included in this response.
      */
@@ -44,9 +44,9 @@ class Highlight extends RequestCollection
      * `Highlight::getUserFeed()` for more information about what to do.
      * Note 2: if user has a igtv post reponse will include 'tv_channel' property
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\HighlightFeedResponse
+     * @return \InstagramNextAPI\Response\HighlightFeedResponse
      *
      * @see Highlight::getUserFeed()
      * @see Story::getReelsMediaFeed() To get highlight items when they aren't included in this response.
@@ -65,9 +65,9 @@ class Highlight extends RequestCollection
      * @param string      $module
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CreateHighlightResponse
+     * @return \InstagramNextAPI\Response\CreateHighlightResponse
      */
     public function create(
         array $mediaIds,
@@ -112,9 +112,9 @@ class Highlight extends RequestCollection
      * @param string $module          (optional) From which app module (page) you're performing this action.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\HighlightFeedResponse
+     * @return \InstagramNextAPI\Response\HighlightFeedResponse
      */
     public function edit(
         $highlightReelId,
@@ -157,9 +157,9 @@ class Highlight extends RequestCollection
      *
      * @param string $highlightReelId Highlight ID, using internal format (ie "highlight:12345678901234567").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function delete(
         $highlightReelId)

@@ -1,15 +1,15 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\HandlerStack;
-use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Exception\ServerMessageThrower;
-use InstagramAPI\Middleware\FakeCookies;
-use InstagramAPI\Middleware\ZeroRating;
+use InstagramNextAPI\Exception\InstagramException;
+use InstagramNextAPI\Exception\ServerMessageThrower;
+use InstagramNextAPI\Middleware\FakeCookies;
+use InstagramNextAPI\Middleware\ZeroRating;
 use LazyJsonMapper\Exception\LazyJsonMapperException;
 use Psr\Http\Message\RequestInterface as HttpRequestInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
@@ -33,7 +33,7 @@ class Client
     /**
      * The Instagram class instance we belong to.
      *
-     * @var \InstagramAPI\Instagram
+     * @var \InstagramNextAPI\Instagram
      */
     protected $_parent;
 
@@ -73,12 +73,12 @@ class Client
     private $_guzzleClient;
 
     /**
-     * @var \InstagramAPI\Middleware\FakeCookies
+     * @var \InstagramNextAPI\Middleware\FakeCookies
      */
     private $_fakeCookies;
 
     /**
-     * @var \InstagramAPI\Middleware\ZeroRating
+     * @var \InstagramNextAPI\Middleware\ZeroRating
      */
     private $_zeroRating;
 
@@ -108,7 +108,7 @@ class Client
     /**
      * Constructor.
      *
-     * @param \InstagramAPI\Instagram $parent
+     * @param \InstagramNextAPI\Instagram $parent
      */
     public function __construct(
         $parent)
@@ -154,7 +154,7 @@ class Client
      *
      * Used whenever we switch active user, to configure our internal state.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function updateFromCurrentSettings()
     {
@@ -168,7 +168,7 @@ class Client
     /**
      * Loads all cookies via the current Settings storage.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function loadCookieJar()
     {
@@ -284,7 +284,7 @@ class Client
      * automatically calls it when enough time has elapsed since last save.
      *
      * @throws \InvalidArgumentException                 If the JSON cannot be encoded.
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function saveCookieJar()
     {
@@ -449,11 +449,11 @@ class Client
             $httpStatusCode = $httpResponse !== null ? $httpResponse->getStatusCode() : null;
             switch ($httpStatusCode) {
                 case 400:
-                    throw new \InstagramAPI\Exception\BadRequestException('Invalid request options.');
+                    throw new \InstagramNextAPI\Exception\BadRequestException('Invalid request options.');
                 case 404:
-                    throw new \InstagramAPI\Exception\NotFoundException('Requested resource does not exist.');
+                    throw new \InstagramNextAPI\Exception\NotFoundException('Requested resource does not exist.');
                 default:
-                    throw new \InstagramAPI\Exception\EmptyResponseException('No response from server. Either a connection or configuration error.');
+                    throw new \InstagramNextAPI\Exception\EmptyResponseException('No response from server. Either a connection or configuration error.');
             }
         }
 
@@ -528,7 +528,7 @@ class Client
         // means that the user can look at the full response details via the
         // exception itself.
         if (!$responseObject->isOk()) {
-            if ($responseObject instanceof \InstagramAPI\Response\DirectSendItemResponse && $responseObject->getPayload() !== null) {
+            if ($responseObject instanceof \InstagramNextAPI\Response\DirectSendItemResponse && $responseObject->getPayload() !== null) {
                 $message = $responseObject->getPayload()->getMessage();
             } else {
                 $message = $responseObject->getMessage();
@@ -605,9 +605,9 @@ class Client
      * @param HttpRequestInterface $request       HTTP request to send.
      * @param array                $guzzleOptions Extra Guzzle options for this request.
      *
-     * @throws \InstagramAPI\Exception\NetworkException                For any network/socket related errors.
-     * @throws \InstagramAPI\Exception\ThrottledException              When we're throttled by server.
-     * @throws \InstagramAPI\Exception\RequestHeadersTooLargeException When request is too large.
+     * @throws \InstagramNextAPI\Exception\NetworkException                For any network/socket related errors.
+     * @throws \InstagramNextAPI\Exception\ThrottledException              When we're throttled by server.
+     * @throws \InstagramNextAPI\Exception\RequestHeadersTooLargeException When request is too large.
      *
      * @return HttpResponseInterface
      */
@@ -623,17 +623,17 @@ class Client
             $response = $this->_guzzleClient->send($request, $guzzleOptions);
         } catch (\Exception $e) {
             // Re-wrap Guzzle's exception using our own NetworkException.
-            throw new \InstagramAPI\Exception\NetworkException($e);
+            throw new \InstagramNextAPI\Exception\NetworkException($e);
         }
 
         // Detect very serious HTTP status codes in the response.
         $httpCode = $response->getStatusCode();
         switch ($httpCode) {
         case 429: // "429 Too Many Requests"
-            throw new \InstagramAPI\Exception\ThrottledException('Throttled by Instagram because of too many API requests.');
+            throw new \InstagramNextAPI\Exception\ThrottledException('Throttled by Instagram because of too many API requests.');
             break;
         case 431: // "431 Request Header Fields Too Large"
-            throw new \InstagramAPI\Exception\RequestHeadersTooLargeException('The request start-line and/or headers are too large to process.');
+            throw new \InstagramNextAPI\Exception\RequestHeadersTooLargeException('The request start-line and/or headers are too large to process.');
             break;
         // WARNING: Do NOT detect 404 and other higher-level HTTP errors here,
         // since we catch those later during steps like mapServerResponse()
@@ -669,8 +669,8 @@ class Client
      * @param array                $libraryOptions Additional options for controlling Library features
      *                                             such as the debugging output.
      *
-     * @throws \InstagramAPI\Exception\NetworkException   For any network/socket related errors.
-     * @throws \InstagramAPI\Exception\ThrottledException When we're throttled by server.
+     * @throws \InstagramNextAPI\Exception\NetworkException   For any network/socket related errors.
+     * @throws \InstagramNextAPI\Exception\ThrottledException When we're throttled by server.
      *
      * @return HttpResponseInterface
      */

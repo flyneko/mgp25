@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Request;
-use InstagramAPI\Response;
-use InstagramAPI\Signatures;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Request;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Signatures;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions for interacting with media items from yourself and others.
@@ -19,9 +19,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaInfoResponse
+     * @return \InstagramNextAPI\Response\MediaInfoResponse
      */
     public function getInfo(
         $mediaId)
@@ -38,9 +38,9 @@ class Media extends RequestCollection
      *                              "CAROUSEL", or the raw value of the Item's "getMediaType()" function.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaDeleteResponse
+     * @return \InstagramNextAPI\Response\MediaDeleteResponse
      */
     public function delete(
         $mediaId,
@@ -72,9 +72,9 @@ class Media extends RequestCollection
      *                                "CAROUSEL", or the raw value of the Item's "getMediaType()" function.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EditMediaResponse
+     * @return \InstagramNextAPI\Response\EditMediaResponse
      *
      * @see Usertag::tagMedia() for an example of proper "usertags" metadata formatting.
      * @see Usertag::untagMedia() for an example of proper "usertags" metadata formatting.
@@ -105,7 +105,7 @@ class Media extends RequestCollection
             } else {
                 // The user wants to add/change the location of the media.
                 if (!$metadata['location'] instanceof Response\Model\Location) {
-                    throw new \InvalidArgumentException('The "location" metadata value must be an instance of \InstagramAPI\Response\Model\Location.');
+                    throw new \InvalidArgumentException('The "location" metadata value must be an instance of \InstagramNextAPI\Response\Model\Location.');
                 }
 
                 $request
@@ -141,9 +141,9 @@ class Media extends RequestCollection
      * @param array  $extraData      (optional) Depending on the module name, additional data is required.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      *
      * @see Media::_parseLikeParameters() For all supported modules and required parameters.
      */
@@ -183,9 +183,9 @@ class Media extends RequestCollection
      * @param array  $extraData (optional) Depending on the module name, additional data is required.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      *
      * @see Media::_parseLikeParameters() For all supported modules and required parameters.
      */
@@ -212,9 +212,9 @@ class Media extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LikeFeedResponse
+     * @return \InstagramNextAPI\Response\LikeFeedResponse
      */
     public function getLikedFeed(
         $maxId = null)
@@ -232,9 +232,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaLikersResponse
+     * @return \InstagramNextAPI\Response\MediaLikersResponse
      */
     public function getLikers(
         $mediaId)
@@ -260,9 +260,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaLikersResponse
+     * @return \InstagramNextAPI\Response\MediaLikersResponse
      */
     public function getLikersChrono(
         $mediaId)
@@ -275,9 +275,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function enableComments(
         $mediaId)
@@ -294,9 +294,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function disableComments(
         $mediaId)
@@ -330,9 +330,9 @@ class Media extends RequestCollection
      * @param bool        $feedBumped     (optional) If Instagram bumped this post to the top of your feed.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentResponse
+     * @return \InstagramNextAPI\Response\CommentResponse
      */
     public function comment(
         $mediaId,
@@ -385,9 +385,9 @@ class Media extends RequestCollection
      *                        "target_comment_id" - used by comment Push notifications to retrieve the page with the specific comment.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaCommentsResponse
+     * @return \InstagramNextAPI\Response\MediaCommentsResponse
      */
     public function getComments(
         $mediaId,
@@ -427,9 +427,9 @@ class Media extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentInfosResponse
+     * @return \InstagramNextAPI\Response\CommentInfosResponse
      */
     public function getCommentInfos(
         $mediaIds)
@@ -466,9 +466,9 @@ class Media extends RequestCollection
      *                          "min_id" - next "minimum ID" (get newer comments, after this ID), used for forwards pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaCommentRepliesResponse
+     * @return \InstagramNextAPI\Response\MediaCommentRepliesResponse
      */
     public function getCommentReplies(
         $mediaId,
@@ -496,9 +496,9 @@ class Media extends RequestCollection
      * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $commentId The comment's ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DeleteCommentResponse
+     * @return \InstagramNextAPI\Response\DeleteCommentResponse
      */
     public function deleteComment(
         $mediaId,
@@ -517,9 +517,9 @@ class Media extends RequestCollection
      * @param string          $mediaId    The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string|string[] $commentIds The IDs of one or more comments to delete.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DeleteCommentResponse
+     * @return \InstagramNextAPI\Response\DeleteCommentResponse
      */
     public function deleteComments(
         $mediaId,
@@ -544,9 +544,9 @@ class Media extends RequestCollection
      * @param int    $feedPosition The position of the media item in the feed.
      * @param string $module       From which module you're preforming this action.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentLikeUnlikeResponse
+     * @return \InstagramNextAPI\Response\CommentLikeUnlikeResponse
      */
     public function likeComment(
         $commentId,
@@ -570,9 +570,9 @@ class Media extends RequestCollection
      * @param int    $feedPosition The position of the media item in the feed.
      * @param string $module       From which module you're preforming this action.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentLikeUnlikeResponse
+     * @return \InstagramNextAPI\Response\CommentLikeUnlikeResponse
      */
     public function unlikeComment(
         $commentId,
@@ -594,9 +594,9 @@ class Media extends RequestCollection
      *
      * @param string $commentId The comment's ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentLikersResponse
+     * @return \InstagramNextAPI\Response\CommentLikersResponse
      */
     public function getCommentLikers(
         $commentId)
@@ -611,9 +611,9 @@ class Media extends RequestCollection
      *
      * @param string|string[] $commentIds The IDs of one or more comments and/or media IDs
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TranslateResponse
+     * @return \InstagramNextAPI\Response\TranslateResponse
      */
     public function translateComments(
         $commentIds)
@@ -634,9 +634,9 @@ class Media extends RequestCollection
      *
      * @param string $url The URL you want to validate.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ValidateURLResponse
+     * @return \InstagramNextAPI\Response\ValidateURLResponse
      */
     public function validateURL(
         $url)
@@ -654,9 +654,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SaveAndUnsaveMedia
+     * @return \InstagramNextAPI\Response\SaveAndUnsaveMedia
      */
     public function save(
         $mediaId)
@@ -673,9 +673,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SaveAndUnsaveMedia
+     * @return \InstagramNextAPI\Response\SaveAndUnsaveMedia
      */
     public function unsave(
         $mediaId)
@@ -692,9 +692,9 @@ class Media extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SavedFeedResponse
+     * @return \InstagramNextAPI\Response\SavedFeedResponse
      */
     public function getSavedFeed(
         $maxId = null)
@@ -710,9 +710,9 @@ class Media extends RequestCollection
     /**
      * Get blocked media.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BlockedMediaResponse
+     * @return \InstagramNextAPI\Response\BlockedMediaResponse
      */
     public function getBlockedMedia()
     {
@@ -726,9 +726,9 @@ class Media extends RequestCollection
      * @param string $mediaId    The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $sourceName (optional) Source of the media.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function report(
         $mediaId,
@@ -750,9 +750,9 @@ class Media extends RequestCollection
      * @param string $mediaId   The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string $commentId The comment's ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function reportComment(
         $mediaId,
@@ -773,9 +773,9 @@ class Media extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PermalinkResponse
+     * @return \InstagramNextAPI\Response\PermalinkResponse
      */
     public function getPermalink(
         $mediaId)

@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Media\Geometry;
+namespace InstagramNextAPI\Media\Geometry;
 
 class Dimensions
 {

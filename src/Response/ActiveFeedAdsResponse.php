@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response;
+namespace InstagramNextAPI\Response;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 
 /**
  * ActiveFeedAdsResponse.

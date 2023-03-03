@@ -1,14 +1,14 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
 use Evenement\EventEmitterInterface;
 use Evenement\EventEmitterTrait;
-use InstagramAPI\React\Connector;
-use InstagramAPI\Realtime\Command\Direct as DirectCommand;
-use InstagramAPI\Realtime\Command\IrisSubscribe;
-use InstagramAPI\Realtime\Mqtt\Auth;
-use InstagramAPI\Realtime\Payload\ZeroProvisionEvent;
+use InstagramNextAPI\React\Connector;
+use InstagramNextAPI\Realtime\Command\Direct as DirectCommand;
+use InstagramNextAPI\Realtime\Command\IrisSubscribe;
+use InstagramNextAPI\Realtime\Mqtt\Auth;
+use InstagramNextAPI\Realtime\Payload\ZeroProvisionEvent;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use React\EventLoop\LoopInterface;

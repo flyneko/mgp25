@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage;
+namespace InstagramNextAPI\Settings\Storage;
 
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Settings\StorageInterface;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Settings\StorageInterface;
 use Redis as PHPRedis;
 
 /**
@@ -37,7 +37,7 @@ class Redis implements StorageInterface
         array $locationConfig)
     {
         // Prefix to the hash, makes users searchable by the hash prefix
-        $this->_hashPrefix = ((isset($locationConfig['redishash'])) ? $locationConfig['redishash'] : 'InstagramAPI:');
+        $this->_hashPrefix = ((isset($locationConfig['redishash'])) ? $locationConfig['redishash'] : 'InstagramNextAPI:');
 
         if (isset($locationConfig['redis'])) {
             // Pre-provided connection to re-use instead of creating a new one.
@@ -237,7 +237,7 @@ class Redis implements StorageInterface
     /**
      * Check the connection by pinging it.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     private function _checkConnection()
     {

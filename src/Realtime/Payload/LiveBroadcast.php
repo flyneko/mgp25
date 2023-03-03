@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Payload;
+namespace InstagramNextAPI\Realtime\Payload;
 
-use InstagramAPI\AutoPropertyMapper;
+use InstagramNextAPI\AutoPropertyMapper;
 
 /**
  * LiveBroadcast.
@@ -11,7 +11,7 @@ use InstagramAPI\AutoPropertyMapper;
  * @method string getBroadcastMessage()
  * @method mixed getDisplayNotification()
  * @method mixed getIsPeriodic()
- * @method \InstagramAPI\Response\Model\User getUser()
+ * @method \InstagramNextAPI\Response\Model\User getUser()
  * @method bool isBroadcastId()
  * @method bool isBroadcastMessage()
  * @method bool isDisplayNotification()
@@ -21,7 +21,7 @@ use InstagramAPI\AutoPropertyMapper;
  * @method $this setBroadcastMessage(string $value)
  * @method $this setDisplayNotification(mixed $value)
  * @method $this setIsPeriodic(mixed $value)
- * @method $this setUser(\InstagramAPI\Response\Model\User $value)
+ * @method $this setUser(\InstagramNextAPI\Response\Model\User $value)
  * @method $this unsetBroadcastId()
  * @method $this unsetBroadcastMessage()
  * @method $this unsetDisplayNotification()
@@ -31,7 +31,7 @@ use InstagramAPI\AutoPropertyMapper;
 class LiveBroadcast extends AutoPropertyMapper
 {
     const JSON_PROPERTY_MAP = [
-        'user'                 => '\InstagramAPI\Response\Model\User',
+        'user'                 => '\InstagramNextAPI\Response\Model\User',
         'broadcast_id'         => 'string',
         'is_periodic'          => '',
         'broadcast_message'    => 'string',

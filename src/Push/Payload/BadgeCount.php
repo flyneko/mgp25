@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Push\Payload;
+namespace InstagramNextAPI\Push\Payload;
 
 use Fbns\Client\Json;
 

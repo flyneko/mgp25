@@ -1,17 +1,17 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Exception\ThrottledException;
-use InstagramAPI\Exception\UploadFailedException;
-use InstagramAPI\Media\Constraints\ConstraintsFactory;
-use InstagramAPI\Media\Photo\PhotoDetails;
-use InstagramAPI\Request\Metadata\Internal as InternalMetadata;
-use InstagramAPI\Response;
-use InstagramAPI\Signatures;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Exception\InstagramException;
+use InstagramNextAPI\Exception\ThrottledException;
+use InstagramNextAPI\Exception\UploadFailedException;
+use InstagramNextAPI\Media\Constraints\ConstraintsFactory;
+use InstagramNextAPI\Media\Photo\PhotoDetails;
+use InstagramNextAPI\Request\Metadata\Internal as InternalMetadata;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Signatures;
+use InstagramNextAPI\Utils;
 
 /**
  * Instagram Direct messaging functions.
@@ -33,9 +33,9 @@ class Direct extends RequestCollection
      * @param bool        $prefetch           (optional) Indicates if the request is called from prefetch.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectInboxResponse
+     * @return \InstagramNextAPI\Response\DirectInboxResponse
      */
     public function getInbox(
         $cursorId = null,
@@ -68,9 +68,9 @@ class Direct extends RequestCollection
      *
      * @param string|null $cursorId Next "cursor ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectPendingInboxResponse
+     * @return \InstagramNextAPI\Response\DirectPendingInboxResponse
      */
     public function getPendingInbox(
         $cursorId = null)
@@ -91,9 +91,9 @@ class Direct extends RequestCollection
      * @param array $threads One or more thread identifiers.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function approvePendingThreads(
         array $threads)
@@ -134,9 +134,9 @@ class Direct extends RequestCollection
      * @param array $threads One or more thread identifiers.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function declinePendingThreads(
         array $threads)
@@ -174,9 +174,9 @@ class Direct extends RequestCollection
     /**
      * Decline all pending threads.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function declineAllPendingThreads()
     {
@@ -190,9 +190,9 @@ class Direct extends RequestCollection
     /**
      * Get a list of activity statuses for users who you follow or message.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PresencesResponse
+     * @return \InstagramNextAPI\Response\PresencesResponse
      */
     public function getPresences()
     {
@@ -210,9 +210,9 @@ class Direct extends RequestCollection
      * @param bool        $showThreads Whether to include existing threads into response.
      * @param string|null $query       (optional) The user to search for.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectRankedRecipientsResponse|null Will be NULL if throttled by Instagram.
+     * @return \InstagramNextAPI\Response\DirectRankedRecipientsResponse|null Will be NULL if throttled by Instagram.
      */
     public function getRankedRecipients(
         $mode,
@@ -242,9 +242,9 @@ class Direct extends RequestCollection
      * @param string[]|int[] $users Array of numerical UserPK IDs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectThreadResponse
+     * @return \InstagramNextAPI\Response\DirectThreadResponse
      */
     public function getThreadByParticipants(
         array $users)
@@ -272,9 +272,9 @@ class Direct extends RequestCollection
      * @param string      $threadId Thread ID.
      * @param string|null $cursorId Next "cursor ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectThreadResponse
+     * @return \InstagramNextAPI\Response\DirectThreadResponse
      */
     public function getThread(
         $threadId,
@@ -297,9 +297,9 @@ class Direct extends RequestCollection
      * @param string      $threadId Thread ID.
      * @param string|null $cursorId Next "cursor ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectVisualThreadResponse
+     * @return \InstagramNextAPI\Response\DirectVisualThreadResponse
      *
      * @deprecated Visual inbox has been superseded by the unified inbox.
      * @see Direct::getThread()
@@ -322,9 +322,9 @@ class Direct extends RequestCollection
      * @param string $threadId Thread ID.
      * @param string $title    New title.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectThreadResponse
+     * @return \InstagramNextAPI\Response\DirectThreadResponse
      */
     public function updateThreadTitle(
         $threadId,
@@ -343,9 +343,9 @@ class Direct extends RequestCollection
      *
      * @param string $threadId Thread ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function muteThread(
         $threadId)
@@ -362,9 +362,9 @@ class Direct extends RequestCollection
      *
      * @param string $threadId Thread ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function unmuteThread(
         $threadId)
@@ -388,9 +388,9 @@ class Direct extends RequestCollection
      * @param string         $threadTitle Name of the group thread.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectCreateGroupThreadResponse
+     * @return \InstagramNextAPI\Response\DirectCreateGroupThreadResponse
      */
     public function createGroupThread(
         array $userIds,
@@ -425,9 +425,9 @@ class Direct extends RequestCollection
      * @param string[]|int[] $users    Array of numerical UserPK IDs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectThreadResponse
+     * @return \InstagramNextAPI\Response\DirectThreadResponse
      */
     public function addUsersToThread(
         $threadId,
@@ -458,9 +458,9 @@ class Direct extends RequestCollection
      *
      * @param string $threadId Thread ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function leaveThread(
         $threadId)
@@ -477,9 +477,9 @@ class Direct extends RequestCollection
      *
      * @param string $threadId Thread ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function hideThread(
         $threadId)
@@ -504,9 +504,9 @@ class Direct extends RequestCollection
      *                           "client_context" - predefined UUID used to prevent double-posting.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendText(
         array $recipients,
@@ -550,9 +550,9 @@ class Direct extends RequestCollection
      *                           "text" (optional) - text message.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemsResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemsResponse
      *
      * @see https://help.instagram.com/1209246439090858 For more information.
      */
@@ -588,9 +588,9 @@ class Direct extends RequestCollection
      *                              "client_context" - predefined UUID used to prevent double-posting.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendPhoto(
         array $recipients,
@@ -623,9 +623,9 @@ class Direct extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -653,9 +653,9 @@ class Direct extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -684,10 +684,10 @@ class Direct extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendVideo(
         array $recipients,
@@ -706,7 +706,7 @@ class Direct extends RequestCollection
 
         // Send the uploaded video to recipients.
         try {
-            /** @var \InstagramAPI\Response\DirectSendItemResponse $result */
+            /** @var \InstagramNextAPI\Response\DirectSendItemResponse $result */
             $result = $this->ig->internal->configureWithRetries(
                 function () use ($internalMetadata, $recipients, $options) {
                     $videoUploadResponse = $internalMetadata->getVideoUploadResponse();
@@ -748,10 +748,10 @@ class Direct extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -779,10 +779,10 @@ class Direct extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -808,9 +808,9 @@ class Direct extends RequestCollection
      * @param array $options    An associative array of optional parameters, including:
      *                          "client_context" - predefined UUID used to prevent double-posting.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendLike(
         array $recipients,
@@ -832,9 +832,9 @@ class Direct extends RequestCollection
      *                           "text" - text message.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendHashtag(
         array $recipients,
@@ -866,9 +866,9 @@ class Direct extends RequestCollection
      *                           "text" - text message.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      *
      * @see Location::search()
      */
@@ -899,9 +899,9 @@ class Direct extends RequestCollection
      *                           "text" - text message.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendProfile(
         array $recipients,
@@ -927,9 +927,9 @@ class Direct extends RequestCollection
      *                             "client_context" - predefined UUID used to prevent double-posting.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function sendReaction(
         $threadId,
@@ -958,9 +958,9 @@ class Direct extends RequestCollection
      *                           "text" - text message.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemsResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemsResponse
      *
      * @see https://help.instagram.com/188382041703187 For more information.
      */
@@ -1009,7 +1009,7 @@ class Direct extends RequestCollection
      *                            "client_context" - predefined UUID used to prevent double-posting.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
      * @return Response\DirectSendItemResponse
      */
@@ -1033,9 +1033,9 @@ class Direct extends RequestCollection
      *                             "client_context" - predefined UUID used to prevent double-posting.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     public function deleteReaction(
         $threadId,
@@ -1052,9 +1052,9 @@ class Direct extends RequestCollection
      * @param string $threadId     Thread ID.
      * @param string $threadItemId Thread item ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function deleteItem(
         $threadId,
@@ -1073,9 +1073,9 @@ class Direct extends RequestCollection
      * @param string $threadId     Thread ID.
      * @param string $threadItemId Thread item ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSeenItemResponse
+     * @return \InstagramNextAPI\Response\DirectSeenItemResponse
      */
     public function markItemSeen(
         $threadId,
@@ -1101,9 +1101,9 @@ class Direct extends RequestCollection
      * @param string|string[] $threadItemIds One or more thread item IDs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function markVisualItemsSeen(
         $threadId,
@@ -1132,9 +1132,9 @@ class Direct extends RequestCollection
      * @param string|string[] $threadItemIds One or more thread item IDs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function markVisualItemsReplayed(
         $threadId,
@@ -1236,9 +1236,9 @@ class Direct extends RequestCollection
      *                           "live" uses "client_context" and "text".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     protected function _sendDirectItem(
         $type,
@@ -1415,9 +1415,9 @@ class Direct extends RequestCollection
      *                           "story_share" uses "client_context", "story_media_id", "media_type" and "text".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemsResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemsResponse
      */
     protected function _sendDirectItems(
         $type,
@@ -1519,9 +1519,9 @@ class Direct extends RequestCollection
      *                               "client_context" - predefined UUID used to prevent double-posting.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DirectSendItemResponse
+     * @return \InstagramNextAPI\Response\DirectSendItemResponse
      */
     protected function _handleReaction(
         $threadId,

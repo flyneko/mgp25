@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Subscription\GraphQl;
+namespace InstagramNextAPI\Realtime\Subscription\GraphQl;
 
-use InstagramAPI\Realtime\Subscription\GraphQlSubscription;
+use InstagramNextAPI\Realtime\Subscription\GraphQlSubscription;
 
 class DirectTypingSubscription extends GraphQlSubscription
 {

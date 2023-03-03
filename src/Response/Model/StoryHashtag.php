@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+namespace InstagramNextAPI\Response\Model;
 
-use InstagramAPI\AutoPropertyMapper;
-use InstagramAPI\Response\PropertyCollection;
+use InstagramNextAPI\AutoPropertyMapper;
+use InstagramNextAPI\Response\PropertyCollection;
 
 /**
  * StoryHashtag.

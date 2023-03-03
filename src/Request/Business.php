@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Response;
 
 /**
  * Business-account related functions.
@@ -17,9 +17,9 @@ class Business extends RequestCollection
      *
      * @param $day
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\InsightsResponse
+     * @return \InstagramNextAPI\Response\InsightsResponse
      */
     public function getInsights(
         $day = null)
@@ -39,9 +39,9 @@ class Business extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaInsightsResponse
+     * @return \InstagramNextAPI\Response\MediaInsightsResponse
      */
     public function getMediaInsights(
         $mediaId)
@@ -54,9 +54,9 @@ class Business extends RequestCollection
     /**
      * Get account statistics.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GraphqlResponse
+     * @return \InstagramNextAPI\Response\GraphqlResponse
      */
     public function getStatistics()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Payload;
+namespace InstagramNextAPI\Realtime\Payload;
 
-use InstagramAPI\AutoPropertyMapper;
+use InstagramNextAPI\AutoPropertyMapper;
 
 /**
  * RealtimeEvent.

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage;
+namespace InstagramNextAPI\Settings\Storage;
 
-use InstagramAPI\Settings\Storage\Components\PDOStorage;
+use InstagramNextAPI\Settings\Storage\Components\PDOStorage;
 use PDO;
 
 /**

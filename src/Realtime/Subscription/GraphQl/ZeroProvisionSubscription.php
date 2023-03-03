@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Realtime\Subscription\GraphQl;
+namespace InstagramNextAPI\Realtime\Subscription\GraphQl;
 
-use InstagramAPI\Realtime\Subscription\GraphQlSubscription;
-use InstagramAPI\Signatures;
+use InstagramNextAPI\Realtime\Subscription\GraphQlSubscription;
+use InstagramNextAPI\Signatures;
 
 class ZeroProvisionSubscription extends GraphQlSubscription
 {

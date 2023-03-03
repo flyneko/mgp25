@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+namespace InstagramNextAPI\Realtime\Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\HandlerInterface;
+use InstagramNextAPI\Realtime\Message;
 
 class RegionHintHandler extends AbstractHandler implements HandlerInterface
 {

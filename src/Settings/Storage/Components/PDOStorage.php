@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage\Components;
+namespace InstagramNextAPI\Settings\Storage\Components;
 
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Settings\StorageInterface;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Settings\StorageInterface;
 use PDO;
 
 /**
@@ -38,7 +38,7 @@ abstract class PDOStorage implements StorageInterface
      *
      * @param string $backendName Human name of the backend, such as "MySQL" or "SQLite".
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function __construct(
         $backendName = 'PDO')
@@ -142,7 +142,7 @@ abstract class PDOStorage implements StorageInterface
      * @param string $column The database column.
      * @param string $data   Data to be written.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     protected function _setUserColumn(
         $column,

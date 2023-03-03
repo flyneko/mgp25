@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Request\Metadata\Internal as InternalMetadata;
-use InstagramAPI\Response;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Request\Metadata\Internal as InternalMetadata;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions for managing your story and interacting with other stories.
@@ -22,9 +22,9 @@ class Story extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -43,9 +43,9 @@ class Story extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      * @see https://help.instagram.com/2183694401643300
@@ -68,10 +68,10 @@ class Story extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -90,10 +90,10 @@ class Story extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      * @see https://help.instagram.com/2183694401643300
@@ -117,9 +117,9 @@ class Story extends RequestCollection
      *
      * @param string $reason (optional) Reason for the request.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelsTrayFeedResponse
+     * @return \InstagramNextAPI\Response\ReelsTrayFeedResponse
      *
      * @see Story::getUserStoryFeed()
      */
@@ -144,9 +144,9 @@ class Story extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserReelMediaFeedResponse
+     * @return \InstagramNextAPI\Response\UserReelMediaFeedResponse
      *
      * @see Story::getUserStoryFeed()
      */
@@ -170,9 +170,9 @@ class Story extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserStoryFeedResponse
+     * @return \InstagramNextAPI\Response\UserStoryFeedResponse
      *
      * @see Story::getUserReelMediaFeed()
      */
@@ -197,9 +197,9 @@ class Story extends RequestCollection
      * @param string|string[] $feedList List of numerical UserPK IDs, OR highlight IDs (such as `highlight:123882132324123`).
      * @param string          $source   (optional) Source app-module where the request was made.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelsMediaResponse
+     * @return \InstagramNextAPI\Response\ReelsMediaResponse
      *
      * @see Highlight::getUserFeed() More info about when to use this API for highlight-details.
      */
@@ -229,9 +229,9 @@ class Story extends RequestCollection
     /**
      * Get your archived story media feed.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ArchivedStoriesFeedResponse
+     * @return \InstagramNextAPI\Response\ArchivedStoriesFeedResponse
      */
     public function getArchivedStoriesFeed()
     {
@@ -252,9 +252,9 @@ class Story extends RequestCollection
      * @param string      $storyPk The story media item's PK in Instagram's internal format (ie "3482384834").
      * @param string|null $maxId   Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelMediaViewerResponse
+     * @return \InstagramNextAPI\Response\ReelMediaViewerResponse
      */
     public function getStoryItemViewers(
         $storyPk,
@@ -279,9 +279,9 @@ class Story extends RequestCollection
      * @param int    $votingOption Value that represents the voting option of the voter. 0 for the first option, 1 for the second option.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelMediaViewerResponse
+     * @return \InstagramNextAPI\Response\ReelMediaViewerResponse
      */
     public function votePollStory(
         $storyId,
@@ -312,9 +312,9 @@ class Story extends RequestCollection
      * @param float  $votingOption Value that represents the voting option of the voter. Should be a float from 0 to 1 (ie "0.25").
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelMediaViewerResponse
+     * @return \InstagramNextAPI\Response\ReelMediaViewerResponse
      */
     public function voteSliderStory(
         $storyId,
@@ -346,9 +346,9 @@ class Story extends RequestCollection
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\StoryPollVotersResponse
+     * @return \InstagramNextAPI\Response\StoryPollVotersResponse
      */
     public function getStoryPollVoters(
         $storyId,
@@ -377,9 +377,9 @@ class Story extends RequestCollection
      * @param string $questionId   The question ID in Instagram's internal format (ie "17956159684032257").
      * @param string $responseText The text to respond to the question with. (Note: Android App limits this to 94 characters).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function answerStoryQuestion(
         $storyId,
@@ -402,9 +402,9 @@ class Story extends RequestCollection
      * @param string      $questionId The question ID in Instagram's internal format (ie "17956159684032257").
      * @param string|null $maxId      Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\StoryAnswersResponse
+     * @return \InstagramNextAPI\Response\StoryAnswersResponse
      */
     public function getStoryAnswers(
          $storyId,
@@ -423,9 +423,9 @@ class Story extends RequestCollection
     /**
      * Gets the created story countdowns of the current account.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\StoryCountdownsResponse
+     * @return \InstagramNextAPI\Response\StoryCountdownsResponse
      */
     public function getStoryCountdowns()
     {
@@ -438,9 +438,9 @@ class Story extends RequestCollection
      *
      * @param string $countdownId The countdown ID in Instagram's internal format (ie "17956159684032257").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function followStoryCountdown(
         $countdownId)
@@ -457,9 +457,9 @@ class Story extends RequestCollection
      *
      * @param string $countdownId The countdown ID in Instagram's internal format (ie "17956159684032257").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function unfollowStoryCountdown(
         $countdownId)
@@ -476,9 +476,9 @@ class Story extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CharitiesListResponse
+     * @return \InstagramNextAPI\Response\CharitiesListResponse
      */
     public function getCharities(
         $maxId = null)
@@ -498,9 +498,9 @@ class Story extends RequestCollection
      * @param string      $query Search query.
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CharitiesListResponse
+     * @return \InstagramNextAPI\Response\CharitiesListResponse
      */
     public function searchCharities(
         $query,
@@ -519,7 +519,7 @@ class Story extends RequestCollection
     /**
      * Creates the array for a donation sticker.
      *
-     * @param \InstagramAPI\Response\Model\User $charityUser          The User object of the charity's Instagram account.
+     * @param \InstagramNextAPI\Response\Model\User $charityUser          The User object of the charity's Instagram account.
      * @param float                             $x
      * @param float                             $y
      * @param float                             $width
@@ -612,9 +612,9 @@ class Story extends RequestCollection
      * @param Response\Model\Item[] $items Array of one or more story media Items.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaSeenResponse
+     * @return \InstagramNextAPI\Response\MediaSeenResponse
      *
      * @see Location::markStoryMediaSeen()
      * @see Hashtag::markStoryMediaSeen()
@@ -633,9 +633,9 @@ class Story extends RequestCollection
      * to your story), and the list of users you have blocked from seeing your
      * stories.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelSettingsResponse
+     * @return \InstagramNextAPI\Response\ReelSettingsResponse
      */
     public function getReelSettings()
     {
@@ -655,9 +655,9 @@ class Story extends RequestCollection
      *                                       "on" and "off".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReelSettingsResponse
+     * @return \InstagramNextAPI\Response\ReelSettingsResponse
      */
     public function setReelSettings(
         $messagePrefs,

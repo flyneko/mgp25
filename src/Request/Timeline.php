@@ -1,13 +1,13 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Exception\UploadFailedException;
-use InstagramAPI\Request\Metadata\Internal as InternalMetadata;
-use InstagramAPI\Response;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Exception\InstagramException;
+use InstagramNextAPI\Exception\UploadFailedException;
+use InstagramNextAPI\Request\Metadata\Internal as InternalMetadata;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions for managing your timeline and interacting with other timelines.
@@ -25,9 +25,9 @@ class Timeline extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -45,10 +45,10 @@ class Timeline extends RequestCollection
      * @param array  $externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -76,10 +76,10 @@ class Timeline extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureTimelineAlbum() for available album metadata fields.
      */
@@ -157,7 +157,7 @@ class Timeline extends RequestCollection
         $albumInternalMetadata = new InternalMetadata();
         // Configure the uploaded album and attach it to our timeline.
         try {
-            /** @var \InstagramAPI\Response\ConfigureResponse $configure */
+            /** @var \InstagramNextAPI\Response\ConfigureResponse $configure */
             $configure = $this->ig->internal->configureWithRetries(
                 function () use ($media, $albumInternalMetadata, $externalMetadata) {
                     return $this->ig->internal->configureTimelineAlbum($media, $albumInternalMetadata, $externalMetadata);
@@ -205,9 +205,9 @@ class Timeline extends RequestCollection
      *                             "battery_level" Sets the current device battery
      *                             level.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TimelineFeedResponse
+     * @return \InstagramNextAPI\Response\TimelineFeedResponse
      */
     public function getTimelineFeed(
         $maxId = null,
@@ -332,9 +332,9 @@ class Timeline extends RequestCollection
      * @param string      $userId Numerical UserPK ID.
      * @param string|null $maxId  Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserFeedResponse
+     * @return \InstagramNextAPI\Response\UserFeedResponse
      */
     public function getUserFeed(
         $userId,
@@ -356,9 +356,9 @@ class Timeline extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserFeedResponse
+     * @return \InstagramNextAPI\Response\UserFeedResponse
      */
     public function getSelfUserFeed(
         $maxId = null)
@@ -369,9 +369,9 @@ class Timeline extends RequestCollection
     /**
      * Get your archived timeline media feed.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserFeedResponse
+     * @return \InstagramNextAPI\Response\UserFeedResponse
      */
     public function getArchivedMediaFeed()
     {
@@ -391,9 +391,9 @@ class Timeline extends RequestCollection
      *                        Otherwise, if false, makes the media public to everyone again.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ArchiveMediaResponse
+     * @return \InstagramNextAPI\Response\ArchiveMediaResponse
      */
     public function archiveMedia(
         $mediaId,
@@ -422,7 +422,7 @@ class Timeline extends RequestCollection
      * @param bool   $printProgress  (optional) Toggles terminal output.
      *
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      */
     public function backup(
         $baseOutputPath = null,

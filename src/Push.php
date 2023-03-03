@@ -1,12 +1,12 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
 use Evenement\EventEmitterInterface;
 use Evenement\EventEmitterTrait;
-use InstagramAPI\Push\Fbns;
-use InstagramAPI\Push\Notification;
-use InstagramAPI\React\Connector;
+use InstagramNextAPI\Push\Fbns;
+use InstagramNextAPI\Push\Notification;
+use InstagramNextAPI\React\Connector;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use React\EventLoop\LoopInterface;

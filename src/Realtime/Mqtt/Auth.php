@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Realtime\Mqtt;
+namespace InstagramNextAPI\Realtime\Mqtt;
 
 use Fbns\Client\AuthInterface;
-use InstagramAPI\Instagram;
+use InstagramNextAPI\Instagram;
 
 class Auth implements AuthInterface
 {

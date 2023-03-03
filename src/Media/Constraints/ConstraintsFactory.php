@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Media\Constraints;
+namespace InstagramNextAPI\Media\Constraints;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Media\ConstraintsInterface;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Media\ConstraintsInterface;
 
 class ConstraintsFactory
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 
 /**
  * Functions related to managing and exploring user tags in media.
@@ -18,9 +18,9 @@ class Usertag extends RequestCollection
      * @param string  $captionText Caption to use for the media.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EditMediaResponse
+     * @return \InstagramNextAPI\Response\EditMediaResponse
      */
     public function tagMedia(
         $mediaId,
@@ -46,9 +46,9 @@ class Usertag extends RequestCollection
      * @param string $captionText Caption to use for the media.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EditMediaResponse
+     * @return \InstagramNextAPI\Response\EditMediaResponse
      */
     public function untagMedia(
         $mediaId,
@@ -70,9 +70,9 @@ class Usertag extends RequestCollection
      *
      * @param string $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaInfoResponse
+     * @return \InstagramNextAPI\Response\MediaInfoResponse
      */
     public function removeSelfTag(
         $mediaId)
@@ -90,9 +90,9 @@ class Usertag extends RequestCollection
      * @param string      $userId Numerical UserPK ID.
      * @param string|null $maxId  Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UsertagsResponse
+     * @return \InstagramNextAPI\Response\UsertagsResponse
      */
     public function getUserFeed(
         $userId,
@@ -112,9 +112,9 @@ class Usertag extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UsertagsResponse
+     * @return \InstagramNextAPI\Response\UsertagsResponse
      */
     public function getSelfUserFeed(
         $maxId = null)
@@ -127,9 +127,9 @@ class Usertag extends RequestCollection
      *
      * @param bool $enabled TRUE to manually accept photos, or FALSE to accept automatically.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ReviewPreferenceResponse
+     * @return \InstagramNextAPI\Response\ReviewPreferenceResponse
      */
     public function setReviewPreference(
         $enabled)

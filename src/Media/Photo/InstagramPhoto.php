@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Media\Photo;
+namespace InstagramNextAPI\Media\Photo;
 
-use InstagramAPI\Media\Geometry\Dimensions;
-use InstagramAPI\Media\Geometry\Rectangle;
-use InstagramAPI\Media\InstagramMedia;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Media\Geometry\Dimensions;
+use InstagramNextAPI\Media\Geometry\Rectangle;
+use InstagramNextAPI\Media\InstagramMedia;
+use InstagramNextAPI\Utils;
 
 /**
  * Automatically prepares a photo file according to Instagram's rules.

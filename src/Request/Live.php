@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Response;
-use InstagramAPI\Signatures;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Signatures;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions for exploring and interacting with live broadcasts.
@@ -14,9 +14,9 @@ class Live extends RequestCollection
     /**
      * Get suggested broadcasts.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SuggestedBroadcastsResponse
+     * @return \InstagramNextAPI\Response\SuggestedBroadcastsResponse
      */
     public function getSuggestedBroadcasts()
     {
@@ -34,9 +34,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastInfoResponse
+     * @return \InstagramNextAPI\Response\BroadcastInfoResponse
      */
     public function getInfo(
         $broadcastId)
@@ -52,9 +52,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ViewerListResponse
+     * @return \InstagramNextAPI\Response\ViewerListResponse
      */
     public function getViewerList(
         $broadcastId)
@@ -68,9 +68,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FinalViewerListResponse
+     * @return \InstagramNextAPI\Response\FinalViewerListResponse
      */
     public function getFinalViewerList(
         $broadcastId)
@@ -85,9 +85,9 @@ class Live extends RequestCollection
      * @param string      $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string|null $maxId       Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PostLiveViewerListResponse
+     * @return \InstagramNextAPI\Response\PostLiveViewerListResponse
      */
     public function getPostLiveViewerList(
         $broadcastId,
@@ -107,9 +107,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param bool   $isViewer    Indicates if this request is being ran as a viewer (optional).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastHeartbeatAndViewerCountResponse
+     * @return \InstagramNextAPI\Response\BroadcastHeartbeatAndViewerCountResponse
      */
     public function getHeartbeatAndViewerCount(
         $broadcastId,
@@ -139,9 +139,9 @@ class Live extends RequestCollection
      * @param int    $lastSeenTs     Last seen timestamp (optional).
      * @param int    $lastFetchTs    Last fetch timestamp (optional).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastJoinRequestCountResponse|null
+     * @return \InstagramNextAPI\Response\BroadcastJoinRequestCountResponse|null
      */
     public function getJoinRequestCounts(
         $broadcastId,
@@ -155,7 +155,7 @@ class Live extends RequestCollection
                 ->addParam('last_seen_ts', $lastSeenTs)
                 ->addParam('last_fetch_ts', $lastFetchTs)
                 ->getResponse(new Response\BroadcastJoinRequestCountResponse());
-        } catch (\InstagramAPI\Exception\EmptyResponseException $e) {
+        } catch (\InstagramNextAPI\Exception\EmptyResponseException $e) {
             return null;
         }
     }
@@ -166,9 +166,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $questionId  The question ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function showQuestion(
         $broadcastId,
@@ -187,9 +187,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $questionId  The question ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function hideQuestion(
         $broadcastId,
@@ -210,9 +210,9 @@ class Live extends RequestCollection
      * @param string $broadcastId  The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $questionText Your question text.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function question(
         $broadcastId,
@@ -229,9 +229,9 @@ class Live extends RequestCollection
     /**
      * Get all received responses from a story question.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastQuestionsResponse
+     * @return \InstagramNextAPI\Response\BroadcastQuestionsResponse
      */
     public function getQuestions()
     {
@@ -244,9 +244,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastQuestionsResponse
+     * @return \InstagramNextAPI\Response\BroadcastQuestionsResponse
      */
     public function getLiveBroadcastQuestions(
         $broadcastId)
@@ -264,9 +264,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $viewerId    Numerical UserPK ID of the user to wave to.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function wave(
         $broadcastId,
@@ -286,9 +286,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $commentText Your comment text.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentBroadcastResponse
+     * @return \InstagramNextAPI\Response\CommentBroadcastResponse
      */
     public function comment(
         $broadcastId,
@@ -309,9 +309,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $commentId   Target comment ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PinCommentBroadcastResponse
+     * @return \InstagramNextAPI\Response\PinCommentBroadcastResponse
      */
     public function pinComment(
         $broadcastId,
@@ -332,9 +332,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param string $commentId   Pinned comment ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UnpinCommentBroadcastResponse
+     * @return \InstagramNextAPI\Response\UnpinCommentBroadcastResponse
      */
     public function unpinComment(
         $broadcastId,
@@ -356,9 +356,9 @@ class Live extends RequestCollection
      * @param int    $lastCommentTs     Last comments timestamp (optional).
      * @param int    $commentsRequested Number of comments requested (optional).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastCommentsResponse
+     * @return \InstagramNextAPI\Response\BroadcastCommentsResponse
      */
     public function getComments(
         $broadcastId,
@@ -378,9 +378,9 @@ class Live extends RequestCollection
      * @param int    $startingOffset (optional) The time-offset to start at when retrieving the comments.
      * @param string $encodingTag    (optional) TODO: ?.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PostLiveCommentsResponse
+     * @return \InstagramNextAPI\Response\PostLiveCommentsResponse
      */
     public function getPostLiveComments(
         $broadcastId,
@@ -398,9 +398,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EnableDisableLiveCommentsResponse
+     * @return \InstagramNextAPI\Response\EnableDisableLiveCommentsResponse
      */
     public function enableComments(
         $broadcastId)
@@ -417,9 +417,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EnableDisableLiveCommentsResponse
+     * @return \InstagramNextAPI\Response\EnableDisableLiveCommentsResponse
      */
     public function disableComments(
         $broadcastId)
@@ -439,9 +439,9 @@ class Live extends RequestCollection
      * @param int    $burstLikeCount Number of burst likes ("hearts") to send (optional).
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastLikeResponse
+     * @return \InstagramNextAPI\Response\BroadcastLikeResponse
      */
     public function like(
         $broadcastId,
@@ -468,9 +468,9 @@ class Live extends RequestCollection
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param int    $likeTs      Like timestamp.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BroadcastLikeCountResponse
+     * @return \InstagramNextAPI\Response\BroadcastLikeCountResponse
      */
     public function getLikeCount(
         $broadcastId,
@@ -488,9 +488,9 @@ class Live extends RequestCollection
      * @param int    $startingOffset (optional) The time-offset to start at when retrieving the likes.
      * @param string $encodingTag    (optional) TODO: ?.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PostLiveLikesResponse
+     * @return \InstagramNextAPI\Response\PostLiveLikesResponse
      */
     public function getPostLiveLikes(
         $broadcastId,
@@ -512,9 +512,9 @@ class Live extends RequestCollection
      * @param int $previewHeight (optional) Height.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CreateLiveResponse
+     * @return \InstagramNextAPI\Response\CreateLiveResponse
      *
      * @see Live::start()
      * @see Live::end()
@@ -553,9 +553,9 @@ class Live extends RequestCollection
      * @param string|null $latitude    (optional) Latitude.
      * @param string|null $longitude   (optional) Longitude.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\StartLiveResponse
+     * @return \InstagramNextAPI\Response\StartLiveResponse
      *
      * @see Live::create()
      * @see Live::end()
@@ -589,9 +589,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     private function _getQuestionStatus(
         $broadcastId)
@@ -612,9 +612,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function resumeBroadcastAfterContentMatch(
         $broadcastId)
@@ -635,9 +635,9 @@ class Live extends RequestCollection
      * @param string $broadcastId      The broadcast ID in Instagram's internal format (ie "17854587811139572").
      * @param bool   $copyrightWarning True when broadcast is ended via a copyright notice (optional).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      *
      * @see Live::create()
      * @see Live::start()
@@ -661,9 +661,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function addToPostLive(
         $broadcastId)
@@ -680,9 +680,9 @@ class Live extends RequestCollection
      *
      * @param string $broadcastId The broadcast ID in Instagram's internal format (ie "17854587811139572").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function deletePostLive(
         $broadcastId)

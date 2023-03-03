@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\React;
+namespace InstagramNextAPI\React;
 
 use Clue\React\HttpProxy\ProxyConnector as HttpConnectProxy;
 use Clue\React\Socks\Client as SocksProxy;
 use GuzzleHttp\Psr7\Uri;
-use InstagramAPI\Instagram;
+use InstagramNextAPI\Instagram;
 use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use React\Promise\RejectedPromise;

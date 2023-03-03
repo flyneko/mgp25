@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
 /**
  * Class for converting media IDs to/from Instagram's shortcode system.

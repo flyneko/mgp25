@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Exception\RequestHeadersTooLargeException;
-use InstagramAPI\Exception\ThrottledException;
-use InstagramAPI\Response;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Exception\RequestHeadersTooLargeException;
+use InstagramNextAPI\Exception\ThrottledException;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions related to finding, exploring and managing relations with people.
@@ -34,9 +34,9 @@ class People extends RequestCollection
      *                            "self_likers_self_likers_photo_view_profile",
      *                            "self_likers_self_likers_video_view_profile".
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function getInfoById(
         $userId,
@@ -58,9 +58,9 @@ class People extends RequestCollection
      * @param string $username Username as string (NOT as a numerical ID).
      * @param string $module   From which app module (page) you have opened the profile.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      *
      * @see People::getInfoById() For the list of supported modules.
      */
@@ -81,7 +81,7 @@ class People extends RequestCollection
      *
      * @param string $username Username as string (NOT as a numerical ID).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
      * @return string Their numerical UserPK ID.
      *
@@ -98,9 +98,9 @@ class People extends RequestCollection
      *
      * Also try Account::getCurrentUser() instead, for account details.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      *
      * @see Account::getCurrentUser()
      */
@@ -118,9 +118,9 @@ class People extends RequestCollection
      *
      * @param bool $prefetch Indicates if request is called due to prefetch.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ActivityNewsResponse
+     * @return \InstagramNextAPI\Response\ActivityNewsResponse
      */
     public function getRecentActivityInbox(
         $prefetch = false)
@@ -141,9 +141,9 @@ class People extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FollowingRecentActivityResponse
+     * @return \InstagramNextAPI\Response\FollowingRecentActivityResponse
      */
     public function getFollowingRecentActivity(
         $maxId = null)
@@ -162,9 +162,9 @@ class People extends RequestCollection
      * WARNING: This is a special, very heavily throttled API endpoint.
      * Instagram REQUIRES that you wait several minutes between calls to it.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BootstrapUsersResponse|null Will be NULL if throttled by Instagram.
+     * @return \InstagramNextAPI\Response\BootstrapUsersResponse|null Will be NULL if throttled by Instagram.
      */
     public function getBootstrapUsers()
     {
@@ -192,9 +192,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipsShowResponse
+     * @return \InstagramNextAPI\Response\FriendshipsShowResponse
      */
     public function getFriendship(
         $userId)
@@ -207,9 +207,9 @@ class People extends RequestCollection
      *
      * @param string|string[] $userList List of numerical UserPK IDs.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipsShowManyResponse
+     * @return \InstagramNextAPI\Response\FriendshipsShowManyResponse
      */
     public function getFriendships(
         $userList)
@@ -229,9 +229,9 @@ class People extends RequestCollection
     /**
      * Get list of pending friendship requests.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FollowerAndFollowingResponse
+     * @return \InstagramNextAPI\Response\FollowerAndFollowingResponse
      */
     public function getPendingFriendships()
     {
@@ -245,9 +245,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function approveFriendship(
         $userId)
@@ -269,9 +269,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function rejectFriendship(
         $userId)
@@ -290,9 +290,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function removeFollower(
         $userId)
@@ -311,9 +311,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function markUserOverage(
         $userId)
@@ -335,9 +335,9 @@ class People extends RequestCollection
      * @param string|null $maxId       Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FollowerAndFollowingResponse
+     * @return \InstagramNextAPI\Response\FollowerAndFollowingResponse
      *
      * @see Signatures::generateUUID() To create a UUID.
      * @see examples/rankTokenUsage.php For an example.
@@ -371,9 +371,9 @@ class People extends RequestCollection
      * @param string|null $maxId       Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FollowerAndFollowingResponse
+     * @return \InstagramNextAPI\Response\FollowerAndFollowingResponse
      *
      * @see Signatures::generateUUID() To create a UUID.
      * @see examples/rankTokenUsage.php For an example.
@@ -404,9 +404,9 @@ class People extends RequestCollection
      * @param string|null $searchQuery Limit the userlist to ones matching the query.
      * @param string|null $maxId       Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FollowerAndFollowingResponse
+     * @return \InstagramNextAPI\Response\FollowerAndFollowingResponse
      *
      * @see Signatures::generateUUID() To create a UUID.
      * @see examples/rankTokenUsage.php For an example.
@@ -426,9 +426,9 @@ class People extends RequestCollection
      * @param string|null $searchQuery Limit the userlist to ones matching the query.
      * @param string|null $maxId       Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FollowerAndFollowingResponse
+     * @return \InstagramNextAPI\Response\FollowerAndFollowingResponse
      *
      * @see Signatures::generateUUID() To create a UUID.
      * @see examples/rankTokenUsage.php For an example.
@@ -453,9 +453,9 @@ class People extends RequestCollection
      * @throws \InvalidArgumentException                  If invalid query or
      *                                                    trying to exclude too
      *                                                    many user IDs.
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SearchUserResponse
+     * @return \InstagramNextAPI\Response\SearchUserResponse
      *
      * @see SearchUserResponse::getRankToken() To get a rank token from the response.
      * @see examples/paginateWithExclusion.php For an example.
@@ -498,9 +498,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\AccountDetailsResponse
+     * @return \InstagramNextAPI\Response\AccountDetailsResponse
      */
     public function getAccountDetails(
         $userId)
@@ -514,9 +514,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FormerUsernamesResponse
+     * @return \InstagramNextAPI\Response\FormerUsernamesResponse
      */
     public function getFormerUsernames(
         $userId)
@@ -530,9 +530,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPk ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SharedFollowersResponse
+     * @return \InstagramNextAPI\Response\SharedFollowersResponse
      */
     public function getSharedFollowers(
         $userId)
@@ -547,9 +547,9 @@ class People extends RequestCollection
      * @param string      $targetUserId Numerical UserPk ID.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ActiveFeedAdsResponse
+     * @return \InstagramNextAPI\Response\ActiveFeedAdsResponse
      */
     public function getActiveFeedAds(
         $targetUserId,
@@ -564,9 +564,9 @@ class People extends RequestCollection
      * @param string      $targetUserId Numerical UserPk ID.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ActiveReelAdsResponse
+     * @return \InstagramNextAPI\Response\ActiveReelAdsResponse
      */
     public function getActiveStoryAds(
         $targetUserId,
@@ -583,7 +583,7 @@ class People extends RequestCollection
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
      * @return Response
      */
@@ -625,9 +625,9 @@ class People extends RequestCollection
      * @param array  $contacts
      * @param string $module
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LinkAddressBookResponse
+     * @return \InstagramNextAPI\Response\LinkAddressBookResponse
      *
      * @see People::unlinkAddressBook()
      */
@@ -650,9 +650,9 @@ class People extends RequestCollection
     /**
      * Unlink your address book from Instagram.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UnlinkAddressBookResponse
+     * @return \InstagramNextAPI\Response\UnlinkAddressBookResponse
      */
     public function unlinkAddressBook()
     {
@@ -671,9 +671,9 @@ class People extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DiscoverPeopleResponse
+     * @return \InstagramNextAPI\Response\DiscoverPeopleResponse
      */
     public function discoverPeople(
         $maxId = null)
@@ -698,9 +698,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SuggestedUsersResponse
+     * @return \InstagramNextAPI\Response\SuggestedUsersResponse
      */
     public function getSuggestedUsers(
         $userId)
@@ -717,9 +717,9 @@ class People extends RequestCollection
      * sign" on your own profile in the Instagram app. Its amount of suggestions
      * matches the number on the badge, and it usually only has a handful (1-4).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SuggestedUsersBadgeResponse
+     * @return \InstagramNextAPI\Response\SuggestedUsersBadgeResponse
      */
     public function getSuggestedUsersBadge()
     {
@@ -764,9 +764,9 @@ class People extends RequestCollection
      *                          must match that user's "algorithm" value in
      *                          functions like People::discoverPeople().
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SuggestedUsersResponse
+     * @return \InstagramNextAPI\Response\SuggestedUsersResponse
      */
     public function hideSuggestedUser(
         $userId,
@@ -786,9 +786,9 @@ class People extends RequestCollection
      * @param string      $userId  Numerical UserPK ID.
      * @param string|null $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function follow(
         $userId,
@@ -815,9 +815,9 @@ class People extends RequestCollection
      * @param string      $userId  Numerical UserPK ID.
      * @param string|null $mediaId The media ID in Instagram's internal format (ie "3482384834_43294").
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function unfollow(
         $userId,
@@ -848,9 +848,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function favorite(
         $userId)
@@ -868,9 +868,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function unfavorite(
         $userId)
@@ -888,9 +888,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function favoriteForStories(
         $userId)
@@ -908,9 +908,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function unfavoriteForStories(
         $userId)
@@ -929,9 +929,9 @@ class People extends RequestCollection
      * @param string $userId     Numerical UserPK ID.
      * @param string $sourceName (optional) Source app-module of the report.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function report(
         $userId,
@@ -953,9 +953,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function block(
         $userId)
@@ -978,9 +978,9 @@ class People extends RequestCollection
      *                       Available options: 'story', 'post' or 'all'.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function muteUserMedia(
         $userId,
@@ -997,9 +997,9 @@ class People extends RequestCollection
      *                       Available options: 'story', 'post' or 'all'.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function unmuteUserMedia(
         $userId,
@@ -1017,9 +1017,9 @@ class People extends RequestCollection
      * @param string $endpoint API endpoint for muting/unmuting user media.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      *
      * @see People::muteUserMedia()
      * @see People::unmuteUserMedia()
@@ -1057,9 +1057,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      */
     public function unblock(
         $userId)
@@ -1077,9 +1077,9 @@ class People extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BlockedListResponse
+     * @return \InstagramNextAPI\Response\BlockedListResponse
      */
     public function getBlockedList(
         $maxId = null)
@@ -1098,9 +1098,9 @@ class People extends RequestCollection
      * @param string $userId Numerical UserPK ID.
      * @param string $source (optional) The source where this request was triggered.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      *
      * @see People::muteFriendStory()
      */
@@ -1121,9 +1121,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      *
      * @see People::unmuteFriendStory()
      */
@@ -1141,9 +1141,9 @@ class People extends RequestCollection
     /**
      * Get the list of users who are blocked from seeing your stories.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BlockedReelsResponse
+     * @return \InstagramNextAPI\Response\BlockedReelsResponse
      */
     public function getBlockedStoryList()
     {
@@ -1163,9 +1163,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      *
      * @see People::blockMyStory()
      */
@@ -1186,9 +1186,9 @@ class People extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FriendshipResponse
+     * @return \InstagramNextAPI\Response\FriendshipResponse
      *
      * @see People::unblockMyStory()
      */
@@ -1205,9 +1205,9 @@ class People extends RequestCollection
     /**
      * Get the list of users on your close friends list.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CloseFriendsResponse
+     * @return \InstagramNextAPI\Response\CloseFriendsResponse
      */
     public function getCloseFriends()
     {
@@ -1218,9 +1218,9 @@ class People extends RequestCollection
     /**
      * Get the list of suggested users for your close friends list.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CloseFriendsResponse
+     * @return \InstagramNextAPI\Response\CloseFriendsResponse
      */
     public function getSuggestedCloseFriends()
     {
@@ -1238,9 +1238,9 @@ class People extends RequestCollection
      * @param string $module (optional) From which app module (page) you have change your close friends list.
      * @param string $source (optional) Source page of app-module of where you changed your close friends list.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function setCloseFriends(
         array $add,
@@ -1263,9 +1263,9 @@ class People extends RequestCollection
     /**
      * Gets a list of ranked users to display in Android's share UI.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SharePrefillResponse
+     * @return \InstagramNextAPI\Response\SharePrefillResponse
      */
     public function getSharePrefill()
     {

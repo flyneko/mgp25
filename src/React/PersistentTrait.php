@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\React;
+namespace InstagramNextAPI\React;
 
 use React\EventLoop\Timer\TimerInterface;
 use React\Promise\PromiseInterface;

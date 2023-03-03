@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Media;
+namespace InstagramNextAPI\Media;
 
 /**
  * Represents Instagram's media constraints.

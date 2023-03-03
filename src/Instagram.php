@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
-use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Response\Model\User;
-use InstagramAPI\Settings\StorageHandler;
+use InstagramNextAPI\Exception\InstagramException;
+use InstagramNextAPI\Response\Model\User;
+use InstagramNextAPI\Settings\StorageHandler;
 
 /**
  * Instagram's Private API v7.0.1.
@@ -46,7 +46,7 @@ class Instagram implements ExperimentsInterface
     /**
      * The Android device for the currently active user.
      *
-     * @var \InstagramAPI\Devices\DeviceInterface
+     * @var \InstagramNextAPI\Devices\DeviceInterface
      */
     public $device;
 
@@ -134,7 +134,7 @@ class Instagram implements ExperimentsInterface
     /**
      * The account settings storage.
      *
-     * @var \InstagramAPI\Settings\StorageHandler|null
+     * @var \InstagramNextAPI\Settings\StorageHandler|null
      */
     public $settings;
 
@@ -213,7 +213,7 @@ class Instagram implements ExperimentsInterface
      * @param array $storageConfig  Configuration for the desired
      *                              user settings storage backend.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      */
     public function __construct(
         $debug = false,
@@ -362,9 +362,9 @@ class Instagram implements ExperimentsInterface
      * @param bool $force Force login through existing login state
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LoginResponse|null
+     * @return \InstagramNextAPI\Response\LoginResponse|null
      *
      * @see Instagram::login() The public login handler with a full description.
      */
@@ -391,7 +391,7 @@ class Instagram implements ExperimentsInterface
 
             try {
                 $response = $this->account->login($username, $password);
-            } catch (\InstagramAPI\Exception\InstagramException $e) {
+            } catch (\InstagramNextAPI\Exception\InstagramException $e) {
                 if ($e->hasResponse() && $e->getResponse()->isTwoFactorRequired()) {
                     // Login failed because two-factor login is required.
                     // Return server response to tell user they need 2-factor.
@@ -432,9 +432,9 @@ class Instagram implements ExperimentsInterface
      *                                    Default value is the first argument $username
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LoginResponse
+     * @return \InstagramNextAPI\Response\LoginResponse
      */
     public function finishTwoFactorLogin(
         $username,
@@ -493,9 +493,9 @@ class Instagram implements ExperimentsInterface
      *                                    Email and phone aren't allowed here.
      *                                    Default value is the first argument $username
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TwoFactorLoginSMSResponse
+     * @return \InstagramNextAPI\Response\TwoFactorLoginSMSResponse
      */
     public function sendTwoFactorLoginSMS(
         $username,
@@ -538,9 +538,9 @@ class Instagram implements ExperimentsInterface
      *
      * @param string $username Your Instagram username.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UsersLookupResponse
+     * @return \InstagramNextAPI\Response\UsersLookupResponse
      */
     public function userLookup(
         $username)
@@ -561,9 +561,9 @@ class Instagram implements ExperimentsInterface
      *
      * @param string $username Your Instagram username.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\RecoveryResponse
+     * @return \InstagramNextAPI\Response\RecoveryResponse
      */
     public function sendRecoveryEmail(
         $username)
@@ -571,7 +571,7 @@ class Instagram implements ExperimentsInterface
         // Verify that they can use the recovery email option.
         $userLookup = $this->userLookup($username);
         if (!$userLookup->getCanEmailReset()) {
-            throw new \InstagramAPI\Exception\InternalException('Email recovery is not available, since your account lacks a verified email address.');
+            throw new \InstagramNextAPI\Exception\InternalException('Email recovery is not available, since your account lacks a verified email address.');
         }
 
         return $this->account->sendRecoveryFlowEmail($username);
@@ -587,9 +587,9 @@ class Instagram implements ExperimentsInterface
      *
      * @param string $username Your Instagram username.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\RecoveryResponse
+     * @return \InstagramNextAPI\Response\RecoveryResponse
      */
     public function sendRecoverySMS(
         $username)
@@ -597,7 +597,7 @@ class Instagram implements ExperimentsInterface
         // Verify that they can use the recovery SMS option.
         $userLookup = $this->userLookup($username);
         if (!$userLookup->getHasValidPhone() || !$userLookup->getCanSmsReset()) {
-            throw new \InstagramAPI\Exception\InternalException('SMS recovery is not available, since your account lacks a verified phone number.');
+            throw new \InstagramNextAPI\Exception\InternalException('SMS recovery is not available, since your account lacks a verified phone number.');
         }
 
         return $this->account->sendRecoverySms($username);
@@ -612,7 +612,7 @@ class Instagram implements ExperimentsInterface
      * @param string $password Your Instagram password.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      */
     protected function _setUser(
         $username,
@@ -717,7 +717,7 @@ class Instagram implements ExperimentsInterface
      * @param string $username Your Instagram username.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      */
     protected function _setUserWithoutPassword(
         $username)
@@ -745,7 +745,7 @@ class Instagram implements ExperimentsInterface
      * @param Response\LoginResponse $response The login response.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      */
     protected function _updateLoginState(
         Response\LoginResponse $response)
@@ -786,7 +786,7 @@ class Instagram implements ExperimentsInterface
     /**
      * Sends pre-login flow. This is required to emulate real device behavior.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      */
     protected function _sendPreLoginFlow()
     {
@@ -813,9 +813,9 @@ class Instagram implements ExperimentsInterface
      *                                 parameter.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LoginResponse|null A login response if a
+     * @return \InstagramNextAPI\Response\LoginResponse|null A login response if a
      *                                                   full (re-)login is
      *                                                   needed during the login
      *                                                   flow attempt, otherwise
@@ -869,9 +869,9 @@ class Instagram implements ExperimentsInterface
      * logging out of the APP. But you SHOULDN'T do that! In almost 100% of all
      * cases you want to *stay logged in* sof that `login()` resumes your session!
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LogoutResponse
+     * @return \InstagramNextAPI\Response\LogoutResponse
      *
      * @see Instagram::login()
      */
@@ -933,7 +933,7 @@ class Instagram implements ExperimentsInterface
      *
      * @param string $url
      *
-     * @return \InstagramAPI\Request
+     * @return \InstagramNextAPI\Request
      */
     public function request(
         $url)

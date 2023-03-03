@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+namespace InstagramNextAPI\Realtime\Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
-use InstagramAPI\Response\Model\UserPresence;
+use InstagramNextAPI\Realtime\HandlerInterface;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
+use InstagramNextAPI\Response\Model\UserPresence;
 
 class PresenceHandler extends AbstractHandler implements HandlerInterface
 {

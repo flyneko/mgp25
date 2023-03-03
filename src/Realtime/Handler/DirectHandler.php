@@ -1,24 +1,24 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+namespace InstagramNextAPI\Realtime\Handler;
 
-use InstagramAPI\Client as HttpClient;
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\Action\AckAction;
-use InstagramAPI\Realtime\Payload\Event\PatchEvent;
-use InstagramAPI\Realtime\Payload\Event\PatchEventOp;
-use InstagramAPI\Realtime\Payload\RealtimeAction;
-use InstagramAPI\Realtime\Payload\RealtimeEvent;
-use InstagramAPI\Realtime\Payload\StoryScreenshot;
-use InstagramAPI\Realtime\Payload\ThreadAction;
-use InstagramAPI\Realtime\Payload\ThreadActivity;
-use InstagramAPI\Response\Model\ActionBadge;
-use InstagramAPI\Response\Model\DirectInbox;
-use InstagramAPI\Response\Model\DirectSeenItemPayload;
-use InstagramAPI\Response\Model\DirectThread;
-use InstagramAPI\Response\Model\DirectThreadItem;
-use InstagramAPI\Response\Model\DirectThreadLastSeenAt;
+use InstagramNextAPI\Client as HttpClient;
+use InstagramNextAPI\Realtime\HandlerInterface;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\Payload\Action\AckAction;
+use InstagramNextAPI\Realtime\Payload\Event\PatchEvent;
+use InstagramNextAPI\Realtime\Payload\Event\PatchEventOp;
+use InstagramNextAPI\Realtime\Payload\RealtimeAction;
+use InstagramNextAPI\Realtime\Payload\RealtimeEvent;
+use InstagramNextAPI\Realtime\Payload\StoryScreenshot;
+use InstagramNextAPI\Realtime\Payload\ThreadAction;
+use InstagramNextAPI\Realtime\Payload\ThreadActivity;
+use InstagramNextAPI\Response\Model\ActionBadge;
+use InstagramNextAPI\Response\Model\DirectInbox;
+use InstagramNextAPI\Response\Model\DirectSeenItemPayload;
+use InstagramNextAPI\Response\Model\DirectThread;
+use InstagramNextAPI\Response\Model\DirectThreadItem;
+use InstagramNextAPI\Response\Model\DirectThreadLastSeenAt;
 
 class DirectHandler extends AbstractHandler implements HandlerInterface
 {

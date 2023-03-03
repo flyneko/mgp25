@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 
 /**
  * Functions related to creating and managing collections of your saved media.
@@ -19,9 +19,9 @@ class Collection extends RequestCollection
      *
      * @param string|null $maxId Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GetCollectionsListResponse
+     * @return \InstagramNextAPI\Response\GetCollectionsListResponse
      */
     public function getList(
         $maxId = null)
@@ -41,9 +41,9 @@ class Collection extends RequestCollection
      * @param string      $collectionId The collection ID.
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CollectionFeedResponse
+     * @return \InstagramNextAPI\Response\CollectionFeedResponse
      */
     public function getFeed(
         $collectionId,
@@ -63,9 +63,9 @@ class Collection extends RequestCollection
      * @param string $name       Name of the collection.
      * @param string $moduleName (optional) From which app module (page) you're performing this action.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CreateCollectionResponse
+     * @return \InstagramNextAPI\Response\CreateCollectionResponse
      */
     public function create(
         $name,
@@ -87,9 +87,9 @@ class Collection extends RequestCollection
      *
      * @param string $collectionId The collection ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DeleteCollectionResponse
+     * @return \InstagramNextAPI\Response\DeleteCollectionResponse
      */
     public function delete(
         $collectionId)
@@ -112,9 +112,9 @@ class Collection extends RequestCollection
      *                             string 'module_name' (optional).
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EditCollectionResponse
+     * @return \InstagramNextAPI\Response\EditCollectionResponse
      */
     public function edit(
         $collectionId,
@@ -160,9 +160,9 @@ class Collection extends RequestCollection
      * @param string   $mediaId       The media ID in Instagram's internal format (ie "3482384834_43294").
      * @param string   $moduleName    (optional) From which app module (page) you're performing this action.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\EditCollectionResponse
+     * @return \InstagramNextAPI\Response\EditCollectionResponse
      */
     public function removeMedia(
         array $collectionIds,

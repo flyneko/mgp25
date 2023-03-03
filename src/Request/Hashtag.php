@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Exception\RequestHeadersTooLargeException;
-use InstagramAPI\Response;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Exception\RequestHeadersTooLargeException;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Utils;
 
 /**
  * Functions related to finding and exploring hashtags.
@@ -17,9 +17,9 @@ class Hashtag extends RequestCollection
      * @param string $hashtag The hashtag, not including the "#".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagInfoResponse
+     * @return \InstagramNextAPI\Response\TagInfoResponse
      */
     public function getInfo(
         $hashtag)
@@ -36,9 +36,9 @@ class Hashtag extends RequestCollection
      * @param string $hashtag The hashtag, not including the "#".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagsStoryResponse
+     * @return \InstagramNextAPI\Response\TagsStoryResponse
      */
     public function getStory(
         $hashtag)
@@ -61,9 +61,9 @@ class Hashtag extends RequestCollection
      * @param string|null $maxId        Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagFeedResponse
+     * @return \InstagramNextAPI\Response\TagFeedResponse
      */
     public function getSection(
         $hashtag,
@@ -127,9 +127,9 @@ class Hashtag extends RequestCollection
      * @throws \InvalidArgumentException                  If invalid query or
      *                                                    trying to exclude too
      *                                                    many hashtags.
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SearchTagResponse
+     * @return \InstagramNextAPI\Response\SearchTagResponse
      *
      * @see SearchTagResponse::getRankToken() To get a rank token from the response.
      * @see examples/paginateWithExclusion.php For an example.
@@ -172,9 +172,9 @@ class Hashtag extends RequestCollection
      * @param string $hashtag The hashtag, not including the "#".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagRelatedResponse
+     * @return \InstagramNextAPI\Response\TagRelatedResponse
      */
     public function follow(
         $hashtag)
@@ -194,9 +194,9 @@ class Hashtag extends RequestCollection
      * @param string $hashtag The hashtag, not including the "#".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagRelatedResponse
+     * @return \InstagramNextAPI\Response\TagRelatedResponse
      */
     public function unfollow(
         $hashtag)
@@ -216,9 +216,9 @@ class Hashtag extends RequestCollection
      * @param string $hashtag The hashtag, not including the "#".
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagRelatedResponse
+     * @return \InstagramNextAPI\Response\TagRelatedResponse
      */
     public function getRelated(
         $hashtag)
@@ -243,9 +243,9 @@ class Hashtag extends RequestCollection
      * @param string|null $maxId     Next "maximum ID", used for pagination.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TagFeedResponse
+     * @return \InstagramNextAPI\Response\TagFeedResponse
      *
      * @see Hashtag::getSection() To see the function that will replace this one in the future.
      */
@@ -265,9 +265,9 @@ class Hashtag extends RequestCollection
      *
      * @param string $userId Numerical UserPK ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\HashtagsResponse
+     * @return \InstagramNextAPI\Response\HashtagsResponse
      */
     public function getFollowing(
         $userId)
@@ -279,9 +279,9 @@ class Hashtag extends RequestCollection
     /**
      * Get list of tags that you are following.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\HashtagsResponse
+     * @return \InstagramNextAPI\Response\HashtagsResponse
      */
     public function getSelfFollowing()
     {
@@ -291,9 +291,9 @@ class Hashtag extends RequestCollection
     /**
      * Get list of tags that are suggested to follow to.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\HashtagsResponse
+     * @return \InstagramNextAPI\Response\HashtagsResponse
      */
     public function getFollowSuggestions()
     {
@@ -328,9 +328,9 @@ class Hashtag extends RequestCollection
      *                                                media Items.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaSeenResponse
+     * @return \InstagramNextAPI\Response\MediaSeenResponse
      *
      * @see Story::markMediaSeen()
      * @see Location::markStoryMediaSeen()

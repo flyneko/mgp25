@@ -1,28 +1,28 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
 use GuzzleHttp\Psr7\LimitStream;
 use GuzzleHttp\Psr7\Stream;
-use InstagramAPI\Constants;
-use InstagramAPI\Exception\CheckpointRequiredException;
-use InstagramAPI\Exception\ConsentRequiredException;
-use InstagramAPI\Exception\FeedbackRequiredException;
-use InstagramAPI\Exception\InstagramException;
-use InstagramAPI\Exception\LoginRequiredException;
-use InstagramAPI\Exception\NetworkException;
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Exception\ThrottledException;
-use InstagramAPI\Exception\UploadFailedException;
-use InstagramAPI\Media\MediaDetails;
-use InstagramAPI\Media\Video\FFmpeg;
-use InstagramAPI\Media\Video\InstagramThumbnail;
-use InstagramAPI\Media\Video\VideoDetails;
-use InstagramAPI\Request;
-use InstagramAPI\Request\Metadata\Internal as InternalMetadata;
-use InstagramAPI\Response;
-use InstagramAPI\Signatures;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Exception\CheckpointRequiredException;
+use InstagramNextAPI\Exception\ConsentRequiredException;
+use InstagramNextAPI\Exception\FeedbackRequiredException;
+use InstagramNextAPI\Exception\InstagramException;
+use InstagramNextAPI\Exception\LoginRequiredException;
+use InstagramNextAPI\Exception\NetworkException;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Exception\ThrottledException;
+use InstagramNextAPI\Exception\UploadFailedException;
+use InstagramNextAPI\Media\MediaDetails;
+use InstagramNextAPI\Media\Video\FFmpeg;
+use InstagramNextAPI\Media\Video\InstagramThumbnail;
+use InstagramNextAPI\Media\Video\VideoDetails;
+use InstagramNextAPI\Request;
+use InstagramNextAPI\Request\Metadata\Internal as InternalMetadata;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Signatures;
+use InstagramNextAPI\Utils;
 use Winbox\Args;
 use function GuzzleHttp\Psr7\stream_for;
 
@@ -59,10 +59,10 @@ class Internal extends RequestCollection
      * @param array                 $externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSinglePhoto() for available metadata fields.
      */
@@ -113,8 +113,8 @@ class Internal extends RequestCollection
      * @param InternalMetadata $internalMetadata Internal library-generated metadata object.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException
      */
     public function uploadPhotoData(
         $targetFeed,
@@ -170,9 +170,9 @@ class Internal extends RequestCollection
      * @param array            $externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      */
     public function configureSinglePhoto(
         $targetFeed,
@@ -411,8 +411,8 @@ class Internal extends RequestCollection
      * @param InternalMetadata|null $internalMetadata (optional) Internal library-generated metadata object.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
      * @return InternalMetadata Updated internal metadata object.
      */
@@ -475,10 +475,10 @@ class Internal extends RequestCollection
      * @param array                 $externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException If the video upload fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException If the video upload fails.
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      *
      * @see Internal::configureSingleVideo() for available metadata fields.
      */
@@ -505,7 +505,7 @@ class Internal extends RequestCollection
 
         // Configure the uploaded video and attach it to our timeline/story.
         try {
-            /** @var \InstagramAPI\Response\ConfigureResponse $configure */
+            /** @var \InstagramNextAPI\Response\ConfigureResponse $configure */
             $configure = $this->ig->internal->configureWithRetries(
                 function () use ($targetFeed, $internalMetadata, $externalMetadata) {
                     // Attempt to configure video parameters.
@@ -535,8 +535,8 @@ class Internal extends RequestCollection
      * @param array            $externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
-     * @throws \InstagramAPI\Exception\UploadFailedException
+     * @throws \InstagramNextAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\UploadFailedException
      */
     public function uploadVideoThumbnail(
         $targetFeed,
@@ -579,9 +579,9 @@ class Internal extends RequestCollection
      * @param int              $targetFeed       One of the FEED_X constants.
      * @param InternalMetadata $internalMetadata Internal library-generated metadata object.
      *
-     * @throws \InstagramAPI\Exception\InstagramException If the request fails.
+     * @throws \InstagramNextAPI\Exception\InstagramException If the request fails.
      *
-     * @return \InstagramAPI\Response\UploadJobVideoResponse
+     * @return \InstagramNextAPI\Response\UploadJobVideoResponse
      */
     protected function _requestVideoUploadURL(
         $targetFeed,
@@ -617,9 +617,9 @@ class Internal extends RequestCollection
      * @param array            $externalMetadata (optional) User-provided metadata key-value pairs.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      */
     public function configureSingleVideo(
         $targetFeed,
@@ -876,9 +876,9 @@ class Internal extends RequestCollection
      *                                           for the album itself (its caption, location, etc).
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ConfigureResponse
+     * @return \InstagramNextAPI\Response\ConfigureResponse
      */
     public function configureTimelineAlbum(
         array $media,
@@ -1003,7 +1003,7 @@ class Internal extends RequestCollection
      *
      * @param Response\SyncResponse $syncResponse
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     protected function _saveExperiments(
         Response\SyncResponse $syncResponse)
@@ -1042,9 +1042,9 @@ class Internal extends RequestCollection
      * @param bool $prelogin
      * @param bool $useCsrfToken
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SyncResponse
+     * @return \InstagramNextAPI\Response\SyncResponse
      */
     public function syncDeviceFeatures(
         $prelogin = false,
@@ -1071,9 +1071,9 @@ class Internal extends RequestCollection
     /**
      * Perform an Instagram "feature synchronization" call for account.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SyncResponse
+     * @return \InstagramNextAPI\Response\SyncResponse
      */
     public function syncUserFeatures()
     {
@@ -1095,9 +1095,9 @@ class Internal extends RequestCollection
     /**
      * Send pre login launcher sync.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LauncherSyncResponse
+     * @return \InstagramNextAPI\Response\LauncherSyncResponse
      */
     public function preLoginLauncherSync() {
         $request = $this->ig->request('launcher/sync/')
@@ -1111,9 +1111,9 @@ class Internal extends RequestCollection
     /**
      * Send post login launcher sync.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LauncherSyncResponse
+     * @return \InstagramNextAPI\Response\LauncherSyncResponse
      */
     public function postLoginLauncherSync() {
         $request = $this->ig->request('launcher/sync/')
@@ -1130,9 +1130,9 @@ class Internal extends RequestCollection
     /**
      * Get decisions about device capabilities.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CapabilitiesDecisionsResponse
+     * @return \InstagramNextAPI\Response\CapabilitiesDecisionsResponse
      */
     public function getDeviceCapabilitiesDecisions()
     {
@@ -1145,9 +1145,9 @@ class Internal extends RequestCollection
     /**
      * Registers advertising identifier.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function logAttribution()
     {
@@ -1160,9 +1160,9 @@ class Internal extends RequestCollection
     /**
      * TODO.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function logResurrectAttribution()
     {
@@ -1180,9 +1180,9 @@ class Internal extends RequestCollection
      * @param string $usage        Desired usage, either "ig_select_app" or "default".
      * @param bool   $useCsrfToken (Optional) Decides to include a csrf token in this request.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MsisdnHeaderResponse
+     * @return \InstagramNextAPI\Response\MsisdnHeaderResponse
      */
     public function readMsisdnHeader(
         $usage,
@@ -1206,9 +1206,9 @@ class Internal extends RequestCollection
      *
      * @param string $usage Mobile subno usage.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MsisdnHeaderResponse
+     * @return \InstagramNextAPI\Response\MsisdnHeaderResponse
      *
      * @since 10.24.0 app version.
      */
@@ -1254,9 +1254,9 @@ class Internal extends RequestCollection
      *
      * @param string $reason One of: "token_expired", "mqtt_token_push", "token_stale", "provisioning_time_mismatch".
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\TokenResultResponse
+     * @return \InstagramNextAPI\Response\TokenResultResponse
      */
     public function fetchZeroRatingToken(
         $reason = 'token_expired')
@@ -1278,9 +1278,9 @@ class Internal extends RequestCollection
     /**
      * Get megaphone log.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MegaphoneLogResponse
+     * @return \InstagramNextAPI\Response\MegaphoneLogResponse
      */
     public function getMegaphoneLog()
     {
@@ -1302,9 +1302,9 @@ class Internal extends RequestCollection
      * TODO: We don't know what this function does. If we ever discover that it
      * has a useful purpose, then we should move it somewhere else.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FacebookHiddenEntitiesResponse
+     * @return \InstagramNextAPI\Response\FacebookHiddenEntitiesResponse
      */
     public function getFacebookHiddenSearchEntities()
     {
@@ -1315,9 +1315,9 @@ class Internal extends RequestCollection
     /**
      * Get Facebook OTA (Over-The-Air) update information.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FacebookOTAResponse
+     * @return \InstagramNextAPI\Response\FacebookOTAResponse
      */
     public function getFacebookOTA()
     {
@@ -1336,9 +1336,9 @@ class Internal extends RequestCollection
     /**
      * Fetch profiler traces config.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LoomFetchConfigResponse
+     * @return \InstagramNextAPI\Response\LoomFetchConfigResponse
      *
      * @see https://github.com/facebookincubator/profilo
      */
@@ -1354,9 +1354,9 @@ class Internal extends RequestCollection
      * This is just for some internal state information, such as
      * "has_change_password_megaphone". It's not for public use.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ProfileNoticeResponse
+     * @return \InstagramNextAPI\Response\ProfileNoticeResponse
      */
     public function getProfileNotice()
     {
@@ -1372,9 +1372,9 @@ class Internal extends RequestCollection
      * policy where Instagram asks you to accept new policy and accept that
      * you have 18 years old or more.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FetchQPDataResponse
+     * @return \InstagramNextAPI\Response\FetchQPDataResponse
      */
     public function getQPFetch()
     {
@@ -1405,9 +1405,9 @@ class Internal extends RequestCollection
     /**
      * Get Arlink download info.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ArlinkDownloadInfoResponse
+     * @return \InstagramNextAPI\Response\ArlinkDownloadInfoResponse
      */
     public function getArlinkDownloadInfo()
     {
@@ -1419,9 +1419,9 @@ class Internal extends RequestCollection
     /**
      * Get quick promotions cooldowns.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\QPCooldownsResponse
+     * @return \InstagramNextAPI\Response\QPCooldownsResponse
      */
     public function getQPCooldowns()
     {
@@ -1456,9 +1456,9 @@ class Internal extends RequestCollection
      * @param string                $module   Module where the story was found.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\MediaSeenResponse
+     * @return \InstagramNextAPI\Response\MediaSeenResponse
      *
      * @see Story::markMediaSeen()
      * @see Location::markStoryMediaSeen()
@@ -1476,7 +1476,7 @@ class Internal extends RequestCollection
         foreach ($items as $item) {
             if (!$item instanceof Response\Model\Item) {
                 throw new \InvalidArgumentException(
-                    'All story items must be instances of \InstagramAPI\Response\Model\Item.'
+                    'All story items must be instances of \InstagramNextAPI\Response\Model\Item.'
                 );
             }
 
@@ -1534,7 +1534,7 @@ class Internal extends RequestCollection
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \LogicException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
      * @return Response
      */
@@ -1639,7 +1639,7 @@ class Internal extends RequestCollection
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \LogicException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
      * @return Response\ResumableUploadResponse
      */
@@ -1719,9 +1719,9 @@ class Internal extends RequestCollection
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UploadPhotoResponse
+     * @return \InstagramNextAPI\Response\UploadPhotoResponse
      */
     protected function _uploadPhotoInOnePiece(
         $targetFeed,
@@ -1756,9 +1756,9 @@ class Internal extends RequestCollection
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \LogicException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     protected function _uploadResumablePhoto(
         $targetFeed,
@@ -1875,9 +1875,9 @@ class Internal extends RequestCollection
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \LogicException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UploadVideoResponse
+     * @return \InstagramNextAPI\Response\UploadVideoResponse
      */
     protected function _uploadVideoChunks(
         $targetFeed,
@@ -2062,9 +2062,9 @@ class Internal extends RequestCollection
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \LogicException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     protected function _uploadSegmentedVideo(
         $targetFeed,
@@ -2158,9 +2158,9 @@ class Internal extends RequestCollection
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @throws \LogicException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     protected function _uploadResumableVideo(
         $targetFeed,

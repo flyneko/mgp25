@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Response;
 
 /**
  * Functions related to Instagram's "creative assets", such as stickers.
@@ -21,9 +21,9 @@ class Creative extends RequestCollection
      * @param array|null $location    (optional) Array containing lat, lng and horizontalAccuracy.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\StickerAssetsResponse
+     * @return \InstagramNextAPI\Response\StickerAssetsResponse
      */
     public function getStickerAssets(
         $stickerType = 'static_stickers',
@@ -57,9 +57,9 @@ class Creative extends RequestCollection
      * NOTE: The files are some strange binary format that only the Instagram
      * app understands. If anyone figures out the format, please contact us.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FaceModelsResponse
+     * @return \InstagramNextAPI\Response\FaceModelsResponse
      */
     public function getFaceModels()
     {
@@ -81,9 +81,9 @@ class Creative extends RequestCollection
      *
      * @param array|null $location (optional) Array containing lat, lng and horizontalAccuracy.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\FaceEffectsResponse
+     * @return \InstagramNextAPI\Response\FaceEffectsResponse
      */
     public function getFaceEffects(
         array $location = null)
@@ -107,9 +107,9 @@ class Creative extends RequestCollection
     /**
      * Send supported capabilities.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\WriteSuppotedCapabilitiesResponse
+     * @return \InstagramNextAPI\Response\WriteSuppotedCapabilitiesResponse
      */
     public function sendSupportedCapabilities()
     {

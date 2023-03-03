@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command;
+namespace InstagramNextAPI\Realtime\Command;
 
-use InstagramAPI\Realtime\CommandInterface;
-use InstagramAPI\Realtime\Mqtt;
-use InstagramAPI\Signatures;
+use InstagramNextAPI\Realtime\CommandInterface;
+use InstagramNextAPI\Realtime\Mqtt;
+use InstagramNextAPI\Signatures;
 
 abstract class DirectCommand implements CommandInterface
 {

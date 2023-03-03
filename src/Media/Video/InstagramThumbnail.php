@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Media\Video;
+namespace InstagramNextAPI\Media\Video;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Utils;
 
 /**
  * Automatically creates a video thumbnail according to Instagram's rules.

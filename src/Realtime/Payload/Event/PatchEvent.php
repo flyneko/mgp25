@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Payload\Event;
+namespace InstagramNextAPI\Realtime\Payload\Event;
 
-use InstagramAPI\Realtime\Payload\RealtimeEvent;
+use InstagramNextAPI\Realtime\Payload\RealtimeEvent;
 
 /**
  * PatchEvent.

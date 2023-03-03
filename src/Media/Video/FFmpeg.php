@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Media\Video;
+namespace InstagramNextAPI\Media\Video;
 
-use InstagramAPI\Utils;
+use InstagramNextAPI\Utils;
 use Symfony\Component\Process\Process;
 use Winbox\Args;
 
@@ -239,6 +239,6 @@ class FFmpeg
             return $instance;
         }
 
-        throw new \RuntimeException('You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via "\InstagramAPI\Media\Video\FFmpeg::$defaultBinary = \'/home/exampleuser/ffmpeg/bin/ffmpeg\';" at the start of your script.');
+        throw new \RuntimeException('You must have FFmpeg to process videos. Ensure that its binary-folder exists in your PATH environment variable, or manually set its full path via "\InstagramNextAPI\Media\Video\FFmpeg::$defaultBinary = \'/home/exampleuser/ffmpeg/bin/ffmpeg\';" at the start of your script.');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage;
+namespace InstagramNextAPI\Settings\Storage;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Settings\Storage\Components\PDOStorage;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Settings\Storage\Components\PDOStorage;
+use InstagramNextAPI\Utils;
 use PDO;
 
 /**

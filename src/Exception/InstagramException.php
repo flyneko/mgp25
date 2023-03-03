@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Exception;
+namespace InstagramNextAPI\Exception;
 
-use InstagramAPI\Response;
+use InstagramNextAPI\Response;
 
 /**
  * The core exception that ALL other library exceptions derive from.

@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Push;
+namespace InstagramNextAPI\Push;
 
 use Evenement\EventEmitterInterface;
 use Evenement\EventEmitterTrait;
@@ -9,10 +9,10 @@ use Fbns\Client\Connection;
 use Fbns\Client\Lite;
 use Fbns\Client\Message\Push as PushMessage;
 use Fbns\Client\Message\Register;
-use InstagramAPI\Constants;
-use InstagramAPI\Devices\DeviceInterface;
-use InstagramAPI\React\PersistentInterface;
-use InstagramAPI\React\PersistentTrait;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Devices\DeviceInterface;
+use InstagramNextAPI\React\PersistentInterface;
+use InstagramNextAPI\React\PersistentTrait;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\Socket\ConnectorInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Response\Model;
+namespace InstagramNextAPI\Response\Model;
 
 /**
  * AymfItem.

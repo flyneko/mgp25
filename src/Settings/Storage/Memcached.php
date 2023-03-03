@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Settings\Storage;
+namespace InstagramNextAPI\Settings\Storage;
 
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Settings\StorageInterface;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Settings\StorageInterface;
 use Memcached as PHPMemcached;
 
 /**
@@ -88,7 +88,7 @@ class Memcached implements StorageInterface
      * @param string $username The Instagram username.
      * @param string $key      Name of the subkey.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return string|null The value as a string IF the user's key exists,
      *                     otherwise NULL.
@@ -116,7 +116,7 @@ class Memcached implements StorageInterface
      * @param string       $key      Name of the subkey.
      * @param string|mixed $value    The data to store. MUST be castable to string.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     private function _setUserKey(
         $username,
@@ -145,7 +145,7 @@ class Memcached implements StorageInterface
      * @param string $username The Instagram username.
      * @param string $key      Name of the subkey.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     private function _delUserKey(
         $username,

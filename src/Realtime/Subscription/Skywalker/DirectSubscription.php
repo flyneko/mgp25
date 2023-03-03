@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Subscription\Skywalker;
+namespace InstagramNextAPI\Realtime\Subscription\Skywalker;
 
-use InstagramAPI\Realtime\Subscription\SkywalkerSubscription;
+use InstagramNextAPI\Realtime\Subscription\SkywalkerSubscription;
 
 class DirectSubscription extends SkywalkerSubscription
 {

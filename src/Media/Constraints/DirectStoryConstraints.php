@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Media\Constraints;
+namespace InstagramNextAPI\Media\Constraints;
 
 /**
  * Instagram's direct messaging story media constraints.

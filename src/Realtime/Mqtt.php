@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Realtime;
+namespace InstagramNextAPI\Realtime;
 
 use BinSoul\Net\Mqtt\Client\React\ReactMqttClient;
 use BinSoul\Net\Mqtt\DefaultConnection;
@@ -8,18 +8,18 @@ use BinSoul\Net\Mqtt\DefaultMessage;
 use BinSoul\Net\Mqtt\Message as MqttMessage;
 use Evenement\EventEmitterInterface;
 use Fbns\Client\AuthInterface;
-use InstagramAPI\Constants;
-use InstagramAPI\Devices\DeviceInterface;
-use InstagramAPI\ExperimentsInterface;
-use InstagramAPI\React\PersistentInterface;
-use InstagramAPI\React\PersistentTrait;
-use InstagramAPI\Realtime\Command\UpdateSubscriptions;
-use InstagramAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
-use InstagramAPI\Realtime\Subscription\GraphQl\DirectTypingSubscription;
-use InstagramAPI\Realtime\Subscription\GraphQl\ZeroProvisionSubscription;
-use InstagramAPI\Realtime\Subscription\Skywalker\DirectSubscription;
-use InstagramAPI\Realtime\Subscription\Skywalker\LiveSubscription;
-use InstagramAPI\Signatures;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Devices\DeviceInterface;
+use InstagramNextAPI\ExperimentsInterface;
+use InstagramNextAPI\React\PersistentInterface;
+use InstagramNextAPI\React\PersistentTrait;
+use InstagramNextAPI\Realtime\Command\UpdateSubscriptions;
+use InstagramNextAPI\Realtime\Subscription\GraphQl\AppPresenceSubscription;
+use InstagramNextAPI\Realtime\Subscription\GraphQl\DirectTypingSubscription;
+use InstagramNextAPI\Realtime\Subscription\GraphQl\ZeroProvisionSubscription;
+use InstagramNextAPI\Realtime\Subscription\Skywalker\DirectSubscription;
+use InstagramNextAPI\Realtime\Subscription\Skywalker\LiveSubscription;
+use InstagramNextAPI\Signatures;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;

@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Media\Photo;
+namespace InstagramNextAPI\Media\Photo;
 
-use InstagramAPI\Media\ConstraintsInterface;
-use InstagramAPI\Media\MediaDetails;
+use InstagramNextAPI\Media\ConstraintsInterface;
+use InstagramNextAPI\Media\MediaDetails;
 
 class PhotoDetails extends MediaDetails
 {

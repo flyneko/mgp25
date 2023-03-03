@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Exception;
+namespace InstagramNextAPI\Exception;
 
 /**
  * This exception re-wraps ALL networking/socket exceptions.
@@ -47,7 +47,7 @@ class NetworkException extends RequestException
         // NOTE: We DON'T assign the guzzleException to "$previous", otherwise
         // the user would still see something like "Uncaught GuzzleHttp\Exception\
         // RequestException" and Guzzle's stack trace, instead of "Uncaught
-        // InstagramAPI\Exception\NetworkException" and OUR correct stack trace.
+        // InstagramNextAPI\Exception\NetworkException" and OUR correct stack trace.
         parent::__construct($message);
     }
 

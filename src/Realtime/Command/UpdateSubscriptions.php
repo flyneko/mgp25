@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command;
+namespace InstagramNextAPI\Realtime\Command;
 
-use InstagramAPI\Realtime\CommandInterface;
-use InstagramAPI\Realtime\Mqtt\QosLevel;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Realtime\CommandInterface;
+use InstagramNextAPI\Realtime\Mqtt\QosLevel;
+use InstagramNextAPI\Utils;
 
 class UpdateSubscriptions implements CommandInterface
 {

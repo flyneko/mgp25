@@ -1,11 +1,11 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Exception\InternalException;
-use InstagramAPI\Exception\SettingsException;
-use InstagramAPI\Response;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Exception\InternalException;
+use InstagramNextAPI\Exception\SettingsException;
+use InstagramNextAPI\Response;
+use InstagramNextAPI\Utils;
 
 /**
  * Account-related functions, such as profile editing and security.
@@ -90,9 +90,9 @@ class Account extends RequestCollection
      *
      * Also try People::getSelfInfo() instead, for some different information.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      *
      * @see People::getSelfInfo()
      */
@@ -118,9 +118,9 @@ class Account extends RequestCollection
      * @param string $biography Biography text. Use "" for nothing.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      *
      * @see Account::editProfile() should be called after this function!
      */
@@ -148,7 +148,7 @@ class Account extends RequestCollection
      *
      * @param string $gender this can be male, female, empty or null for 'prefer not to say' or anything else for custom
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function setGender(
         $gender = '')
@@ -186,9 +186,9 @@ class Account extends RequestCollection
      * @param string|null $newUsername (optional) Rename your account to a new username,
      *                                 which you've already verified with checkUsername().
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      *
      * @see Account::getCurrentUser() to get your current account details.
      * @see Account::checkUsername() to verify your new username first.
@@ -240,9 +240,9 @@ class Account extends RequestCollection
      * @param string $photoFilename The photo filename.
      *
      * @throws \InvalidArgumentException
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function changeProfilePicture(
         $photoFilename)
@@ -258,9 +258,9 @@ class Account extends RequestCollection
     /**
      * Remove your account's profile picture.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function removeProfilePicture()
     {
@@ -274,9 +274,9 @@ class Account extends RequestCollection
     /**
      * Sets your account to public.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function setPublic()
     {
@@ -290,9 +290,9 @@ class Account extends RequestCollection
     /**
      * Sets your account to private.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function setPrivate()
     {
@@ -309,9 +309,9 @@ class Account extends RequestCollection
      * In order to switch your account to Business profile you MUST
      * call Account::setBusinessInfo().
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SwitchBusinessProfileResponse
+     * @return \InstagramNextAPI\Response\SwitchBusinessProfileResponse
      *
      * @see Account::setBusinessInfo() sets required data to become a business profile.
      */
@@ -324,9 +324,9 @@ class Account extends RequestCollection
     /**
      * Switches your account to personal profile.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SwitchPersonalProfileResponse
+     * @return \InstagramNextAPI\Response\SwitchPersonalProfileResponse
      */
     public function switchToPersonalProfile()
     {
@@ -344,9 +344,9 @@ class Account extends RequestCollection
      * @param string $email       Email.
      * @param string $categoryId  TODO: Info.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CreateBusinessInfoResponse
+     * @return \InstagramNextAPI\Response\CreateBusinessInfoResponse
      */
     public function setBusinessInfo(
         $phoneNumber,
@@ -376,9 +376,9 @@ class Account extends RequestCollection
      *
      * @param string $username Instagram username to check.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CheckUsernameResponse
+     * @return \InstagramNextAPI\Response\CheckUsernameResponse
      *
      * @see Account::editProfile() to rename your account.
      */
@@ -396,9 +396,9 @@ class Account extends RequestCollection
     /**
      * Get account spam filter status.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterResponse
+     * @return \InstagramNextAPI\Response\CommentFilterResponse
      */
     public function getCommentFilter()
     {
@@ -411,9 +411,9 @@ class Account extends RequestCollection
      *
      * @param int $config_value Whether spam filter is on (0 or 1).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterSetResponse
+     * @return \InstagramNextAPI\Response\CommentFilterSetResponse
      */
     public function setCommentFilter(
         $config_value)
@@ -429,9 +429,9 @@ class Account extends RequestCollection
     /**
      * Get whether the comment category filter is disabled.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentCategoryFilterResponse
+     * @return \InstagramNextAPI\Response\CommentCategoryFilterResponse
      */
     public function getCommentCategoryFilterDisabled()
     {
@@ -442,9 +442,9 @@ class Account extends RequestCollection
     /**
      * Get account spam filter keywords.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterKeywordsResponse
+     * @return \InstagramNextAPI\Response\CommentFilterKeywordsResponse
      */
     public function getCommentFilterKeywords()
     {
@@ -457,9 +457,9 @@ class Account extends RequestCollection
      *
      * @param string $keywords List of blocked words, separated by comma.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\CommentFilterSetResponse
+     * @return \InstagramNextAPI\Response\CommentFilterSetResponse
      */
     public function setCommentFilterKeywords(
         $keywords)
@@ -478,9 +478,9 @@ class Account extends RequestCollection
      * @param string $oldPassword Old password.
      * @param string $newPassword New password.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\ChangePasswordResponse
+     * @return \InstagramNextAPI\Response\ChangePasswordResponse
      */
     public function changePassword(
         $oldPassword,
@@ -504,9 +504,9 @@ class Account extends RequestCollection
      *          CODES LET YOU REGAIN CONTROL OF YOUR ACCOUNT IF YOU LOSE THE
      *          PHONE NUMBER! WITHOUT THE CODES, YOU RISK LOSING YOUR ACCOUNT!
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\AccountSecurityInfoResponse
+     * @return \InstagramNextAPI\Response\AccountSecurityInfoResponse
      *
      * @see Account::enableTwoFactorSMS()
      */
@@ -527,9 +527,9 @@ class Account extends RequestCollection
      *
      * @param string $phoneNumber Phone number with country code. Format: +34123456789.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SendTwoFactorEnableSMSResponse
+     * @return \InstagramNextAPI\Response\SendTwoFactorEnableSMSResponse
      *
      * @see Account::enableTwoFactorSMS()
      */
@@ -558,9 +558,9 @@ class Account extends RequestCollection
      * @param string $phoneNumber      Phone number with country code. Format: +34123456789.
      * @param string $verificationCode The code sent to your phone via `Account::sendTwoFactorEnableSMS()`.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\AccountSecurityInfoResponse
+     * @return \InstagramNextAPI\Response\AccountSecurityInfoResponse
      *
      * @see Account::sendTwoFactorEnableSMS()
      * @see Account::getSecurityInfo()
@@ -586,9 +586,9 @@ class Account extends RequestCollection
     /**
      * Disable Two Factor authentication.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\DisableTwoFactorSMSResponse
+     * @return \InstagramNextAPI\Response\DisableTwoFactorSMSResponse
      */
     public function disableTwoFactorSMS()
     {
@@ -617,9 +617,9 @@ class Account extends RequestCollection
     /**
      * Get presence status.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PresenceStatusResponse
+     * @return \InstagramNextAPI\Response\PresenceStatusResponse
      */
     public function getPresenceStatus()
     {
@@ -639,9 +639,9 @@ class Account extends RequestCollection
      * Allow accounts you follow and anyone you message to see when you were
      * last active on Instagram apps.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function enablePresence()
     {
@@ -663,9 +663,9 @@ class Account extends RequestCollection
      *
      * You won't be able to see the activity status of other accounts.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function disablePresence()
     {
@@ -685,9 +685,9 @@ class Account extends RequestCollection
     /**
      * Tell Instagram to send you a message to verify your email address.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SendConfirmEmailResponse
+     * @return \InstagramNextAPI\Response\SendConfirmEmailResponse
      */
     public function sendConfirmEmail()
     {
@@ -704,9 +704,9 @@ class Account extends RequestCollection
      *
      * @param string $phoneNumber Phone number with country code. Format: +34123456789.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\SendSMSCodeResponse
+     * @return \InstagramNextAPI\Response\SendSMSCodeResponse
      */
     public function sendSMSCode(
         $phoneNumber)
@@ -727,9 +727,9 @@ class Account extends RequestCollection
      * @param string $phoneNumber      Phone number with country code. Format: +34123456789.
      * @param string $verificationCode The code sent to your phone via `Account::sendSMSCode()`.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\VerifySMSCodeResponse
+     * @return \InstagramNextAPI\Response\VerifySMSCodeResponse
      *
      * @see Account::sendSMSCode()
      */
@@ -753,9 +753,9 @@ class Account extends RequestCollection
      *
      * @param string $usage Either "prefill" or "auto_confirmation".
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function setContactPointPrefill(
         $usage)
@@ -771,9 +771,9 @@ class Account extends RequestCollection
     /**
      * Get account badge notifications for the "Switch account" menu.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\BadgeNotificationsResponse
+     * @return \InstagramNextAPI\Response\BadgeNotificationsResponse
      */
     public function getBadgeNotifications()
     {
@@ -789,9 +789,9 @@ class Account extends RequestCollection
     /**
      * TODO.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GenericResponse
+     * @return \InstagramNextAPI\Response\GenericResponse
      */
     public function getProcessContactPointSignals()
     {
@@ -808,9 +808,9 @@ class Account extends RequestCollection
     /**
      *  Get prefill candidates.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\PrefillCandidatesResponse
+     * @return \InstagramNextAPI\Response\PrefillCandidatesResponse
      */
     public function getPrefillCandidates()
     {
@@ -827,9 +827,9 @@ class Account extends RequestCollection
      *
      * @param bool $useAuth Indicates if auth is required for this request
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\UserInfoResponse
+     * @return \InstagramNextAPI\Response\UserInfoResponse
      */
     public function getAccountFamily(
         $useAuth = true)
@@ -841,9 +841,9 @@ class Account extends RequestCollection
     /**
      * Get linked accounts status.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\LinkageStatusResponse
+     * @return \InstagramNextAPI\Response\LinkageStatusResponse
      */
     public function getLinkageStatus()
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace InstagramAPI\Request;
+namespace InstagramNextAPI\Request;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Response;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Response;
 
 /**
  * Functions related to Shopping and catalogs.
@@ -18,9 +18,9 @@ class Shopping extends RequestCollection
      * @param string $merchantId  The merchant ID in Instagram's internal format (ie "20100000").
      * @param int    $deviceWidth Device width (optional).
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\OnTagProductResponse
+     * @return \InstagramNextAPI\Response\OnTagProductResponse
      */
     public function getOnTagProductInfo(
         $productId,
@@ -41,9 +41,9 @@ class Shopping extends RequestCollection
      *
      * @param string $locale The device user's locale, such as "en_US.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GraphqlResponse
+     * @return \InstagramNextAPI\Response\GraphqlResponse
      */
     public function getCatalogs(
         $locale = 'en_US')
@@ -64,9 +64,9 @@ class Shopping extends RequestCollection
      * @param string $query     Finds products containing this string.
      * @param int    $offset    Offset, used for pagination. Values must be multiples of 20.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\GraphqlResponse
+     * @return \InstagramNextAPI\Response\GraphqlResponse
      */
     public function getCatalogItems(
         $catalogId,
@@ -106,9 +106,9 @@ class Shopping extends RequestCollection
      *
      * @param string $catalogId The catalog's ID.
      *
-     * @throws \InstagramAPI\Exception\InstagramException
+     * @throws \InstagramNextAPI\Exception\InstagramException
      *
-     * @return \InstagramAPI\Response\OnBoardCatalogResponse
+     * @return \InstagramNextAPI\Response\OnBoardCatalogResponse
      */
     public function setOnBoardCatalog(
         $catalogId)

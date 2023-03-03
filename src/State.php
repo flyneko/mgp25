@@ -1,7 +1,7 @@
 <?php
-namespace InstagramAPI;
+namespace InstagramNextAPI;
 
-use InstagramAPI\Devices\Device;
+use InstagramNextAPI\Devices\Device;
 
 class State {
     protected $_data = [];

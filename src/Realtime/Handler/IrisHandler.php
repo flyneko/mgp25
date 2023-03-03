@@ -1,10 +1,10 @@
 <?php
 
-namespace InstagramAPI\Realtime\Handler;
+namespace InstagramNextAPI\Realtime\Handler;
 
-use InstagramAPI\Realtime\HandlerInterface;
-use InstagramAPI\Realtime\Message;
-use InstagramAPI\Realtime\Payload\IrisSubscribeAck;
+use InstagramNextAPI\Realtime\HandlerInterface;
+use InstagramNextAPI\Realtime\Message;
+use InstagramNextAPI\Realtime\Payload\IrisSubscribeAck;
 
 class IrisHandler extends AbstractHandler implements HandlerInterface
 {

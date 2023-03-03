@@ -1,16 +1,16 @@
 <?php
 
-namespace InstagramAPI\Request\Metadata;
+namespace InstagramNextAPI\Request\Metadata;
 
-use InstagramAPI\Constants;
-use InstagramAPI\Media\Constraints\ConstraintsFactory;
-use InstagramAPI\Media\Photo\PhotoDetails;
-use InstagramAPI\Media\Video\VideoDetails;
-use InstagramAPI\Response\Model\VideoUploadUrl;
-use InstagramAPI\Response\UploadJobVideoResponse;
-use InstagramAPI\Response\UploadPhotoResponse;
-use InstagramAPI\Response\UploadVideoResponse;
-use InstagramAPI\Utils;
+use InstagramNextAPI\Constants;
+use InstagramNextAPI\Media\Constraints\ConstraintsFactory;
+use InstagramNextAPI\Media\Photo\PhotoDetails;
+use InstagramNextAPI\Media\Video\VideoDetails;
+use InstagramNextAPI\Response\Model\VideoUploadUrl;
+use InstagramNextAPI\Response\UploadJobVideoResponse;
+use InstagramNextAPI\Response\UploadPhotoResponse;
+use InstagramNextAPI\Response\UploadVideoResponse;
+use InstagramNextAPI\Utils;
 
 class Internal
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Realtime\Command\Direct;
+namespace InstagramNextAPI\Realtime\Command\Direct;
 
-use InstagramAPI\Realtime\Command\DirectCommand;
+use InstagramNextAPI\Realtime\Command\DirectCommand;
 
 final class MarkSeen extends DirectCommand
 {

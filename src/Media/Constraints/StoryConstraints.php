@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Media\Constraints;
+namespace InstagramNextAPI\Media\Constraints;
 
-use InstagramAPI\Media\ConstraintsInterface;
+use InstagramNextAPI\Media\ConstraintsInterface;
 
 /**
  * Instagram's story media constraints.

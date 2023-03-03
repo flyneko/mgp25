@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Response\PropertyCollection;
+namespace InstagramNextAPI\Response\PropertyCollection;
 
-use InstagramAPI\AutoPropertyMapper;
+use InstagramNextAPI\AutoPropertyMapper;
 
 /**
  * Sticker.

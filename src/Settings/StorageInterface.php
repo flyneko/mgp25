@@ -1,6 +1,6 @@
 <?php
 
-namespace InstagramAPI\Settings;
+namespace InstagramNextAPI\Settings;
 
 /**
  * Data Storage Interface.
@@ -64,7 +64,7 @@ interface StorageInterface
      *
      * @param array $locationConfig Configuration parameters for the location.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function openLocation(
         array $locationConfig);
@@ -79,7 +79,7 @@ interface StorageInterface
      *
      * @param string $username The Instagram username.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return bool TRUE if user exists, otherwise FALSE.
      */
@@ -100,7 +100,7 @@ interface StorageInterface
      * @param string $oldUsername The old name that settings are stored as.
      * @param string $newUsername The new name to move the settings to.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function moveUser(
         $oldUsername,
@@ -117,7 +117,7 @@ interface StorageInterface
      *
      * @param string $username The Instagram username.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function deleteUser(
         $username);
@@ -141,7 +141,7 @@ interface StorageInterface
      *
      * @param string $username The Instagram username.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function openUser(
         $username);
@@ -149,7 +149,7 @@ interface StorageInterface
     /**
      * Load all settings for the currently active user.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      *
      * @return array An array with all current key-value pairs for the user, or
      *               an empty array if no settings exist.
@@ -165,7 +165,7 @@ interface StorageInterface
      *
      * @param array  $userSettings An array with all of the user's key-value pairs.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function saveUserSettings(
         array $userSettings
@@ -183,7 +183,7 @@ interface StorageInterface
      * After this call, there will not be any other user-related calls until the
      * next openUser() call.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function closeUser();
 
@@ -196,7 +196,7 @@ interface StorageInterface
      *
      * Implementing this is optional, but the function must exist.
      *
-     * @throws \InstagramAPI\Exception\SettingsException
+     * @throws \InstagramNextAPI\Exception\SettingsException
      */
     public function closeLocation();
 }

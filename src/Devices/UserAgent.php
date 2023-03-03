@@ -1,8 +1,8 @@
 <?php
 
-namespace InstagramAPI\Devices;
+namespace InstagramNextAPI\Devices;
 
-use InstagramAPI\Constants;
+use InstagramNextAPI\Constants;
 
 /**
  * Android device User-Agent builder.
